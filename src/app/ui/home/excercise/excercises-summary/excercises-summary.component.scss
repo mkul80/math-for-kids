@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  margin: 16px;
+}
+
+mat-card {
+  background-color: #f9fbe7;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+mat-icon {
+  color: #4caf50;
+}
+
+.success-rate {
+  color: #4caf50;
+}
+
+.error-count {
+  color: #f44336;
+}

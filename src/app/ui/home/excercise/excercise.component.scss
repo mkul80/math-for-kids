@@ -1,0 +1,66 @@
+@use "@angular/material" as mat;
+
+:host {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+
+  .mat-mdc-progress-bar {
+    border-radius: 10px;
+  }
+
+  @include mat.progress-bar-overrides(
+    (
+      track-shape: 10px,
+      track-height: 20px,
+      active-indicator-height: 20px,
+    )
+  );
+}
+
+.math-problem {
+  max-width: 480px;
+  font-size: 2rem;
+  gap: 15px;
+  background: #f0f8ff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.number {
+  font-weight: bold;
+  color: #4a4af4;
+}
+.operator,
+.equals {
+  color: #ff6b6b;
+  font-size: 2.5rem;
+}
+.result-input {
+  width: 100px;
+  height: 50px;
+  font-size: 2rem;
+  text-align: center;
+  border: 3px solid #4a4af4;
+  border-radius: 10px;
+  outline: none;
+}
+.result-input.correct,
+.button.correct {
+  border-color: #2ecc71;
+  background-color: #d4ffea;
+}
+.result-input.incorrect,
+.button.incorrect {
+  border-color: #e74c3c;
+  background-color: #ffe5e5;
+}
+.continue-button {
+  background-color: #2ecc71;
+  color: white;
+}

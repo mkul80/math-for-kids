@@ -1,0 +1,71 @@
+@use "@angular/material" as mat;
+
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$green-palette,
+    ),
+    typography: (
+      plain-family: Comic Neue,
+      brand-family: Comic Neue,
+      bold-weight: 900,
+      medium-weight: 700,
+      regular-weight: 300,
+    ),
+    density: (
+      scale: -2,
+    ),
+  )
+);
+
+body {
+  @include mat.core();
+  @include mat.all-component-themes($theme);
+
+  @include mat.button-overrides(
+    (
+      filled-container-height: 3.5rem,
+      filled-label-text-size: 2.5rem,
+    )
+  );
+
+  @include mat.button-toggle-overrides(
+    (
+      label-text-size: 1.8rem,
+    )
+  );
+}
+
+@import "flex.scss";
+
+$boo: --mat-sys-body-medium;
+
+@debug "font #{$boo}";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+.h-100 {
+  height: 100%;
+}
+.w-100 {
+  width: 100%;
+}
+
+// .primary-button {
+//   background-color: var(--mat-sys-primary) !important;
+// }
+
+// .secondary-button {
+//   background-color: var(--mat-sys-primary);
+// }
+
+// .tertiary-button {
+//   background-color: var(--mat-sys-tertiary) !important;
+// }

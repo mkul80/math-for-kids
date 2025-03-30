@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HomeComponent } from './ui/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent],
-  template: '<app-home></app-home>',
-  styles: '',
+  imports: [RouterOutlet],
+  template: '<router-outlet></router-outlet>',
+  styles: `:host{
+    display: block;
+    height: 100%;
+}`,
 })
 export class AppComponent {
   title = 'math-tutorial';

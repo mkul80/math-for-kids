@@ -1,0 +1,19 @@
+<mat-card>
+  <h2>Podsumowanie Ćwiczenia</h2>
+  <div class="mat-h2 stat-row d-flex justify-center align-center">
+    <mat-icon>check_circle</mat-icon>&nbsp;
+    <span class="success-rate">{{ correctCount }} Poprawnych</span>
+  </div>
+  <div class="mat-h2 stat-row d-flex justify-center align-center">
+    <mat-icon>error</mat-icon>&nbsp;
+    <span class="error-count">{{ errorCount }} Błędów</span>
+  </div>
+  <div class="mat-h2 stat-row d-flex justify-center align-center">
+    <mat-icon>equalizer</mat-icon>&nbsp;
+    <span>Razem: {{ totalCount }}</span>
+  </div>
+  <div class="mat-h2 stat-row d-flex justify-center align-center">
+    <mat-icon>star</mat-icon>&nbsp;
+    <span>Współczynnik sukcesu: {{ successRate | number : "1.0-0" }}%</span>
+  </div>
+</mat-card>

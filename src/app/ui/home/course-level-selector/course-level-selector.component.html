@@ -1,0 +1,71 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container d-flex flex-column align-center"
+>
+  <mat-card class="card w-100">
+    <mat-card-header>
+      <mat-card-title class="title">Wybierz działanie</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group
+        formControlName="operation"
+        class="toggle-group d-flex flex-wrap justify-center"
+      >
+        @for(item of operations; track item){
+        <mat-button-toggle [value]="item.value" class="button">
+          {{ item.label }}
+        </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    </mat-card-content>
+  </mat-card>
+  <br />
+  <mat-card class="card w-100">
+    <mat-card-header>
+      <mat-card-title class="title">Wybierz zakres liczb</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group
+        formControlName="totalRange"
+        class="toggle-group d-flex flex-wrap justify-center"
+      >
+        @for(item of valueTotalRanges; track item){
+        <mat-button-toggle [value]="item.value" class="button">
+          <span class="body-2">{{ item.label }}</span>
+        </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    </mat-card-content>
+  </mat-card>
+  <br />
+  <mat-card class="card w-100">
+    <mat-card-header>
+      <mat-card-title class="title">Wybierz ilość zadań</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group
+        formControlName="excerciseCount"
+        class="toggle-group d-flex flex-wrap justify-center"
+      >
+        @for(item of excercisesCounts; track item){
+        <mat-button-toggle [value]="item.value" class="button">
+          {{ item.label }}
+        </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    </mat-card-content>
+  </mat-card>
+  <div class="button-group d-flex justify-center">
+    <button
+      type="submit"
+      [disabled]="!form.valid"
+      class="start-button d-flex align-center"
+    >
+      <span class="button-content d-flex align-center">
+        <i class="icon fas fa-rocket"></i>
+        Zaczynamy!
+      </span>
+    </button>
+  </div>
+</form>

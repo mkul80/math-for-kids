@@ -1,0 +1,56 @@
+<mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+@if(!excerciseFinished){
+<div class="math-problem d-flex align-center justify-between">
+  <span class="number">{{ excerciseList[currentIndex].firstValue }}</span>
+  <span class="operator">+</span>
+  <span class="number">{{ excerciseList[currentIndex].secondValue }}</span>
+  <span class="equals">=</span>
+  <input
+    type="number"
+    class="result-input"
+    [class.correct]="excerciseStatus === excerciseStatuses.Correct"
+    [class.incorrect]="excerciseStatus === excerciseStatuses.Incorrect"
+    [formControl]="formControl"
+  />
+</div>
+} @else {
+<app-excercises-summary
+  [errorCount]="errorCount"
+  [correctCount]="correctCount"
+></app-excercises-summary>
+} @if(excerciseFinished){
+<button
+  mat-flat-button
+  color="tertiary"
+  class="continue-button"
+  [routerLink]="['/']"
+>
+  Zacznij od nowa
+</button>
+} @if (showCheckAnswerButton) {
+<button
+  mat-flat-button
+  class="check-button"
+  [class.correct]="excerciseStatus === excerciseStatuses.Correct"
+  [class.incorrect]="excerciseStatus === excerciseStatuses.Incorrect"
+  [disabled]="formControl.pristine"
+  (click)="checkAnswer()"
+>
+  Sprawdź wynik
+</button>
+} @if(showNextButton) {
+<app-excerise-status
+  [excercise]="excerciseList[currentIndex]"
+  [userResult]="formControl.value"
+></app-excerise-status
+>} @if(showContinueButton){
+<button
+  mat-flat-button
+  color="tertiary"
+  class="continue-button"
+  (click)="nextExercise()"
+  *ngIf="currentIndex < excerciseList.length - 1"
+>
+  Kontynuuj
+</button>
+}
