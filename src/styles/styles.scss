@@ -1,4 +1,5 @@
 @use "@angular/material" as mat;
+@use "flex" as *;
 
 $theme: mat.define-theme(
   (
@@ -37,15 +38,14 @@ body {
   );
 }
 
-@import "flex.scss";
-
 $boo: --mat-sys-body-medium;
 
 @debug "font #{$boo}";
 
 html,
 body {
-  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
 }
 body {
   margin: 0;
@@ -56,6 +56,10 @@ body {
 }
 .w-100 {
   width: 100%;
+}
+
+.text-center {
+  text-align: center;
 }
 
 // .primary-button {

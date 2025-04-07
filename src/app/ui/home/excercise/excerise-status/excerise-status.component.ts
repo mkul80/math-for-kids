@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Excercise } from '../../../../models/excercise';
-import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from './excercise-status.consts';
+import {
+  FAILURE_MESSAGES,
+  SUCCESS_MESSAGES,
+  SUCCESS_IMAGES,
+  FAILURE_IMAGES,
+} from './excercise-status.consts';
 
 @Component({
   selector: 'app-excerise-status',
@@ -9,26 +14,37 @@ import { FAILURE_MESSAGES, SUCCESS_MESSAGES } from './excercise-status.consts';
   styleUrl: './excerise-status.component.scss',
 })
 export class ExceriseStatusComponent {
+  successImage: string;
+  failureImage: string;
+  failureMessage: Message;
+  successMessage: Message;
+
   @Input() excercise!: Excercise;
   @Input() userResult!: number;
-
-  get correctAnswer(): string {
-    return `${this.excercise.firstValue} + ${this.excercise.secondValue} = ${this.excercise.result}`;
-  }
+  @Input() correctAnswer!: string;
+  @Input() explanation!: string;
 
   get isCorrect(): boolean {
     return this.excercise.result === this.userResult;
   }
 
-  get successMessage(): { title: string; message: string } {
-    return SUCCESS_MESSAGES[
-      Math.floor(Math.random() * SUCCESS_MESSAGES.length)
-    ];
+  #getRandomMessage(messages: Message[]): Message {
+    return messages[Math.floor(Math.random() * messages.length)];
   }
 
-  get failureMessage(): { title: string; message: string } {
-    return FAILURE_MESSAGES[
-      Math.floor(Math.random() * FAILURE_MESSAGES.length)
-    ];
+  #getRandomImage(images: string[]): string {
+    return images[Math.floor(Math.random() * images.length)];
   }
+
+  constructor() {
+    this.successImage = this.#getRandomImage(SUCCESS_IMAGES);
+    this.failureImage = this.#getRandomImage(FAILURE_IMAGES);
+    this.successMessage = this.#getRandomMessage(SUCCESS_MESSAGES);
+    this.failureMessage = this.#getRandomMessage(FAILURE_MESSAGES);
+  }
+}
+
+interface Message {
+  title: string;
+  message: string;
 }

@@ -1,24 +1,30 @@
-<mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
-@if(!excerciseFinished){
+<mat-progress-bar
+  mode="determinate"
+  [value]="excerciseStore.excerciseProgress()"
+></mat-progress-bar>
+
+@if(!excerciseStore.isFinished()){
 <div class="math-problem d-flex align-center justify-between">
-  <span class="number">{{ excerciseList[currentIndex].firstValue }}</span>
-  <span class="operator">+</span>
-  <span class="number">{{ excerciseList[currentIndex].secondValue }}</span>
+  <span class="number">{{ excerciseStore.currentFirstValue() }}</span>
+  <span class="operator">{{ excerciseStore.currentOperationSymbol() }}</span>
+  <span class="number">{{ excerciseStore.currentSecondValue() }}</span>
   <span class="equals">=</span>
   <input
+    #inputRef
     type="number"
     class="result-input"
-    [class.correct]="excerciseStatus === excerciseStatuses.Correct"
-    [class.incorrect]="excerciseStatus === excerciseStatuses.Incorrect"
+    [class.correct]="excerciseStore.currentExcerciseResultCorrect()"
+    [class.incorrect]="excerciseStore.currentExcerciseResultIncorrect()"
     [formControl]="formControl"
+    (keyup.enter)="inputRef.blur(); checkAnswer()"
   />
 </div>
-} @else {
+} @if(excerciseStore.isFinished()){
 <app-excercises-summary
-  [errorCount]="errorCount"
-  [correctCount]="correctCount"
+  [errorCount]="excerciseStore.errorCount()"
+  [correctCount]="excerciseStore.correctCount()"
 ></app-excercises-summary>
-} @if(excerciseFinished){
+} @if(excerciseStore.isFinished()){
 <button
   mat-flat-button
   color="tertiary"
@@ -27,7 +33,7 @@
 >
   Zacznij od nowa
 </button>
-} @if (showCheckAnswerButton) {
+} @if (!excerciseStore.isCurrentAnswered() && !excerciseStore.isFinished()) {
 <button
   mat-flat-button
   class="check-button"
@@ -38,18 +44,18 @@
 >
   Sprawdź wynik
 </button>
-} @if(showNextButton) {
+} @if(excerciseStore.isCurrentAnswered()) {
 <app-excerise-status
-  [excercise]="excerciseList[currentIndex]"
-  [userResult]="formControl.value"
+  [excercise]="excerciseStore.currentExcercise().excercise"
+  [userResult]="excerciseStore.currentExcerciseUserResult()!"
+  [correctAnswer]="excerciseStore.correctResult()"
 ></app-excerise-status
->} @if(showContinueButton){
+>} @if(excerciseStore.isCurrentAnswered() ) {
 <button
   mat-flat-button
   color="tertiary"
   class="continue-button"
   (click)="nextExercise()"
-  *ngIf="currentIndex < excerciseList.length - 1"
 >
   Kontynuuj
 </button>

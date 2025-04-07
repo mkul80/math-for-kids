@@ -1,4 +1,4 @@
 export interface ExcerciseConfig {
-  valueTotalRange: number;
+  difficultyLevel: number;
   excercisesCounts: number;
 }

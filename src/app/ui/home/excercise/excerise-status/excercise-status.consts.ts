@@ -37,3 +37,28 @@ export const FAILURE_MESSAGES = [
     message: 'Jeszcze chwila i będzie dobrze, próbuj dalej!',
   },
 ];
+
+export const SUCCESS_IMAGES = [
+  'assets/images/success/happy-ladybug1.png',
+  'assets/images/success/happy-ladybug3.png',
+  'assets/images/success/happy-unicorn1.jpeg',
+  'assets/images/success/happy-unicorn1.png',
+  'assets/images/success/happy-unicorn2.jpeg',
+  'assets/images/success/happy-unicorn2.png',
+  'assets/images/success/happy-unicorn3.jpeg',
+  'assets/images/success/happy-unicorn3.png',
+  'assets/images/success/happy-unicorn4.jpeg',
+  'assets/images/success/happy-unicorn4.png',
+  'assets/images/success/hapy-ladybug6.png',
+];
+
+export const FAILURE_IMAGES = [
+  'assets/images/failure/sad-kitten1.jpeg',
+  'assets/images/failure/sad-kitten2.jpeg',
+  'assets/images/failure/sad-kitten3.jpeg',
+  'assets/images/failure/sad-kitten4.jpeg',
+  'assets/images/failure/sad-kitten4.png',
+  'assets/images/failure/sad-seal3.png',
+  'assets/images/failure/sad-unicorn1.jpeg',
+  'assets/images/failure/sad-unicorn2.jpeg',
+];

@@ -32,8 +32,8 @@ import { RouterModule } from '@angular/router';
       );
     }
     main{
-      height: calc(100% - 70px);
-      
+      height: calc(100dvh - 70px);
+      overflow: auto;
     }
   `,
 })
