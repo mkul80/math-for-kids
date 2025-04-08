@@ -11,93 +11,80 @@ import { getOperationSymbol, Operation } from '../../models/operation';
 import { ExcerciseGeneratorService } from '../../business-logic/excercise-generator.service';
 import { computed } from '@angular/core';
 import { Excercise } from '../../models/excercise';
-import { localStorageKeys } from '../../consts/user-preferences';
+import { LocalStorageService } from './local-storage-service';
 
 type ExcerciseState = {
   excerciseSet: UserExcercise[];
   failedExcerciseSet: Excercise[];
-  currentExcerciseIndex: number;
+  currentIndex: number;
 };
 const initialState: ExcerciseState = {
   excerciseSet: [],
   failedExcerciseSet: [],
-  currentExcerciseIndex: 0,
+  currentIndex: 0,
 };
 
 export const ExcerciseStore = signalStore(
   withState(initialState),
   withHooks((store) => ({
     onInit: () => {
-      const failedExcerciseSet = localStorage.getItem(
-        localStorageKeys.failedUserExcercises
-      );
-      if (failedExcerciseSet) {
-        const parsedFailedExcerciseSet = JSON.parse(
-          failedExcerciseSet
-        ) as Excercise[];
+      const failedExcercises = LocalStorageService.loadFailedExcercises();
+      if (failedExcercises) {
         patchState(store, {
-          failedExcerciseSet: parsedFailedExcerciseSet,
+          failedExcerciseSet: failedExcercises,
         });
       }
     },
     onDestroy: () => {
-      localStorage.setItem(
-        localStorageKeys.failedUserExcercises,
-        JSON.stringify(store.failedExcerciseSet())
-      );
+      LocalStorageService.saveFailedExcercises(store.failedExcerciseSet());
     },
   })),
   withComputed((store) => ({
-    isFinished: computed(
-      () => store.currentExcerciseIndex() >= store.excerciseSet().length
-    ),
+    currentExcercise: computed(() => {
+      const currentIndex = store.currentIndex();
+      return store.excerciseSet()[currentIndex];
+    }),
+  })),
+  withComputed(({ currentIndex, excerciseSet, currentExcercise }) => ({
+    isFinished: computed(() => currentIndex() >= excerciseSet().length),
     isCurrentAnswered: computed(() => {
-      const current = store.excerciseSet()[store.currentExcerciseIndex()];
-      return current && current.userResult !== undefined;
+      return currentExcercise() && currentExcercise().userResult !== undefined;
     }),
     correctResult: computed(() => {
-      const current = store.excerciseSet()[store.currentExcerciseIndex()];
-      const operation = current.excercise.operation;
+      const operation = currentExcercise().excercise.operation;
       const operationSymbol = getOperationSymbol(operation);
-      return `${current?.excercise.firstValue} ${operationSymbol} ${current?.excercise.secondValue} = ${current?.excercise.result}`;
+      return `${currentExcercise()?.excercise.firstValue} ${operationSymbol} ${
+        currentExcercise()?.excercise.secondValue
+      } = ${currentExcercise()?.excercise.result}`;
     }),
     currentFirstValue: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex]?.excercise.firstValue;
+      return excerciseSet()[currentIndex()]?.excercise.firstValue;
     }),
     currentSecondValue: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex]?.excercise.secondValue;
+      return excerciseSet()[currentIndex()]?.excercise.secondValue;
     }),
     currentOperation: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex]?.excercise.operation;
+      return excerciseSet()[currentIndex()]?.excercise.operation;
     }),
     currentOperationSymbol: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      const operation = store.excerciseSet()[currentIndex]?.excercise.operation;
+      const operation = excerciseSet()[currentIndex()]?.excercise.operation;
       return getOperationSymbol(operation);
     }),
     currentExcercise: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex];
+      return excerciseSet()[currentIndex()];
     }),
     currentExcerciseResult: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex]?.excercise.result;
+      return excerciseSet()[currentIndex()]?.excercise.result;
     }),
     currentExcerciseUserResult: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      return store.excerciseSet()[currentIndex]?.userResult;
+      return excerciseSet()[currentIndex()]?.userResult;
     }),
     currentExcerciseResultCorrect: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      const excercise = store.excerciseSet()[currentIndex];
+      const excercise = excerciseSet()[currentIndex()];
       return excercise && excercise.userResult === excercise.excercise.result;
     }),
     currentExcerciseResultIncorrect: computed(() => {
-      const currentIndex = store.currentExcerciseIndex();
-      const excercise = store.excerciseSet()[currentIndex];
+      const excercise = excerciseSet()[currentIndex()];
       return (
         excercise &&
         excercise.userResult !== undefined &&
@@ -105,24 +92,20 @@ export const ExcerciseStore = signalStore(
       );
     }),
     errorCount: computed(() => {
-      return store
-        .excerciseSet()
-        .filter(
-          (excercise) =>
-            excercise.userResult !== undefined &&
-            excercise.userResult !== excercise.excercise.result
-        ).length;
+      return excerciseSet().filter(
+        (excercise) =>
+          excercise.userResult !== undefined &&
+          excercise.userResult !== excercise.excercise.result
+      ).length;
     }),
     correctCount: computed(() => {
-      return store
-        .excerciseSet()
-        .filter(
-          (excercise) => excercise.userResult === excercise.excercise.result
-        ).length;
+      return excerciseSet().filter(
+        (excercise) => excercise.userResult === excercise.excercise.result
+      ).length;
     }),
     excerciseProgress: computed(() => {
-      const totalExcercises = store.excerciseSet().length;
-      const answeredExcercises = store.currentExcerciseIndex();
+      const totalExcercises = excerciseSet().length;
+      const answeredExcercises = currentIndex();
       return (answeredExcercises / totalExcercises) * 100;
     }),
   })),
@@ -142,18 +125,17 @@ export const ExcerciseStore = signalStore(
           excercise: excercise,
           userResult: undefined,
         })),
-        currentExcerciseIndex: 0,
+        currentIndex: 0,
       });
     },
     setAnswer(userResult: number) {
-      const currentExcercise =
-        store.excerciseSet()[store.currentExcerciseIndex()];
-      const isWrongAnswer = userResult !== currentExcercise.excercise.result;
+      const isWrongAnswer =
+        userResult !== store.currentExcercise().excercise.result;
 
       patchState(store, (state) => {
         const newState: Partial<ExcerciseState> = {
           excerciseSet: state.excerciseSet.map((excercise, index) => {
-            if (index === store.currentExcerciseIndex()) {
+            if (index === store.currentIndex()) {
               return { ...excercise, userResult };
             }
             return excercise;
@@ -163,15 +145,15 @@ export const ExcerciseStore = signalStore(
         if (isWrongAnswer) {
           const exerciseAlreadyExists = state.failedExcerciseSet.some(
             (failed) =>
-              failed.firstValue === currentExcercise.excercise.firstValue &&
-              failed.secondValue === currentExcercise.excercise.secondValue &&
-              failed.operation === currentExcercise.excercise.operation
+              failed.firstValue === store.currentExcercise().excercise.firstValue &&
+              failed.secondValue === store.currentExcercise().excercise.secondValue &&
+              failed.operation === store.currentExcercise().excercise.operation
           );
 
           if (!exerciseAlreadyExists) {
             newState.failedExcerciseSet = [
               ...state.failedExcerciseSet,
-              currentExcercise.excercise,
+              store.currentExcercise().excercise,
             ];
           }
         }
@@ -181,7 +163,7 @@ export const ExcerciseStore = signalStore(
     },
     nextExcercise() {
       patchState(store, (state) => ({
-        currentExcerciseIndex: state.currentExcerciseIndex + 1,
+        currentIndex: state.currentIndex + 1,
       }));
     },
   }))
