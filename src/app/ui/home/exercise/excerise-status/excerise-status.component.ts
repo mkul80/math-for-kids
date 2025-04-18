@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Excercise } from '../../../../models/excercise';
+import { Exercise } from '../../../../models/exercise';
 import {
   FAILURE_MESSAGES,
   SUCCESS_MESSAGES,
   SUCCESS_IMAGES,
   FAILURE_IMAGES,
-} from './excercise-status.consts';
+} from '../../../../consts/exercise-status.consts';
 
 @Component({
   selector: 'app-excerise-status',
@@ -19,10 +19,9 @@ export class ExceriseStatusComponent {
   failureMessage: Message;
   successMessage: Message;
 
-  @Input() excercise!: Excercise;
+  @Input() excercise!: Exercise;
   @Input() userResult!: number;
   @Input() correctAnswer!: string;
-  @Input() explanation!: string;
 
   get isCorrect(): boolean {
     return this.excercise.result === this.userResult;

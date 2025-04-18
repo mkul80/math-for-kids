@@ -1,30 +1,53 @@
 <mat-progress-bar
   mode="determinate"
-  [value]="excerciseStore.excerciseProgress()"
+  [value]="excerciseStore.exerciseProgress()"
 ></mat-progress-bar>
 
 @if(!excerciseStore.isFinished()){
-<div class="math-problem d-flex align-center justify-between">
-  <span class="number">{{ excerciseStore.currentFirstValue() }}</span>
+@if(excerciseStore.currentValues().length===2){
+<div class="math-problem paragraph-1 d-flex align-center justify-between">
+  <span class="number">{{ excerciseStore.currentValues()[0] }}</span>
   <span class="operator">{{ excerciseStore.currentOperationSymbol() }}</span>
-  <span class="number">{{ excerciseStore.currentSecondValue() }}</span>
+  <span class="number">{{ excerciseStore.currentValues()[1] }}</span>
   <span class="equals">=</span>
   <input
     #inputRef
     type="number"
     class="result-input"
-    [class.correct]="excerciseStore.currentExcerciseResultCorrect()"
-    [class.incorrect]="excerciseStore.currentExcerciseResultIncorrect()"
+    [class.correct]="excerciseStore.currentExerciseResultCorrect()"
+    [class.incorrect]="excerciseStore.currentExerciseResultIncorrect()"
     [formControl]="formControl"
     (keyup.enter)="inputRef.blur(); checkAnswer()"
   />
 </div>
-} @if(excerciseStore.isFinished()){
+} @else {
+<div class="math-problem paragraph-1 d-flex flex-column align-center">
+  @if (!excerciseStore.isCurrentAnswered()){
+  <img
+    class="image"
+    src="assets/images/a-little-girl-solves-math-task.jpg"
+    alt="Word task image"
+  />
+  }
+  <div>{{ excerciseStore.currentToString() }}</div>
+  <div>
+    <span class="user-result">Wynik = </span>
+    <input
+      #inputRef
+      type="number"
+      class="result-input"
+      [class.correct]="excerciseStore.currentExerciseResultCorrect()"
+      [class.incorrect]="excerciseStore.currentExerciseResultIncorrect()"
+      [formControl]="formControl"
+      (keyup.enter)="inputRef.blur(); checkAnswer()"
+    />
+  </div>
+</div>
+}} @if(excerciseStore.isFinished()){
 <app-excercises-summary
   [errorCount]="excerciseStore.errorCount()"
   [correctCount]="excerciseStore.correctCount()"
 ></app-excercises-summary>
-} @if(excerciseStore.isFinished()){
 <button
   mat-flat-button
   color="tertiary"
@@ -46,8 +69,8 @@
 </button>
 } @if(excerciseStore.isCurrentAnswered()) {
 <app-excerise-status
-  [excercise]="excerciseStore.currentExcercise().excercise"
-  [userResult]="excerciseStore.currentExcerciseUserResult()!"
+  [excercise]="excerciseStore.currentExercise()"
+  [userResult]="excerciseStore.currentExerciseUserResult()!"
   [correctAnswer]="excerciseStore.correctResult()"
 ></app-excerise-status
 >} @if(excerciseStore.isCurrentAnswered() ) {

@@ -1,17 +1,26 @@
 import { Operation } from '../models/operation';
 
+enum ExerciseType {
+  Simple = 'simple',
+  Word = 'word',
+}
+
+enum DifficultyLevel {
+  Easy = 0,
+  Medium = 1,
+  Hard = 2,
+}
+
 export const userPreferences = {
   difficultyLevels: [
-    { value: 0, label: 'Łatwy 🦊' },
-    { value: 1, label: 'Średni 🐼' },
-    { value: 2, label: 'Trudny 🐯' },
+    { value: DifficultyLevel.Easy, label: '🦊 Łatwy' },
+    { value: DifficultyLevel.Medium, label: '🐼 Średni' },
+    { value: DifficultyLevel.Hard, label: '🐯 Trudny' },
   ],
 
-  excercisesCounts: [
-    { value: 5, label: '5 zadań 🐰' },
-    { value: 10, label: '10 zadań 🐨' },
-    { value: 15, label: '15 zadań 🦘' },
-    { value: 20, label: '20 zadań 🦒' },
+  exerciseTypes: [
+    { value: ExerciseType.Simple, label: 'Proste działania' },
+    { value: ExerciseType.Word, label: 'Zadania tekstowe' },
   ],
 
   mathOperations: [
@@ -23,5 +32,5 @@ export const userPreferences = {
 } as const;
 
 export const localStorageKeys = {
-  failedUserExcercises: 'failedUserExcercises',
+  failedUserExercises: 'failedUserExercises',
 } as const;

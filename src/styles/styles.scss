@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
 @use "flex" as *;
+@use "_fonts.scss";
 
 $theme: mat.define-theme(
   (

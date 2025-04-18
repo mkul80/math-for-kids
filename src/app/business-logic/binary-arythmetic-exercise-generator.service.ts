@@ -1,48 +1,43 @@
 import { Operation } from '../models/operation';
-import { Excercise } from '../models/excercise';
+import { Exercise } from '../models/exercise';
+import { exerciseSettings } from '../consts/user-settings';
 
-export class ExcerciseGeneratorService {
-  static generateExcerciseSet(
+export class BinaryArithmeticExerciseGenerator {
+  static generateExerciseSet(
     operation: Operation,
-    difficultyLevel: number,
-    count: number
-  ): Excercise[] {
+    difficultyLevel: number
+  ): Exercise[] {
     if (difficultyLevel < 0 || difficultyLevel > 2) {
       throw new Error('Difficulty level out of range. Must be 0, 1, or 2');
     }
-
-    return Array(count)
+    console.log('exerciseCount', exerciseSettings.exerciseCount);
+    return Array(exerciseSettings.exerciseCount)
       .fill(null)
-      .map(() => this.generateExcercise(operation, difficultyLevel));
+      .map(() => this.generateExercise(operation, difficultyLevel));
   }
 
-  private static generateExcercise(
+  private static generateExercise(
     operation: Operation,
     difficultyLevel: number
-  ): Excercise {
-    let firstValue: number;
-    let secondValue: number;
+  ): Exercise {
+    let values: number[];
 
     if (operation === Operation.Addition) {
-      [firstValue, secondValue] = this.generateAdditionValues(difficultyLevel);
+      values = this.generateAdditionValues(difficultyLevel);
     } else if (operation === Operation.Subtraction) {
-      [firstValue, secondValue] =
-        this.generateSubtractionValues(difficultyLevel);
+      values = this.generateSubtractionValues(difficultyLevel);
     } else {
       throw new Error('Unknown operation');
     }
 
     return {
-      firstValue,
-      secondValue,
+      values,
       operation,
-      result: this.calculateResult(firstValue, secondValue, operation),
+      result: this.calculateResult(values[0], values[1], operation),
     };
   }
 
-  private static generateAdditionValues(
-    difficultyLevel: number
-  ): [number, number] {
+  private static generateAdditionValues(difficultyLevel: number): number[] {
     switch (difficultyLevel) {
       case 0: {
         const first = Math.floor(Math.random() * 9) + 1;
@@ -69,9 +64,17 @@ export class ExcerciseGeneratorService {
     }
   }
 
-  private static generateSubtractionValues(
-    difficultyLevel: number
-  ): [number, number] {
+  /**
+   * Generates two numbers for subtraction based on the difficulty level
+   * @param difficultyLevel - The difficulty level (0: easy, 1: medium, 2: hard)
+   * @returns An array of two numbers where the first number is always greater than the second
+   *
+   * Difficulty levels:
+   * - Level 0: Single digit numbers (1-9)
+   * - Level 1: First number 10-19, second number is smaller than first number's ones digit
+   * - Level 2: First number 10-19, second number is larger than first number's ones digit
+   */
+  private static generateSubtractionValues(difficultyLevel: number): number[] {
     switch (difficultyLevel) {
       case 0: {
         const first = Math.floor(Math.random() * 9) + 1;

@@ -8,9 +8,10 @@ import {
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { ExcerciseStore } from '../../../store/excercise/excercise.store';
 import { Router } from '@angular/router';
 import { userPreferences } from '../../../consts/user-preferences';
+import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
+import { Operation } from '../../../models/operation';
 
 @Component({
   selector: 'app-course-level-selector',
@@ -32,11 +33,11 @@ export class CourseLevelSelectorComponent implements OnInit {
     'h-100 d-flex flex-column align-center justify-center';
 
   difficultyLevels = userPreferences.difficultyLevels;
-  excercisesCounts = userPreferences.excercisesCounts;
+  exerciseTypes = userPreferences.exerciseTypes;
   operations = userPreferences.mathOperations;
 
   private fb = inject(FormBuilder);
-  private excerciseStore = inject(ExcerciseStore);
+  private excerciseStore = inject(ExerciseExecutionStore);
 
   currentStep = 0;
   readonly totalSteps = 3;
@@ -44,25 +45,37 @@ export class CourseLevelSelectorComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       difficultyLevel: [null, Validators.required],
-      excerciseCount: [null, Validators.required],
+      exerciseType: [null, Validators.required],
       operation: [null, Validators.required],
     });
+  }
+
+  get isSubtraction(): boolean {
+    return this.form.value.operation === Operation.Subtraction;
   }
 
   isLastStep(): boolean {
     return this.currentStep === this.totalSteps - 1;
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      const { operation, difficultyLevel, excerciseCount } = this.form.value;
-      this.excerciseStore.configureExcerciseSet(
-        operation,
-        difficultyLevel,
-        excerciseCount
-      );
-      this.#router.navigate(['/home/excercise']);
-    }
+  startArithmeticExercises(): void {
+    console.log('startArithmeticExercises');
+    const { operation, difficultyLevel, exerciseType } = this.form.value;
+    this.excerciseStore.configureBinaryArythmeticExercises(
+      operation,
+      difficultyLevel
+    );
+    this.#router.navigate(['/home/excercise']);
+  }
+
+  startWordExercises(): void {
+    const { operation, difficultyLevel, exerciseType } = this.form.value;
+    this.excerciseStore.configureTernaryArythmeticExercises(
+      operation,
+      difficultyLevel
+    );
+    console.log('startWordExercises', this.excerciseStore.currentExercise());
+    this.#router.navigate(['/home/excercise']);
   }
 
   handleSelectionAndProgress(): void {

@@ -1,8 +1,4 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  class="container d-flex flex-column align-center"
->
+<form [formGroup]="form" class="container d-flex flex-column align-center">
   <mat-card class="card w-100">
     @switch (currentStep) { @case (0) {
     <mat-card-header>
@@ -40,40 +36,31 @@
     </mat-card-content>
     } @case (2) {
     <mat-card-header>
-      <mat-card-title class="title">Wybierz ilość zadań</mat-card-title>
+      <mat-card-title class="title">Wybierz rodzaj zadań</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-button-toggle-group
-        formControlName="excerciseCount"
+        formControlName="exerciseType"
         class="toggle-group d-flex flex-wrap justify-center"
       >
-        @for(item of excercisesCounts; track item){
-        <mat-button-toggle [value]="item.value" class="button">
-          {{ item.label }}
+        <mat-button-toggle
+          [value]="exerciseTypes[0].value"
+          (click)="startArithmeticExercises()"
+          class="button"
+        >
+          {{ exerciseTypes[0].label }}
+        </mat-button-toggle>
+        @if(isSubtraction){
+        <mat-button-toggle
+          [value]="exerciseTypes[1].value"
+          (click)="startWordExercises()"
+          class="button"
+        >
+          {{ exerciseTypes[1].label }}
         </mat-button-toggle>
         }
       </mat-button-toggle-group>
     </mat-card-content>
     } }
-    <mat-card-actions class="card-actions">
-      @if (currentStep > 0) {
-      <button
-        mat-flat-button
-        color="accent"
-        (click)="currentStep = currentStep - 1"
-      >
-        Wróć
-      </button>
-      } @if (isLastStep()) {
-      <button
-        mat-flat-button
-        color="primary"
-        type="submit"
-        [disabled]="!form.valid"
-      >
-        Start
-      </button>
-      }
-    </mat-card-actions>
   </mat-card>
 </form>

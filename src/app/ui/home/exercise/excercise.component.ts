@@ -1,13 +1,12 @@
 import { Component, inject, OnInit, HostBinding } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Excercise } from '../../../models/excercise';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { ExceriseStatusComponent } from './excerise-status/excerise-status.component';
 import { ExcercisesSummaryComponent } from './excercises-summary/excercises-summary.component';
-import { ExcerciseStore } from '../../../store/excercise/excercise.store';
+import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
 
 @Component({
   selector: 'app-excercise',
@@ -32,7 +31,7 @@ export class ExcerciseComponent implements OnInit {
   excerciseStatus = ExcerciseStatus.NotAnswered;
 
   route = inject(ActivatedRoute);
-  excerciseStore = inject(ExcerciseStore);
+  excerciseStore = inject(ExerciseExecutionStore);
 
   ngOnInit(): void {}
 
@@ -42,7 +41,7 @@ export class ExcerciseComponent implements OnInit {
 
   nextExercise(): void {
     this.formControl.reset();
-    this.excerciseStore.nextExcercise();
+    this.excerciseStore.nextExercise();
   }
 
   excerciseStatuses = ExcerciseStatus;
