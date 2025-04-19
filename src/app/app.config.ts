@@ -5,6 +5,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FailedExercisesStore } from './store/failed-exercises/failed-exercises.store';
 import { LocalStorageService } from './store/exercise/local-storage-service';
 import { ExerciseExecutionStore } from './store/exercise/exercise-execution.store';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 
 function initializeStores() {
   return () => {
@@ -18,8 +22,14 @@ function initializeStores() {
   };
 }
 
+export function httpLoaderFactory(http: HttpClient, document: Document) {
+  const baseHref = document.querySelector('base')?.getAttribute('href') ?? '/';
+  return new TranslateHttpLoader(http, `${baseHref}assets/i18n/`, '.json');
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideRouter(routes, withHashLocation()),
     provideAnimationsAsync(),
     ExerciseExecutionStore,
@@ -29,5 +39,13 @@ export const appConfig: ApplicationConfig = {
       useFactory: initializeStores,
       multi: true,
     },
+    provideTranslateService({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient, DOCUMENT],
+      },
+    }),
   ],
 };

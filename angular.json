@@ -37,6 +37,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/math/",
               "budgets": [
                 {
                   "type": "initial",

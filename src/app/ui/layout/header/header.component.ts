@@ -8,50 +8,29 @@ import { MatDialog } from '@angular/material/dialog';
 import { OkCancelDialogComponent } from '../../dialogs/ok-cancel.dialog.component';
 import { take } from 'rxjs/operators';
 import { CalculatorComponent } from '../../dialogs/calculator-dialog.component';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-header',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
-  template: `<mat-toolbar
-    color="primary"
-    class="d-flex justify-content-between mat-toolbar"
-    style="border-radius: 0 0 15px 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);"
-  >
-    <button mat-icon-button [matMenuTriggerFor]="menu" style="color: #fff;">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="goHome()">
-        <mat-icon>home</mat-icon>
-        <span>Strona główna</span>
-      </button>
-      <button mat-menu-item (click)="openCalculator()">
-        <mat-icon>calculate</mat-icon>
-        <span>Kalkulator</span>
-      </button>
-    </mat-menu>
-
-    <span style="font-size: 1.5em; font-weight: bold; color: #fff;"
-      >Nauka matematyki</span
-    >
-
-    <span class="expander"></span>
-    <button mat-icon-button style="color: #fff;">
-      <mat-icon>face</mat-icon>
-    </button>
-  </mat-toolbar>`,
-  styles: `
-    .mat-toolbar {
-      padding: 8px 16px;
-      min-height: 70px;
-      height:70px;
-    }
-  `,
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    TranslatePipe,
+  ],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
   #router = inject(Router);
   #dialogService = inject(MatDialog);
+  #translateService = inject(TranslateService);
+
+  get selectedLang() {
+    return this.#translateService.currentLang;
+  }
 
   goHome() {
     const dialogRef = this.#dialogService.open(OkCancelDialogComponent, {
@@ -70,6 +49,9 @@ export class HeaderComponent {
           this.#router.navigate(['/']);
         }
       });
+  }
+  onLangChange(lang: string) {
+    this.#translateService.use(lang);
   }
 
   openCalculator() {

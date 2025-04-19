@@ -5,8 +5,10 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { ExceriseStatusComponent } from './excerise-status/excerise-status.component';
-import { ExcercisesSummaryComponent } from './excercises-summary/excercises-summary.component';
+import { ExercisesSummaryComponent } from './exercises-summary/exercises-summary.component';
+import { AnswerSelectorComponent } from './answer-selector/answer-selector.component';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-excercise',
@@ -19,7 +21,9 @@ import { ExerciseExecutionStore } from '../../../store/exercise/exercise-executi
     MatButtonModule,
     RouterLink,
     ExceriseStatusComponent,
-    ExcercisesSummaryComponent,
+    ExercisesSummaryComponent,
+    AnswerSelectorComponent,
+    TranslatePipe,
   ],
   templateUrl: './excercise.component.html',
   styleUrl: './excercise.component.scss',

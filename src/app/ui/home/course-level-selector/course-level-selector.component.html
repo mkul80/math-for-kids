@@ -2,7 +2,9 @@
   <mat-card class="card w-100">
     @switch (currentStep) { @case (0) {
     <mat-card-header>
-      <mat-card-title class="title">Wybierz działanie</mat-card-title>
+      <mat-card-title class="title">{{
+        "select_operation" | translate
+      }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-button-toggle-group
@@ -12,14 +14,16 @@
       >
         @for(item of operations; track item){
         <mat-button-toggle [value]="item.value" class="button">
-          {{ item.label }}
+          {{ item.value | translate }}
         </mat-button-toggle>
         }
       </mat-button-toggle-group>
     </mat-card-content>
     } @case (1) {
     <mat-card-header>
-      <mat-card-title class="title">Wybierz poziom trudności</mat-card-title>
+      <mat-card-title class="title">{{
+        "select_difficulty_level" | translate
+      }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-button-toggle-group
@@ -29,14 +33,16 @@
       >
         @for(item of difficultyLevels; track item){
         <mat-button-toggle [value]="item.value" class="button">
-          <span class="body-2">{{ item.label }}</span>
+          <span class="body-2">{{ item.labelKey | translate }}</span>
         </mat-button-toggle>
         }
       </mat-button-toggle-group>
     </mat-card-content>
     } @case (2) {
     <mat-card-header>
-      <mat-card-title class="title">Wybierz rodzaj zadań</mat-card-title>
+      <mat-card-title class="title">{{
+        "select_exercise_type" | translate
+      }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-button-toggle-group
@@ -48,7 +54,7 @@
           (click)="startArithmeticExercises()"
           class="button"
         >
-          {{ exerciseTypes[0].label }}
+          {{ exerciseTypes[0].labelKey | translate }}
         </mat-button-toggle>
         @if(isSubtraction){
         <mat-button-toggle
@@ -56,7 +62,7 @@
           (click)="startWordExercises()"
           class="button"
         >
-          {{ exerciseTypes[1].label }}
+          {{ exerciseTypes[1].labelKey | translate }}
         </mat-button-toggle>
         }
       </mat-button-toggle-group>

@@ -12,6 +12,7 @@
 
   .mat-mdc-progress-bar {
     border-radius: 10px;
+    min-height: 20px;
   }
 
   @include mat.progress-bar-overrides(

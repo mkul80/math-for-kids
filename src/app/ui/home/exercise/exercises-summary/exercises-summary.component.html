@@ -1,0 +1,25 @@
+<mat-card>
+  <h2 class="header-2">{{ "exercises_summary_title" | translate }}</h2>
+  <div class="header-3 stat-row d-flex justify-center align-center">
+    <mat-icon>check_circle</mat-icon>&nbsp;
+    <span class="success-rate"
+      >{{ "correct_count" | translate }}: {{ correctCount }}</span
+    >
+  </div>
+  <div class="header-3 stat-row d-flex justify-center align-center">
+    <mat-icon>error</mat-icon>&nbsp;
+    <span class="error-count"
+      >{{ "errors_count" | translate }}: {{ errorCount }}</span
+    >
+  </div>
+  <div class="header-3 stat-row d-flex justify-center align-center">
+    <mat-icon>equalizer</mat-icon>&nbsp;
+    <span>{{ "exercises_count" | translate }}: {{ totalCount }}</span>
+  </div>
+  <div class="header-3 stat-row d-flex justify-center align-center">
+    <mat-icon>star</mat-icon>&nbsp;
+    <span
+      >{{ "you_get" | translate }}: {{ score | number : "1.0-0" }} punktów</span
+    >
+  </div>
+</mat-card>

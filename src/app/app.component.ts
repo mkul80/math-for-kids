@@ -21,13 +21,12 @@ export class AppComponent {
   }
   title = 'math-tutorial';
   constructor() {
-    // Check version initially
     this.checkVersion();
   }
 
   async checkVersion() {
     try {
-      const response = await fetch('/assets/version.json');
+      const response = await fetch('/math/assets/version.json');
       const { version: currentVersion } = await response.json();
       const storedVersion = localStorage.getItem('appVersion');
 

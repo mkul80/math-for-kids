@@ -1,15 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { Exercise } from '../../../../models/exercise';
 import {
-  FAILURE_MESSAGES,
-  SUCCESS_MESSAGES,
+  getRandomSuccessMessage,
+  getRandomFailureMessage,
   SUCCESS_IMAGES,
   FAILURE_IMAGES,
 } from '../../../../consts/exercise-status.consts';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-excerise-status',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './excerise-status.component.html',
   styleUrl: './excerise-status.component.scss',
 })
@@ -27,10 +28,6 @@ export class ExceriseStatusComponent {
     return this.excercise.result === this.userResult;
   }
 
-  #getRandomMessage(messages: Message[]): Message {
-    return messages[Math.floor(Math.random() * messages.length)];
-  }
-
   #getRandomImage(images: string[]): string {
     return images[Math.floor(Math.random() * images.length)];
   }
@@ -38,8 +35,8 @@ export class ExceriseStatusComponent {
   constructor() {
     this.successImage = this.#getRandomImage(SUCCESS_IMAGES);
     this.failureImage = this.#getRandomImage(FAILURE_IMAGES);
-    this.successMessage = this.#getRandomMessage(SUCCESS_MESSAGES);
-    this.failureMessage = this.#getRandomMessage(FAILURE_MESSAGES);
+    this.successMessage = getRandomSuccessMessage();
+    this.failureMessage = getRandomFailureMessage();
   }
 }
 

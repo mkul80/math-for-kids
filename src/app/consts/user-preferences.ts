@@ -13,19 +13,19 @@ enum DifficultyLevel {
 
 export const userPreferences = {
   difficultyLevels: [
-    { value: DifficultyLevel.Easy, label: '🦊 Łatwy' },
-    { value: DifficultyLevel.Medium, label: '🐼 Średni' },
-    { value: DifficultyLevel.Hard, label: '🐯 Trudny' },
+    { value: DifficultyLevel.Easy, labelKey: 'difficulty_level_easy' },
+    { value: DifficultyLevel.Medium, labelKey: 'difficulty_level_medium' },
+    { value: DifficultyLevel.Hard, labelKey: 'difficulty_level_hard' },
   ],
 
   exerciseTypes: [
-    { value: ExerciseType.Simple, label: 'Proste działania' },
-    { value: ExerciseType.Word, label: 'Zadania tekstowe' },
+    { value: ExerciseType.Simple, labelKey: 'exercise_type_simple' },
+    { value: ExerciseType.Word, labelKey: 'exercise_type_word' },
   ],
 
   mathOperations: [
-    { label: '➕ Dodawanie', value: Operation.Addition },
-    { label: '➖ Odejmowanie', value: Operation.Subtraction },
+    { labelKey: 'addition', value: Operation.Addition },
+    { labelKey: 'subtraction', value: Operation.Subtraction },
     // { label: '✖️ Mnożenie', value: Operation.Multiplication },
     // { label: '➗ Dzielenie', value: Operation.Division },
   ],
@@ -33,4 +33,5 @@ export const userPreferences = {
 
 export const localStorageKeys = {
   failedUserExercises: 'failedUserExercises',
+  userScore: 'userScore',
 } as const;

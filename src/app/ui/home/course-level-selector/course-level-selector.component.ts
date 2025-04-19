@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { userPreferences } from '../../../consts/user-preferences';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
 import { Operation } from '../../../models/operation';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-course-level-selector',
@@ -21,6 +22,7 @@ import { Operation } from '../../../models/operation';
     MatButtonToggleModule,
     MatCardModule,
     MatButtonModule,
+    TranslatePipe,
   ],
   templateUrl: './course-level-selector.component.html',
   styleUrl: './course-level-selector.component.scss',

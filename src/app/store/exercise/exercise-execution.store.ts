@@ -4,6 +4,7 @@ import {
   signalStore,
   withComputed,
   withMethods,
+  withProps,
   withState,
 } from '@ngrx/signals';
 import { UserExercise } from '../../models/user-exercise';
@@ -11,17 +12,19 @@ import { getOperationSymbol, Operation } from '../../models/operation';
 import { computed } from '@angular/core';
 import { FailedExercisesStore } from '../failed-exercises/failed-exercises.store';
 import { BinaryArithmeticExerciseGenerator } from '../../business-logic/binary-arythmetic-exercise-generator.service';
-import { mathTasks } from '../../consts/math-tasks.consts';
 import { TernaryArithmeticExerciseGenerator } from '../../business-logic/ternary-arithmetic-exercise-generator.service';
+import { MathTasksProviderService } from '../../business-logic/math-tasks-provider.service';
 
 type ExerciseExecutionState = {
   exerciseSet: UserExercise[];
+  score: number;
   currentIndex: number;
 };
 
 const initialState: ExerciseExecutionState = {
   exerciseSet: [],
   currentIndex: 0,
+  score: 0,
 };
 
 export const ExerciseExecutionStore = signalStore(
@@ -50,24 +53,7 @@ export const ExerciseExecutionStore = signalStore(
           values.join(` ${operationSymbol} `) + '= ' + currentExercise().result
         );
       }),
-      currentToString: computed(() => {
-        const operation = excerciseSet()[currentIndex()]?.operation;
-        const operationSymbol = getOperationSymbol(operation);
-        if (currentExercise().values.length === 3) {
-          console.log(
-            'currentToString',
-            currentExercise().values,
-            currentExercise().operation
-          );
-          const task = mathTasks.getByOperation(operation)[currentIndex()];
-          const { values } = currentExercise();
-          console.log(`values`, values, 'index', currentIndex());
-          return `${task(values[0], values[1], values[2])}`;
-        }
-        return `${currentExercise()?.values[0]} ${operationSymbol} ${
-          currentExercise()?.values[1]
-        } = `;
-      }),
+
       currentValues: computed(() => {
         return excerciseSet()[currentIndex()]?.values;
       }),
@@ -77,9 +63,6 @@ export const ExerciseExecutionStore = signalStore(
       currentOperationSymbol: computed(() => {
         const operation = excerciseSet()[currentIndex()]?.operation;
         return getOperationSymbol(operation);
-      }),
-      currentExercise: computed(() => {
-        return excerciseSet()[currentIndex()];
       }),
       currentExerciseResult: computed(() => {
         return excerciseSet()[currentIndex()]?.result;
@@ -98,6 +81,14 @@ export const ExerciseExecutionStore = signalStore(
           excercise.userResult !== undefined &&
           excercise.userResult !== excercise.result
         );
+      }),
+      currentSetScore: computed(() => {
+        return excerciseSet().reduce((acc, excercise) => {
+          if (excercise.userResult === excercise.result) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
       }),
       errorCount: computed(() => {
         return excerciseSet().filter(
@@ -118,62 +109,81 @@ export const ExerciseExecutionStore = signalStore(
       }),
     })
   ),
-  withMethods((store, failedExercisesStore = inject(FailedExercisesStore)) => ({
-    configureBinaryArythmeticExercises(
-      operation: Operation,
-      difficultyLevel: number
-    ): void {
-      console.log('configureBinaryArythmeticExercises', operation);
-      const excercises = BinaryArithmeticExerciseGenerator.generateExerciseSet(
-        operation,
-        difficultyLevel
-      );
-      patchState(store, {
-        exerciseSet: excercises.map((excercise) => ({
-          ...excercise,
-          userResult: undefined,
-        })),
-        currentIndex: 0,
-      });
-    },
-    configureTernaryArythmeticExercises(
-      operation: Operation,
-      difficultyLevel: number
-    ): void {
-      console.log('configureTernaryArythmeticExercises', operation);
-      const exercises = TernaryArithmeticExerciseGenerator.generateExerciseSet(
-        operation,
-        difficultyLevel
-      );
-      patchState(store, {
-        exerciseSet: exercises.map((excercise) => ({
-          ...excercise,
-          userResult: undefined,
-        })),
-        currentIndex: 0,
-      });
-    },
-    setAnswer(userResult: number) {
-      const currentExercise = store.currentExercise();
-      const isWrongAnswer = userResult !== currentExercise.result;
+  withMethods(
+    (
+      store,
+      failedExercisesStore = inject(FailedExercisesStore),
+      mathTasksProvider = inject(MathTasksProviderService)
+    ) => ({
+      configureBinaryArythmeticExercises(
+        operation: Operation,
+        difficultyLevel: number
+      ): void {
+        const excercises =
+          BinaryArithmeticExerciseGenerator.generateExerciseSet(
+            operation,
+            difficultyLevel
+          );
+        patchState(store, {
+          exerciseSet: excercises.map((excercise) => ({
+            ...excercise,
+            userResult: undefined,
+          })),
+          currentIndex: 0,
+        });
+      },
+      configureTernaryArythmeticExercises(
+        operation: Operation,
+        difficultyLevel: number
+      ): void {
+        const exercises =
+          TernaryArithmeticExerciseGenerator.generateExerciseSet(
+            operation,
+            difficultyLevel
+          );
+        patchState(store, {
+          exerciseSet: exercises.map((excercise) => ({
+            ...excercise,
+            userResult: undefined,
+          })),
+          currentIndex: 0,
+        });
+      },
+      stringifyCurrentExercise: () => {
+        const operation = store.exerciseSet()[store.currentIndex()]?.operation;
+        const operationSymbol = getOperationSymbol(operation);
+        if (store.currentExercise().values.length === 3) {
+          const task =
+            mathTasksProvider.getByOperation(operation)[store.currentIndex()];
+          const { values } = store.currentExercise();
+          return `${task(values[0], values[1], values[2])}`;
+        }
+        return `${store.currentExercise()?.values[0]} ${operationSymbol} ${
+          store.currentExercise()?.values[1]
+        } = `;
+      },
+      setAnswer(userResult: number) {
+        const currentExercise = store.currentExercise();
+        const isWrongAnswer = userResult !== currentExercise.result;
 
-      patchState(store, (state) => ({
-        exerciseSet: state.exerciseSet.map((excercise, index) => {
-          if (index === store.currentIndex()) {
-            return { ...excercise, userResult };
-          }
-          return excercise;
-        }),
-      }));
+        patchState(store, (state) => ({
+          exerciseSet: state.exerciseSet.map((excercise, index) => {
+            if (index === store.currentIndex()) {
+              return { ...excercise, userResult };
+            }
+            return excercise;
+          }),
+        }));
 
-      if (isWrongAnswer) {
-        failedExercisesStore.addFailedExercise(currentExercise);
-      }
-    },
-    nextExercise() {
-      patchState(store, (state) => ({
-        currentIndex: state.currentIndex + 1,
-      }));
-    },
-  }))
+        if (isWrongAnswer) {
+          failedExercisesStore.addFailedExercise(currentExercise);
+        }
+      },
+      nextExercise() {
+        patchState(store, (state) => ({
+          currentIndex: state.currentIndex + 1,
+        }));
+      },
+    })
+  )
 );

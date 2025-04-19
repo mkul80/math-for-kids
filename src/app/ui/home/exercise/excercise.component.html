@@ -1,4 +1,5 @@
 <mat-progress-bar
+  class="progress-bar"
   mode="determinate"
   [value]="excerciseStore.exerciseProgress()"
 ></mat-progress-bar>
@@ -29,25 +30,20 @@
     alt="Word task image"
   />
   }
-  <div>{{ excerciseStore.currentToString() }}</div>
-  <div>
-    <span class="user-result">Wynik = </span>
-    <input
-      #inputRef
-      type="number"
-      class="result-input"
-      [class.correct]="excerciseStore.currentExerciseResultCorrect()"
-      [class.incorrect]="excerciseStore.currentExerciseResultIncorrect()"
-      [formControl]="formControl"
-      (keyup.enter)="inputRef.blur(); checkAnswer()"
-    />
-  </div>
+  <div>{{ excerciseStore.stringifyCurrentExercise() }}</div>
+  <app-answer-selector
+    [correctAnswer]="excerciseStore.currentExerciseResult()"
+    [maxValue]="20"
+    [userAnswered]="excerciseStore.isCurrentAnswered()"
+    (selectedAnswer)="excerciseStore.setAnswer($event)"
+  ></app-answer-selector>
 </div>
 }} @if(excerciseStore.isFinished()){
-<app-excercises-summary
+<app-exercises-summary
   [errorCount]="excerciseStore.errorCount()"
   [correctCount]="excerciseStore.correctCount()"
-></app-excercises-summary>
+  [score]="excerciseStore.score()"
+></app-exercises-summary>
 <button
   mat-flat-button
   color="tertiary"
@@ -80,6 +76,6 @@
   class="continue-button"
   (click)="nextExercise()"
 >
-  Kontynuuj
+  {{ "continue" | translate }}
 </button>
 }

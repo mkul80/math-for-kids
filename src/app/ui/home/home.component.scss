@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #ff9ae1 0%,
+    #ffd1eb 25%,
+    #c1f0ff 50%,
+    #b6f5e1 75%,
+    #fff3b6 100%
+  );
+}
+main {
+  flex: 1;
+}
