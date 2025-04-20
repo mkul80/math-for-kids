@@ -3,8 +3,8 @@ import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
-  withProps,
   withState,
 } from '@ngrx/signals';
 import { UserExercise } from '../../models/user-exercise';
@@ -14,6 +14,7 @@ import { FailedExercisesStore } from '../failed-exercises/failed-exercises.store
 import { BinaryArithmeticExerciseGenerator } from '../../business-logic/binary-arythmetic-exercise-generator.service';
 import { TernaryArithmeticExerciseGenerator } from '../../business-logic/ternary-arithmetic-exercise-generator.service';
 import { MathTasksProviderService } from '../../business-logic/math-tasks-provider.service';
+import { LocalStorageService } from './local-storage-service';
 
 type ExerciseExecutionState = {
   exerciseSet: UserExercise[];
@@ -24,11 +25,16 @@ type ExerciseExecutionState = {
 const initialState: ExerciseExecutionState = {
   exerciseSet: [],
   currentIndex: 0,
-  score: 0,
+  score: LocalStorageService.getUserScore() ?? 0,
 };
 
 export const ExerciseExecutionStore = signalStore(
   withState(initialState),
+  withHooks({
+    onDestroy: (store) => {
+      LocalStorageService.saveUserScore(store.score());
+    },
+  }),
   withComputed((store) => ({
     currentExercise: computed(() => {
       const currentIndex = store.currentIndex();

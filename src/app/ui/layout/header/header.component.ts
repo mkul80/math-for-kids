@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -6,27 +6,43 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OkCancelDialogComponent } from '../../dialogs/ok-cancel.dialog.component';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { CalculatorComponent } from '../../dialogs/calculator-dialog.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: true,
-  selector: 'app-header',
   imports: [
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
     TranslatePipe,
+    MatDividerModule,
   ],
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   #router = inject(Router);
   #dialogService = inject(MatDialog);
   #translateService = inject(TranslateService);
+  #http = inject(HttpClient);
+
+  version: string = '';
+
+  ngOnInit() {
+    this.#http
+      .get<{ version: string }>('assets/version.json')
+      .pipe(
+        take(1),
+        map((data) => data.version)
+      )
+      .subscribe((version) => (this.version = version));
+  }
 
   get selectedLang() {
     return this.#translateService.currentLang;

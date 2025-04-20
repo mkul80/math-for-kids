@@ -5,6 +5,7 @@
     mat-flat-button
     class="answer-button"
     [class.selected]="selectedAnswerValue === answer"
+    [class.correct]="selectedAnswerValue === correctAnswer"
     (click)="selectAnswer(answer)"
   >
     {{ answer }}

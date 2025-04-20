@@ -1,6 +1,6 @@
 {
   "name": "math-tutorial",
-  "version": "0.0.13",
+  "version": "0.0.18",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

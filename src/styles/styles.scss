@@ -40,17 +40,22 @@ body {
   );
 }
 
-$boo: --mat-sys-body-medium;
-
-@debug "font #{$boo}";
-
 html,
 body {
-  height: 100dvh;
-  overflow: hidden;
 }
-body {
+html {
+  height: 100%;
+  height: -webkit-fill-available;
+}
+body,
+app-root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
   margin: 0;
+  position: fixed;
+  width: 100%;
+  overflow-y: auto;
 }
 
 .h-100 {
@@ -63,15 +68,3 @@ body {
 .text-center {
   text-align: center;
 }
-
-// .primary-button {
-//   background-color: var(--mat-sys-primary) !important;
-// }
-
-// .secondary-button {
-//   background-color: var(--mat-sys-primary);
-// }
-
-// .tertiary-button {
-//   background-color: var(--mat-sys-tertiary) !important;
-// }

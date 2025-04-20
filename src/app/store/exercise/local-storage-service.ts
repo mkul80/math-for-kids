@@ -22,7 +22,7 @@ export class LocalStorageService {
   }
 
   static saveUserScore(score: number): void {
-    const existingScore = this.loadUserScore() || 0;
+    const existingScore = this.getUserScore() || 0;
     const totalScore = existingScore + score;
     localStorage.setItem(
       localStorageKeys.userScore,
@@ -30,7 +30,7 @@ export class LocalStorageService {
     );
   }
 
-  static loadUserScore(): number | null {
+  static getUserScore(): number | null {
     const userScore = localStorage.getItem(localStorageKeys.userScore);
     if (userScore) {
       return JSON.parse(userScore) as number;

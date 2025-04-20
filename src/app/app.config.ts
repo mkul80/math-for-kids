@@ -8,7 +8,7 @@ import { ExerciseExecutionStore } from './store/exercise/exercise-execution.stor
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 function initializeStores() {
   return () => {

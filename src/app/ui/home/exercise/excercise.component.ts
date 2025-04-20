@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, HostBinding } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -20,7 +20,6 @@ import { BehaviorSubject } from 'rxjs';
     ReactiveFormsModule,
     MatProgressBarModule,
     MatButtonModule,
-    RouterLink,
     ExceriseStatusComponent,
     ExercisesSummaryComponent,
     AnswerSelectorComponent,

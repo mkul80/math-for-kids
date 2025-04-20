@@ -1,72 +1,53 @@
 @if(!excerciseStore.isFinished()) {
-<mat-progress-bar
-  class="progress-bar"
-  mode="determinate"
-  [value]="excerciseStore.exerciseProgress()"
-></mat-progress-bar
->} @if(!excerciseStore.isFinished()){ @if(excerciseStore.isBinary()){
-<div class="math-problem paragraph-1 d-flex align-center justify-between">
-  <span class="number">{{ excerciseStore.currentValues()[0] }}</span>
-  <span class="operator">{{ excerciseStore.currentOperationSymbol() }}</span>
-  <span class="number">{{ excerciseStore.currentValues()[1] }}</span>
-  <span class="equals">=</span>
-  <input
-    #inputRef
-    type="number"
-    class="result-input"
-    [class.correct]="excerciseStore.currentExerciseResultCorrect()"
-    [class.incorrect]="excerciseStore.currentExerciseResultIncorrect()"
-    [formControl]="formControl"
-    (keyup.enter)="inputRef.blur(); checkAnswer()"
-  />
+<div class="progress-container w-100">
+  <span class="progress-emoji">🚀</span>
+  <mat-progress-bar
+    class="progress-bar"
+    mode="determinate"
+    [value]="excerciseStore.exerciseProgress()"
+  ></mat-progress-bar>
+  <span class="progress-emoji">🎯</span>
 </div>
-} @else {
-<div class="math-problem paragraph-1 d-flex flex-column align-center">
-  @if (!excerciseStore.isCurrentAnswered()){
+} @if(!excerciseStore.isFinished()){
+<div
+  class="math-problem header-1 d-flex flex-column align-center justify-between"
+>
+  @if(!excerciseStore.isCurrentAnswered()){ @if(excerciseStore.isBinary()){
+  <div class="select-answer-label header-2">
+    {{ "select_answer" | translate }}
+  </div>
+  } @else {
   <img
     class="image"
     src="assets/images/a-little-girl-solves-math-task.jpg"
     alt="Word task image"
   />
-  }
+  } }
   <div>{{ excerciseStore.stringifyCurrentExercise() }}</div>
-  <app-answer-selector
-    [correctAnswer]="excerciseStore.currentExerciseResult()"
-    [disabled]="excerciseStore.isCurrentAnswered()"
-    (selectedAnswer)="excerciseStore.setAnswer($event)"
-  ></app-answer-selector>
 </div>
-}} @if(excerciseStore.isFinished()){
-<app-exercises-summary
-  [errorCount]="excerciseStore.errorCount()"
-  [correctCount]="excerciseStore.correctCount()"
-  [score]="excerciseStore.score()"
-></app-exercises-summary>
-} @if (!excerciseStore.isCurrentAnswered() && !excerciseStore.isFinished() &&
-excerciseStore.isBinary()) {
-<button
-  mat-flat-button
-  class="check-button"
-  [class.correct]="excerciseStatus === excerciseStatuses.Correct"
-  [class.incorrect]="excerciseStatus === excerciseStatuses.Incorrect"
-  [disabled]="formControl.pristine"
-  (click)="checkAnswer()"
->
-  {{ "check_answer" | translate }}
-</button>
+<app-answer-selector
+  [correctAnswer]="excerciseStore.currentExerciseResult()"
+  [disabled]="excerciseStore.isCurrentAnswered()"
+  (selectedAnswer)="excerciseStore.setAnswer($event)"
+></app-answer-selector>
 } @if(excerciseStore.isCurrentAnswered()) {
 <app-excerise-status
   [excercise]="excerciseStore.currentExercise()"
   [userResult]="excerciseStore.currentExerciseUserResult()!"
   [correctAnswer]="excerciseStore.correctResult()"
-></app-excerise-status
->} @if(excerciseStore.isCurrentAnswered() ) {
+></app-excerise-status>
 <button
   mat-flat-button
   color="tertiary"
-  class="continue-button"
+  class="continue-button w-100"
   (click)="nextExercise()"
 >
   {{ "continue" | translate }}
 </button>
+} @if(excerciseStore.isFinished()){
+<app-exercises-summary
+  [errorCount]="excerciseStore.errorCount()"
+  [correctCount]="excerciseStore.correctCount()"
+  [score]="excerciseStore.score()"
+></app-exercises-summary>
 }

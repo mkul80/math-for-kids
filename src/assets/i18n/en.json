@@ -24,5 +24,6 @@
     "continue":"Continue",
     "start_over":"Start over",
     "check_answer":"Check answer",
-    "points":"points"
+    "points":"points",
+    "select_answer":"Please select an answer"
 }

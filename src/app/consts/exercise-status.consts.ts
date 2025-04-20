@@ -4,34 +4,46 @@ import { TranslateService } from '@ngx-translate/core';
 const SUCCESS_MESSAGES = {
   pl: [
     {
-      title: 'Brawo! Świetna robota! 🎉',
-      message: 'Twoja odpowiedź jest poprawna!',
+      title: 'Brawo! 🎉',
+      message: 'To poprawna odpowiedź, tak trzymaj!',
     },
     {
-      title: 'Dobra robota! Tak trzymaj! 🌟',
-      message: 'Świetnie sobie poradziłeś!',
+      title: 'Świetnie! 🌟',
+      message: 'Dobra robota, wszystko się zgadza.',
     },
-    { title: 'Super! Jesteś mistrzem! 🏆', message: 'Kontynuuj w tym tempie!' },
-    { title: 'Fantastycznie! 🎊', message: 'Twoja odpowiedź była idealna!' },
     {
-      title: 'Wow! Jesteś niesamowity! 🚀',
-      message: 'Gratulacje, to była świetna odpowiedź!',
+      title: 'Super! 👏',
+      message: 'Znakomicie rozwiązane!',
+    },
+    {
+      title: 'Fantastycznie! 🎊',
+      message: 'Twoja odpowiedź była bardzo dobra.',
+    },
+    {
+      title: 'Udało się! ✅',
+      message: 'Zadanie wykonane poprawnie!',
     },
   ],
   en: [
     {
-      title: 'Great job! Well done! 🎉',
-      message: 'Your answer is correct!',
+      title: 'Well done! 🎉',
+      message: 'That’s the correct answer — great job!',
     },
     {
-      title: 'Good job! Keep it up! 🌟',
-      message: 'You did great!',
+      title: 'Nice work! 🌟',
+      message: 'You got it right, keep going!',
     },
-    { title: "Amazing! You're a master! 🏆", message: 'Keep up this pace!' },
-    { title: 'Fantastic! 🎊', message: 'Your answer was perfect!' },
     {
-      title: "Wow! You're incredible! 🚀",
-      message: 'Congratulations, that was an excellent answer!',
+      title: 'Great! 👏',
+      message: 'That was spot on!',
+    },
+    {
+      title: 'Fantastic! 🎊',
+      message: 'Excellent answer!',
+    },
+    {
+      title: 'You did it! ✅',
+      message: 'Correct answer — keep it up!',
     },
   ],
 };
@@ -47,46 +59,46 @@ export const getRandomSuccessMessage = () => {
 const FAILURE_MESSAGES = {
   pl: [
     {
-      title: 'Ups! Spróbuj jeszcze raz! 🤔',
-      message: 'Nie martw się, każdy się uczy na błędach!',
+      title: 'Spróbuj jeszcze raz 🤔',
+      message: 'Tym razem się nie udało, ale dasz radę!',
     },
     {
-      title: 'Nie poddawaj się! Dasz radę! 💪',
-      message: 'Spróbuj ponownie, na pewno się uda!',
+      title: 'Prawie dobrze! 🔄',
+      message: 'Jeszcze jedno podejście i się uda!',
     },
     {
-      title: 'Błąd to krok do sukcesu! 🌱',
-      message: 'Zastanów się jeszcze raz i spróbuj ponownie!',
+      title: 'Nie szkodzi 🙂',
+      message: 'Każdy czasem się myli. Spróbuj ponownie.',
     },
     {
-      title: 'Nie przejmuj się! 🌈',
-      message: 'Każdy popełnia błędy, spróbuj jeszcze raz!',
+      title: 'Jeszcze chwilka! ⏳',
+      message: 'Zastanów się jeszcze raz i spróbuj.',
     },
     {
-      title: 'Prawie się udało! 🌟',
-      message: 'Jeszcze chwila i będzie dobrze, próbuj dalej!',
+      title: 'To nie to 🙈',
+      message: 'Ale jesteś blisko — próbuj dalej!',
     },
   ],
   en: [
     {
-      title: 'Oops! Try again! 🤔',
-      message: "Don't worry, everyone learns from mistakes!",
+      title: 'Try again 🤔',
+      message: "That wasn't it, but you’ve got this!",
     },
     {
-      title: "Don't give up! You can do it! 💪",
-      message: "Try again, you'll succeed!",
+      title: 'Almost right! 🔄',
+      message: 'Give it one more go!',
     },
     {
-      title: 'Mistakes lead to success! 🌱',
-      message: 'Think it through and try once more!',
+      title: 'No worries 🙂',
+      message: 'Everyone makes mistakes. Try once more.',
     },
     {
-      title: "Don't worry! 🌈",
-      message: 'Everyone makes mistakes, try again!',
+      title: 'Getting close! ⏳',
+      message: 'Think again and have another try.',
     },
     {
-      title: 'Almost there! 🌟',
-      message: "Just a bit more and you'll get it, keep trying!",
+      title: 'Not quite 🙈',
+      message: "But you're close — keep going!",
     },
   ],
 };

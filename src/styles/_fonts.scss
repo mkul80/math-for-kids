@@ -27,6 +27,30 @@
   line-height: 1.6;
 }
 
+.label-1 {
+  font-family: "Comic Neue", sans-serif;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.label-2 {
+  font-family: "Comic Neue", sans-serif;
+  font-size: clamp(14px, 2.5vw, 18px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.label-3 {
+  font-family: "Comic Neue", sans-serif;
+  font-size: clamp(12px, 2vw, 16px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.label-bold-1 {
+  font-family: "Comic Neue", sans-serif;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: 700;
+  line-height: 1.5;
+}
 // Headers
 .header-1 {
   font-family: "Comic Neue", sans-serif;

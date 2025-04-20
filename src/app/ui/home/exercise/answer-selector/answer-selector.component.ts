@@ -28,13 +28,14 @@ export class AnswerSelectorComponent implements OnChanges {
   ngOnChanges({ correctAnswer }: SimpleChanges): void {
     if (correctAnswer) {
       this.#generateAnswers();
+      this.selectedAnswerValue = null;
     }
   }
 
   #generateAnswers(): void {
     this.selectedAnswerValue = null;
-    this.wrongAnswer1 = this.#generateRandomNumber();
-    this.wrongAnswer2 = this.#generateRandomNumber();
+    this.wrongAnswer1 = this.#generateRandomNumber(this.correctAnswer);
+    this.wrongAnswer2 = this.#generateRandomNumber(this.correctAnswer);
     this.answers = this.#shuffleAnswers([
       this.correctAnswer,
       this.wrongAnswer1,
@@ -47,14 +48,17 @@ export class AnswerSelectorComponent implements OnChanges {
     this.selectedAnswer.emit(answer);
   }
 
-  #generateRandomNumber(): number {
+  #generateRandomNumber(correctAnswer: number): number {
     let randomNumber;
+    const range = 3; // Maximum difference from correct answer
     do {
-      randomNumber = Math.floor(Math.random() * 20); // Hardcoded maxValue
+      const offset = Math.floor(Math.random() * (range * 2 + 1)) - range;
+      randomNumber = correctAnswer + offset;
     } while (
       randomNumber === this.correctAnswer ||
       randomNumber === this.wrongAnswer1 ||
-      randomNumber === this.wrongAnswer2
+      randomNumber === this.wrongAnswer2 ||
+      randomNumber < 0
     );
     return randomNumber;
   }
