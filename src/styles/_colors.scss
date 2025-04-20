@@ -1,0 +1,24 @@
+:root {
+  --app-green: #28a745;
+  --app-red: #f44336;
+  --app-blue: #3f51b5;
+}
+
+.green-bkg {
+  background-color: var(--app-green);
+}
+.red-bkg {
+  background-color: var(--app-red);
+}
+.blue-bkg {
+  background-color: var(--app-blue);
+}
+.green-text {
+  color: var(--app-green);
+}
+.red-text {
+  color: var(--app-red);
+}
+.blue-text {
+  color: var(--app-blue);
+}

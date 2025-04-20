@@ -19,7 +19,10 @@
     "errors_count":"Errors count",
     "exercises_count":"Exercises count",
     "you_get":"You get",
-    "exercises_summary_title":"Bravo! Let's check how you did!",
+    "exercises_summary_title":"Summary!",
     "app_footer_text":"",
-    "continue":"Continue"
+    "continue":"Continue",
+    "start_over":"Start over",
+    "check_answer":"Check answer",
+    "points":"points"
 }

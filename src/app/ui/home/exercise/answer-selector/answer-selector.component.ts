@@ -3,7 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
@@ -18,17 +17,22 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AnswerSelectorComponent implements OnChanges {
   @Input({ required: true }) correctAnswer!: number;
-  @Input({ required: true }) maxValue = 20;
-  @Input() userAnswered: boolean = false;
+  @Input() disabled: boolean = false;
   @Output() selectedAnswer = new EventEmitter<number>();
 
   wrongAnswer1!: number;
   wrongAnswer2!: number;
-
   answers: number[] = [];
   selectedAnswerValue: number | null = null;
 
-  ngOnChanges(): void {
+  ngOnChanges({ correctAnswer }: SimpleChanges): void {
+    if (correctAnswer) {
+      this.#generateAnswers();
+    }
+  }
+
+  #generateAnswers(): void {
+    this.selectedAnswerValue = null;
     this.wrongAnswer1 = this.#generateRandomNumber();
     this.wrongAnswer2 = this.#generateRandomNumber();
     this.answers = this.#shuffleAnswers([
@@ -46,7 +50,7 @@ export class AnswerSelectorComponent implements OnChanges {
   #generateRandomNumber(): number {
     let randomNumber;
     do {
-      randomNumber = Math.floor(Math.random() * this.maxValue);
+      randomNumber = Math.floor(Math.random() * 20); // Hardcoded maxValue
     } while (
       randomNumber === this.correctAnswer ||
       randomNumber === this.wrongAnswer1 ||

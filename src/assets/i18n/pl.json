@@ -19,7 +19,10 @@
     "errors_count":"Do poprawy",
     "exercises_count":"Liczba zadań",
     "you_get":"Otrzymujesz",
-    "exercises_summary_title":"Brawo! Sprawdźmy jak Ci poszło!",
+    "exercises_summary_title":"Podsumowanie!",
     "app_footer_text":"",
-    "continue":"Kontynuuj"
+    "continue":"Kontynuuj",
+    "start_over":"Zacznij od nowa",
+    "check_answer":"Sprawdź odpowiedź",
+    "points":"punktów"
 }

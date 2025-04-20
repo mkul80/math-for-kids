@@ -1,11 +1,10 @@
+@if(!excerciseStore.isFinished()) {
 <mat-progress-bar
   class="progress-bar"
   mode="determinate"
   [value]="excerciseStore.exerciseProgress()"
-></mat-progress-bar>
-
-@if(!excerciseStore.isFinished()){
-@if(excerciseStore.currentValues().length===2){
+></mat-progress-bar
+>} @if(!excerciseStore.isFinished()){ @if(excerciseStore.isBinary()){
 <div class="math-problem paragraph-1 d-flex align-center justify-between">
   <span class="number">{{ excerciseStore.currentValues()[0] }}</span>
   <span class="operator">{{ excerciseStore.currentOperationSymbol() }}</span>
@@ -33,8 +32,7 @@
   <div>{{ excerciseStore.stringifyCurrentExercise() }}</div>
   <app-answer-selector
     [correctAnswer]="excerciseStore.currentExerciseResult()"
-    [maxValue]="20"
-    [userAnswered]="excerciseStore.isCurrentAnswered()"
+    [disabled]="excerciseStore.isCurrentAnswered()"
     (selectedAnswer)="excerciseStore.setAnswer($event)"
   ></app-answer-selector>
 </div>
@@ -44,15 +42,8 @@
   [correctCount]="excerciseStore.correctCount()"
   [score]="excerciseStore.score()"
 ></app-exercises-summary>
-<button
-  mat-flat-button
-  color="tertiary"
-  class="continue-button"
-  [routerLink]="['/']"
->
-  Zacznij od nowa
-</button>
-} @if (!excerciseStore.isCurrentAnswered() && !excerciseStore.isFinished()) {
+} @if (!excerciseStore.isCurrentAnswered() && !excerciseStore.isFinished() &&
+excerciseStore.isBinary()) {
 <button
   mat-flat-button
   class="check-button"
@@ -61,7 +52,7 @@
   [disabled]="formControl.pristine"
   (click)="checkAnswer()"
 >
-  Sprawdź wynik
+  {{ "check_answer" | translate }}
 </button>
 } @if(excerciseStore.isCurrentAnswered()) {
 <app-excerise-status

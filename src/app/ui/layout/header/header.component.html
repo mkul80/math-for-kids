@@ -23,7 +23,15 @@
 
   <span class="expander"></span>
 
-  <button mat-icon-button style="color: #fff">
-    <mat-icon>face</mat-icon>
+  <button mat-button class="language-button" [matMenuTriggerFor]="langMenu">
+    {{ selectedLang === "pl" ? "🇵🇱" : "🇬🇧" }}
   </button>
+  <mat-menu #langMenu="matMenu">
+    <button class="language-button" mat-menu-item (click)="onLangChange('pl')">
+      <span class="language-item">🇵🇱 {{ "language_polish" | translate }}</span>
+    </button>
+    <button class="language-button" mat-menu-item (click)="onLangChange('en')">
+      <span class="language-item">🇬🇧 {{ "language_english" | translate }}</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

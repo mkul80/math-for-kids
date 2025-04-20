@@ -107,6 +107,20 @@ export const ExerciseExecutionStore = signalStore(
         const answeredExcercises = currentIndex();
         return (answeredExcercises / totalExcercises) * 100;
       }),
+      isTernary: computed(() => {
+        const excercise = excerciseSet()[currentIndex()];
+
+        return (
+          excercise &&
+          excercise.values.length === 3 &&
+          excercise.operation !== Operation.Addition
+        );
+      }),
+      isBinary: computed(() => {
+        const excercise = excerciseSet()[currentIndex()];
+
+        return excercise && excercise.values.length === 2;
+      }),
     })
   ),
   withMethods(

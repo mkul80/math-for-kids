@@ -78,3 +78,20 @@
 .expander {
   flex: 1;
 }
+
+.hide-on-mobile {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.flex-column-on-mobile {
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+.flex-row-on-mobile {
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
+}

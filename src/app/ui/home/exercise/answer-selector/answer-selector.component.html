@@ -1,7 +1,7 @@
 <div class="answer-selector">
   @for (answer of answers; track answer) {
   <button
-    [disabled]="userAnswered"
+    [disabled]="disabled"
     mat-flat-button
     class="answer-button"
     [class.selected]="selectedAnswerValue === answer"

@@ -10,15 +10,4 @@
     >© {{ currentYear }} {{ "app_footer_text" | translate }}</span
   >
   <span class="expander"></span>
-  <button mat-button class="language-button" [matMenuTriggerFor]="langMenu">
-    {{ selectedLang === "pl" ? "🇵🇱" : "🇬🇧" }}
-  </button>
-  <mat-menu #langMenu="matMenu">
-    <button class="language-button" mat-menu-item (click)="langChange('pl')">
-      <span class="language-item">🇵🇱 {{ "language_polish" | translate }}</span>
-    </button>
-    <button class="language-button" mat-menu-item (click)="langChange('en')">
-      <span class="language-item">🇬🇧 {{ "language_english" | translate }}</span>
-    </button>
-  </mat-menu>
 </mat-toolbar>

@@ -9,6 +9,7 @@ import { ExercisesSummaryComponent } from './exercises-summary/exercises-summary
 import { AnswerSelectorComponent } from './answer-selector/answer-selector.component';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
 import { TranslatePipe } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-excercise',
@@ -30,7 +31,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ExcerciseComponent implements OnInit {
   @HostBinding('class') class = 'h-100 d-flex flex-column justify-beetwen';
-
+  nextExercise$ = new BehaviorSubject<boolean>(false);
   formControl: FormControl = new FormControl<number | null>(null);
   excerciseStatus = ExcerciseStatus.NotAnswered;
 

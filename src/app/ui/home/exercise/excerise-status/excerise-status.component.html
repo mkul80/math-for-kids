@@ -1,19 +1,39 @@
-<div class="status-container d-flex flex-column align-center justify-center">
+<div
+  class="status-container d-flex flex-column align-center justify-center gap-1"
+>
   @if(isCorrect) {
-  <div class="correct d-flex flex-column align-center">
-    <img [src]="successImage" alt="Happy dog" class="result-image" />
-    <i class="fas fa-check-circle"></i>
-    <p class="paragraph-bold-1">{{ successMessage.title }}</p>
-    <div class="paragraph-bold-1">{{ successMessage.message }}</div>
+  <div class="correct d-flex align-center">
+    <img
+      src="assets/images/happy-puppy.png"
+      alt="Happy puppy image"
+      class="result-image"
+    />
+    <!-- <img [src]="successImage" alt="Happy dog" class="result-image" /> -->
+    <div class="d-flex flex-column align-center justify-between">
+      <p class="paragraph-bold-1">{{ successMessage.title }}</p>
+      <!-- <div class="paragraph-bold-1">{{ successMessage.message }}</div> -->
+    </div>
   </div>
   } @else {
-  <div class="incorrect d-flex flex-column align-center">
-    <img [src]="failureImage" alt="Sad cat" class="result-image" />
-    <i class="fas fa-times-circle"></i>
+  <div class="incorrect d-flex align-center justify-between">
+    <img
+      src="assets/images/sad-kitten.png"
+      alt="Happy puppy image"
+      class="result-image"
+    />
+    <!-- <img [src]="failureImage" alt="Sad cat" class="result-image" /> -->
     <!-- <h2 class="text-center">{{ failureMessage.title }}</h2> -->
-    <div class="paragraph-bold-1">{{ "correct_answer_is" | translate }}:</div>
-    <h2 class="header-2">{{ correctAnswer }}</h2>
-    <!-- <div class="paragraph-bold-1 text-center">{{ failureMessage.message }}</div>ś -->
+    <div class="d-flex flex-column align-center justify-between">
+      <div class="paragraph-bold-1 text-center">
+        {{ "correct_answer_is" | translate }}:
+      </div>
+      <div class="correct-answer paragraph-bold-1">
+        {{ correctAnswer }}
+      </div>
+      <!-- <div class="paragraph-bold-1 text-center">
+        {{ failureMessage.message }}
+      </div> -->
+    </div>
   </div>
   }
 </div>

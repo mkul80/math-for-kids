@@ -7,9 +7,10 @@ import { additionTasks, subtractionTasks } from '../consts/math-tasks.consts';
   providedIn: 'root',
 })
 export class MathTasksProviderService {
+  #translateService = inject(TranslateService);
+
   getByOperation(operation: Operation) {
-    const translateService = inject(TranslateService);
-    const currentLang = translateService.currentLang;
+    const currentLang = this.#translateService.currentLang;
     if (operation === Operation.Addition) {
       return additionTasks;
     } else if (operation === Operation.Subtraction) {

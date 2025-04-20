@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
@@ -19,15 +19,5 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-  #translateService = inject(TranslateService);
-
-  get selectedLang() {
-    return this.#translateService.currentLang;
-  }
-
-  langChange(lang: string) {
-    this.#translateService.use(lang);
-  }
-
   currentYear = new Date().getFullYear();
 }

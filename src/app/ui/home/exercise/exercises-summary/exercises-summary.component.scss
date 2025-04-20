@@ -1,13 +1,28 @@
 :host {
   display: block;
-  margin: 16px;
 }
 
 .stat-row {
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 mat-card {
+  display: flex;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    gap: 20px;
+  }
+  justify-content: center;
+  margin: 16px;
+  .image {
+    max-width: 100%;
+    height: auto;
+    max-height: 40vh;
+    object-fit: contain;
+    @media screen and (orientation: portrait) and (max-width: 768px) {
+      max-width: 60vw;
+    }
+  }
   background-color: #f9fbe7;
   border-radius: 12px;
   padding: 16px;
@@ -16,13 +31,18 @@ mat-card {
 }
 
 mat-icon {
-  color: #4caf50;
+  color: var(--app-green);
 }
 
 .success-rate {
-  color: #4caf50;
+  color: var(--app-green);
 }
 
 .error-count {
-  color: #f44336;
+  color: --var(--app-red);
+}
+
+.continue-button {
+  height: 46px;
+  margin-top: 20px;
 }

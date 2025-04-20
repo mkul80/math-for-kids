@@ -32,6 +32,10 @@ export class HeaderComponent {
     return this.#translateService.currentLang;
   }
 
+  onLangChange(lang: string) {
+    this.#translateService.use(lang);
+  }
+
   goHome() {
     const dialogRef = this.#dialogService.open(OkCancelDialogComponent, {
       data: {
@@ -49,9 +53,6 @@ export class HeaderComponent {
           this.#router.navigate(['/']);
         }
       });
-  }
-  onLangChange(lang: string) {
-    this.#translateService.use(lang);
   }
 
   openCalculator() {
