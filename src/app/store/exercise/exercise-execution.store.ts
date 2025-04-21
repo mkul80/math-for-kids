@@ -18,14 +18,14 @@ import { LocalStorageService } from './local-storage-service';
 
 type ExerciseExecutionState = {
   exerciseSet: UserExercise[];
-  score: number;
+  score: UserScore;
   currentIndex: number;
 };
 
 const initialState: ExerciseExecutionState = {
   exerciseSet: [],
   currentIndex: 0,
-  score: LocalStorageService.getUserScore() ?? 0,
+  score: LocalStorageService.getUserScore() ?? [0, 0, 0],
 };
 
 export const ExerciseExecutionStore = signalStore(

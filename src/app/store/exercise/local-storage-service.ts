@@ -21,19 +21,14 @@ export class LocalStorageService {
     return null;
   }
 
-  static saveUserScore(score: number): void {
-    const existingScore = this.getUserScore() || 0;
-    const totalScore = existingScore + score;
-    localStorage.setItem(
-      localStorageKeys.userScore,
-      JSON.stringify(totalScore)
-    );
+  static saveUserScore(score: UserScore): void {
+    localStorage.setItem(localStorageKeys.userScore, JSON.stringify(score));
   }
 
-  static getUserScore(): number | null {
+  static getUserScore(): UserScore | null {
     const userScore = localStorage.getItem(localStorageKeys.userScore);
     if (userScore) {
-      return JSON.parse(userScore) as number;
+      return JSON.parse(userScore) as UserScore;
     }
     return null;
   }

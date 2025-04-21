@@ -23,7 +23,7 @@ import { RouterLink } from '@angular/router';
 export class ExercisesSummaryComponent {
   @Input({ required: true }) errorCount!: number;
   @Input({ required: true }) correctCount!: number;
-  @Input({ required: true }) score!: number;
+  @Input({ required: true }) score!: UserScore;
 
   get totalCount(): number {
     return this.errorCount + this.correctCount;
