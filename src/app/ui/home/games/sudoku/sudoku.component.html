@@ -1,0 +1,48 @@
+<div class="sudoku-container">
+  <div class="timer">
+    {{ timer.minutes | number : "2.0" }}:{{ timer.seconds | number : "2.0" }}
+  </div>
+  <div
+    class="sudoku-board"
+    [style.gridTemplateColumns]="'repeat(' + boardSize + ', 1fr)'"
+    [style.gridTemplateRows]="'repeat(' + boardSize + ', 1fr)'"
+  >
+    @for (row of board.fields; let rowIndex = $index; track row) {
+    <div class="sudoku-board-row">
+      @for (cell of row; let colIndex = $index; track cell) {
+      <div
+        class="sudoku-board-cell"
+        [class.readonly]="cell.isReadonly"
+        [class.discovered]="cell.isDiscovered"
+        (click)="onCellClick(cell)"
+      >
+        {{ cell.isDiscovered ? cell.symbol : "❓" }}
+      </div>
+      }
+    </div>
+    }
+  </div>
+  @if (isGameFinished ) {
+  <div class="overlay">
+    <div class="message">
+      {{ "sudoku.congratulations" | translate }}
+    </div>
+  </div>
+  } @if (userGivenUp ) {
+  <div class="overlay overlay--mild"></div>
+  }
+</div>
+<br />
+<div class="actions d-flex justify-center"></div>
+
+<div class="actions d-flex justify-center flex-wrap gap-1">
+  <button mat-flat-button (click)="onRestart()">
+    {{ "sudoku.restart" | translate }}
+  </button>
+  <button mat-flat-button (click)="onGiveUp()">
+    {{ "sudoku.give_up" | translate }}
+  </button>
+  <button mat-flat-button [routerLink]="['/home/sudoku']">
+    {{ "sudoku.new_game" | translate }}
+  </button>
+</div>
