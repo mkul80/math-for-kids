@@ -1,7 +1,14 @@
 import { localStorageKeys } from '../../consts/user-preferences';
 import { Exercise } from '../../models/exercise';
+import { UserScore } from '../../models/user-score';
 
 export class LocalStorageService {
+  static getLanguage(): string | null {
+    return localStorage.getItem(localStorageKeys.language);
+  }
+  static setLanguage(language: string): void {
+    localStorage.setItem(localStorageKeys.language, language);
+  }
   static saveFailedExercises(failedExercises: Exercise[]): void {
     const existingExercises = this.loadFailedExercises() || [];
     const combinedExercises = [...existingExercises, ...failedExercises];

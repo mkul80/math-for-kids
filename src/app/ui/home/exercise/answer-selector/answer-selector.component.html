@@ -1,5 +1,5 @@
 <div class="answer-selector">
-  @for (answer of answers; track answer) {
+  @for (answer of answers; track $index) {
   <button
     [disabled]="disabled"
     mat-flat-button

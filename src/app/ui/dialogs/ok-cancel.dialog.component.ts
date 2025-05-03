@@ -3,7 +3,6 @@ import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogContent,
-  MatDialogTitle,
   MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
@@ -17,9 +16,11 @@ export interface OkCancelDialogData {
 @Component({
   selector: 'app-ok-cancel-dialog',
   template: `
-    <h2 mat-dialog-title>{{ data.header || 'Potwierdzenie' }}</h2>
+    <h2 class="header-1 text-center">{{ data.header || 'Potwierdzenie' }}</h2>
     <mat-dialog-content>
-      <p>{{ data.content || 'Czy na pewno chcesz wykonać tę operację?' }}</p>
+      <p class="paragraph-1">
+        {{ data.content || 'Czy na pewno chcesz wykonać tę operację?' }}
+      </p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]="false">Anuluj</button>
@@ -40,7 +41,6 @@ export interface OkCancelDialogData {
   ],
   standalone: true,
   imports: [
-    MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,

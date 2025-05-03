@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { UserScore } from '../../../../models/user-score';
 
 @Component({
   selector: 'app-exercises-summary',
@@ -23,7 +24,9 @@ import { RouterLink } from '@angular/router';
 export class ExercisesSummaryComponent {
   @Input({ required: true }) errorCount!: number;
   @Input({ required: true }) correctCount!: number;
-  @Input({ required: true }) score!: UserScore;
+  @Input({ required: true }) currentScore!: number;
+
+  // @Input({ required: true }) score!: UserScore;
 
   get totalCount(): number {
     return this.errorCount + this.correctCount;

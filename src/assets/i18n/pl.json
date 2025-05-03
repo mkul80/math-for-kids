@@ -1,30 +1,228 @@
 {
-    "select_operation":"Wybierz działanie",
-    "addition":"➕ Dodawanie",
-    "subtraction":"➖ Odejmowanie",
-    "multiplication":"Mnożenie",
-    "division":"Dzielenie",
-    "language_polish":"Polski",
-    "language_english":"Angielski",
-    "select_difficulty_level":"Wybierz poziom trudności",
-    "difficulty_level_easy":"Łatwy",
-    "difficulty_level_medium":"Średni",
-    "difficulty_level_hard":"Trudny",
-    "select_exercise_type":"Wybierz typ ćwiczenia",
-    "exercise_type_simple":"Proste ćwiczenia",
-    "exercise_type_word":"Zadanie z treścią",
-    "header_title":"Matma dla dzieci",
-    "correct_answer_is":"Poprawna odpowiedź to",
-    "correct_count":"Dobre odpowiedzi",
-    "errors_count":"Do poprawy",
-    "exercises_count":"Liczba zadań",
-    "you_get":"Otrzymujesz",
-    "exercises_summary_title":"Podsumowanie!",
-    "app_footer_text":"",
-    "continue":"Kontynuuj",
-    "start_over":"Zacznij od nowa",
-    "check_answer":"Sprawdź odpowiedź",
-    "points":"punktów",
-    "select_answer":"Proszę wybierz odpowiedź"
-
+  "select_operation": "Wybierz działanie",
+  "operation_addition": "➕ Dodawanie",
+  "operation_subtraction": "➖ Odejmowanie",
+  "operation_any": "➕ lub ➖",
+  "multiplication": "Mnożenie",
+  "division": "Dzielenie",
+  "language_polish": "Polski",
+  "language_english": "Angielski",
+  "select_difficulty_level": "Wybierz poziom trudności",
+  "difficulty_level_easy": "Łatwy",
+  "difficulty_level_medium": "Średni",
+  "difficulty_level_hard": "Trudny",
+  "select_exercise_type": "Wybierz typ ćwiczenia",
+  "exercise_type_simple": "Szybkie zadania",
+  "exercise_type_word": "Zadania z treścią",
+  "header_title": "{userName} liczy",
+  "correct_answer_is": "Poprawna odpowiedź to",
+  "correct_count": "Dobre odpowiedzi",
+  "errors_count": "Do poprawy",
+  "exercises_count": "Liczba zadań",
+  "you_get": "Otrzymujesz",
+  "exercises_summary_title": "Podsumowanie!",
+  "app_footer_text": "",
+  "continue": "Kontynuuj",
+  "start_over": "Od nowa",
+  "check_answer": "Sprawdź odpowiedź",
+  "points": "punktów",
+  "select_answer": "Proszę wybierz odpowiedź",
+  "explanation_first_step": "Pierwszy krok",
+  "explanation_next_step": "Następny krok",
+  "task": {
+    "money": {
+      "start": "Marta miała {value} zł 💰",
+      "add": [
+        "dostała {value} zł od babci",
+        "znalazła {value} zł w skarbonce",
+        "wygrała {value} zł w konkursie",
+        "pożyczyła {value} zł od koleżanki",
+        "zarobiła {value} zł sprzedając rysunki"
+      ],
+      "sub": [
+        "wydała {value} zł na lody 🍦",
+        "zgubiła {value} zł na wycieczce",
+        "spędziła {value} zł na zakupach",
+        "wydała {value} zł na książki",
+        "pożyczyła {value} zł koleżance"
+      ],
+      "question": "Ile ma teraz pieniędzy?"
+    },
+    "fruit": {
+      "start": "Marta miała {value} {value, plural, one {jabłko} few {jabłka} other {jabłek}} 🍎",
+      "add": [
+        "dostała {value} więcej od mamy",
+        "znalazła {value} w ogrodzie",
+        "wygrała {value} w konkursie",
+        "pożyczyła {value} od koleżanki",
+        "odkupiła {value} od sąsiada"
+      ],
+      "sub": [
+        "zjadła {value}",
+        "podarowała {value} koleżance",
+        "zgubiła {value} w parku",
+        "wydała {value} na rynku",
+        "sprzedała {value} w sklepie"
+      ],
+      "question": "Ile jabłek ma teraz Marta?"
+    },
+    "stuffed_animal": {
+      "start": "Marta miała {value} {value, plural, one {pluszkowe zwierzątko} few {pluszowe zwierzątka} other {pluszowych zwierzątek}} 🧸",
+      "add": [
+        "dostała {value} od cioci",
+        "wygrała {value} w konkursie",
+        "znalazła {value} na strychu",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} jako prezent urodzinowy"
+      ],
+      "sub": [
+        "podarowała {value} koleżankom",
+        "zgubiła {value}",
+        "zostawiła {value} w domu dziadków",
+        "wymieniła {value} na inne zabawki",
+        "sprzedała {value} w sklepie z zabawkami"
+      ],
+      "question": "Ile pluszowych zwierzątek ma teraz Marta?"
+    },
+    "cake": {
+      "start": "Marta miała {value} {value, plural, one {ciasto} few {ciasta} other {ciast}} 🍰",
+      "add": [
+        "dostała {value} więcej od babci",
+        "upiekła {value} {value, plural, one {ciasto} few {ciasta} other {ciast}}",
+        "wygrała {value} {value, plural, one {ciasto} few {ciasta} other {ciast}} w konkursie kulinarnym",
+        "pożyczyła {value} {value, plural, one {ciasto} few {ciasta} other {ciast}} od koleżanki",
+        "otrzymała {value} jako prezent"
+      ],
+      "sub": [
+        "zjadła {value} {value, plural, one {ciasto} few {ciasta} other {ciast}}",
+        "podarowała {value} {value, plural, one {ciasto} few {ciasta} other {ciast}} koleżankom",
+        "wymieniła {value} {value, plural, one {ciasto} few {ciasta} other {ciast}} na pluszaki",
+        "zgubiła {value} {value, plural, one {ciasto} few {ciasta} other {ciast}}",
+        "sprzedała {value} {value, plural, one {ciasto} few {ciasta} other {ciast}}"
+      ],
+      "question": "Ile ciast ma teraz Marta?"
+    },
+    "toy": {
+      "start": "Marta miała {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} 🧸",
+      "add": [
+        "dostała {value} od wujka",
+        "wygrała {value} w konkursie",
+        "znalazła {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} w ogrodzie",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} na urodziny"
+      ],
+      "sub": [
+        "podarowała {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} koleżankom",
+        "zgubiła {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}}",
+        "wymieniła {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} na cukierki",
+        "sprzedała {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} na wyprzedaży",
+        "oddała {value} {value, plural, one {zabawkę} few {zabawki} other {zabawek}} córce sąsiadki"
+      ],
+      "question": "Ile zabawek ma teraz Marta?"
+    },
+    "hamster": {
+      "start": "Marta miała {value} {value, plural, one {chomika} few {chomiki} other {chomików}} 🐹",
+      "add": [
+        "dostała {value} od kuzyna",
+        "wygrała {value} w konkursie",
+        "znalazła w ogrodzie {value} {value, plural, one {chomika} few {chomiki} other {chomików}} w ogrodzie",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {chomika} few {chomiki} other {chomików}} na urodziny"
+      ],
+      "sub": [
+        "podarowała {value} {value, plural, one {chomika} few {chomiki} other {chomików}} koleżankom",
+        "zgubiła {value} {value, plural, one {chomika} few {chomiki} other {chomików}}",
+        "wymieniła {value} {value, plural, one {chomika} few {chomiki} other {chomików}} na inne zwierzątka",
+        "sprzedała {value} {value, plural, one {chomika} few {chomiki} other {chomików}} w sklepie",
+        "oddała {value} {value, plural, one {chomika} few {chomiki} other {chomików}} przyjaciółce"
+      ],
+      "question": "Ile chomików ma teraz Marta?"
+    },
+    "notebook": {
+      "start": "Marta miała {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} 📒",
+      "add": [
+        "dostała {value} więcej od cioci",
+        "wygrała {value} w konkursie",
+        "znalazła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} w szkole",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} na rozpoczęcie roku"
+      ],
+      "sub": [
+        "podarowała {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} koleżankom",
+        "zgubiła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}",
+        "wymieniła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} na cukierki",
+        "zniszczyła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}",
+        "spaliła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}"
+      ],
+      "question": "Ile zeszytów ma teraz Marta?"
+    },
+    "pencil": {
+      "start": "Marta miała {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} ✏️",
+      "add": [
+        "dostała {value} więcej od cioci",
+        "wygrała {value} w konkursie",
+        "znalazła {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} w szkole",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} na rozpoczęcie roku"
+      ],
+      "sub": [
+        "podarowała {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} koleżankom",
+        "zgubiła {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}}",
+        "wymieniła {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} na słodycze",
+        "złamała {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} w temperówce",
+        "zniszczyła {value} {value, plural, one {ołówek} few {ołówki} other {ołówków}} ucząc się rysować"
+      ],
+      "question": "Ile ołówków ma teraz Marta?"
+    },
+    "candy": {
+      "start": "Marta miała {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} 🍬",
+      "add": [
+        "dostała {value} więcej od cioci",
+        "wygrała {value} w konkursie",
+        "znalazła {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} w sklepie",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} na urodziny"
+      ],
+      "sub": [
+        "zjadła {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}}",
+        "podarowała {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} koleżankom",
+        "wymieniła {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} na inne słodycze",
+        "zgubiła {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}}",
+        "sprzedała {value} {value, plural, one {cukierek} few {cukierki} other {cukierków}} na wyprzedaży"
+      ],
+      "question": "Ile cukierków ma teraz Marta?"
+    },
+    "doll": {
+      "start": "Marta miała {value} {value, plural, one {lalkę} few {lalki} other {lalek}} 🧸",
+      "add": [
+        "dostała {value} więcej od cioci",
+        "wygrała {value} w konkursie",
+        "znalazła {value} {value, plural, one {lalkę} few {lalki} other {lalek}} na strychu",
+        "pożyczyła {value} od koleżanki",
+        "otrzymała {value} {value, plural, one {lalkę} few {lalki} other {lalek}} na prezent"
+      ],
+      "sub": [
+        "podarowała {value} {value, plural, one {lalkę} few {lalki} other {lalek}} koleżankom",
+        "zgubiła {value} {value, plural, one {lalkę} few {lalki} other {lalek}}",
+        "wymieniła {value} {value, plural, one {lalkę} few {lalki} other {lalek}} na inne zabawki",
+        "sprzedała {value} {value, plural, one {lalkę} few {lalki} other {lalek}} w sklepie z zabawkami",
+        "oddała najlepszej przyjaciółce {value} {value, plural, one {lalkę} few {lalki} other {lalek}} na urodziny"
+      ],
+      "question": "Ile lalek ma teraz Marta?"
+    }
+  },
+  "sudoku": {
+    "new_game": "Nowa gra",
+    "congratulations": "🎉 Gratulacje! Rozwiązałeś Sudoku! 🥳",
+    "readonly_field": "Pole tylko do odczytu",
+    "editable_field": "Pole edytowalne",
+    "board_size_label": "Wybierz rozmiar planszy",
+    "config": {
+      "board_size_3": "3x3",
+      "board_size_4": "4x4",
+      "board_size_5": "5x5"
+    },
+    "restart": "Resetuj",
+    "give_up": "Pokaż rozwiązanie"
+  }
 }

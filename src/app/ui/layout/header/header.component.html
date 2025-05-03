@@ -9,18 +9,22 @@
   <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="goHome()">
       <mat-icon>home</mat-icon>
-      <span>Strona główna</span>
+      <span class="label-bold-1">Strona główna</span>
     </button>
     <button mat-menu-item (click)="openCalculator()">
       <mat-icon>calculate</mat-icon>
-      <span>Kalkulator</span>
+      <span class="label-bold-1">Kalkulator</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/home/sudoku']">
+      <mat-icon>calculate</mat-icon>
+      <span class="label-bold-1">Sudoku</span>
     </button>
     <mat-divider></mat-divider>
-    <div class="version-info">{{ version }}</div>
+    <div class="version-info label-1 text-center">ver. {{ version }}</div>
   </mat-menu>
 
   <span style="font-size: 1.5em; font-weight: bold; color: #fff">{{
-    "header_title" | translate
+    "header_title" | translate : { userName: userName }
   }}</span>
 
   <span class="expander"></span>

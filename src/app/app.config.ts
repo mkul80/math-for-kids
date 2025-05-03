@@ -5,20 +5,26 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FailedExercisesStore } from './store/failed-exercises/failed-exercises.store';
 import { LocalStorageService } from './store/exercise/local-storage-service';
 import { ExerciseExecutionStore } from './store/exercise/exercise-execution.store';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import {
+  provideTranslateService,
+  TranslateCompiler,
+  TranslateLoader,
+} from '@ngx-translate/core';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DOCUMENT } from '@angular/common';
+import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
+import { Logger } from './common/logger.service';
 
 function initializeStores() {
   return () => {
     const failedExercises = LocalStorageService.loadFailedExercises();
-    if (failedExercises) {
-      const failedExercisesStore = inject(FailedExercisesStore);
-      failedExercises.forEach((exercise) =>
-        failedExercisesStore.addFailedExercise(exercise)
-      );
-    }
+    // if (failedExercises) {
+    //   const failedExercisesStore = inject(FailedExercisesStore);
+    //   failedExercises.forEach((exercise) =>
+    //     failedExercisesStore.addFailedExercise(exercise)
+    //   );
+    // }
   };
 }
 
@@ -40,7 +46,10 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideTranslateService({
-      defaultLanguage: 'en',
+      compiler: {
+        provide: TranslateCompiler,
+        useClass: TranslateMessageFormatCompiler,
+      },
       loader: {
         provide: TranslateLoader,
         useFactory: httpLoaderFactory,

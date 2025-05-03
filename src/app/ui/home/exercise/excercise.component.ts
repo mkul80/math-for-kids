@@ -10,6 +10,7 @@ import { AnswerSelectorComponent } from './answer-selector/answer-selector.compo
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { IMAGE_PATHS } from '../../../consts/image-paths';
 
 @Component({
   selector: 'app-excercise',
@@ -46,6 +47,13 @@ export class ExcerciseComponent implements OnInit {
   nextExercise(): void {
     this.formControl.reset();
     this.excerciseStore.nextExercise();
+  }
+
+  getExerciseImage(object?: string): string {
+    if (!object) {
+      return IMAGE_PATHS['default'];
+    }
+    return IMAGE_PATHS[object] || IMAGE_PATHS['default'];
   }
 
   excerciseStatuses = ExcerciseStatus;

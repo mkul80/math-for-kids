@@ -7,32 +7,39 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { UserExercise } from '../../models/user-exercise';
-import { getOperationSymbol, Operation } from '../../models/operation';
+import { ExerciseAttempt } from '../../models/exercise-attempt';
 import { computed } from '@angular/core';
 import { FailedExercisesStore } from '../failed-exercises/failed-exercises.store';
-import { BinaryArithmeticExerciseGenerator } from '../../business-logic/binary-arythmetic-exercise-generator.service';
-import { TernaryArithmeticExerciseGenerator } from '../../business-logic/ternary-arithmetic-exercise-generator.service';
-import { MathTasksProviderService } from '../../business-logic/math-tasks-provider.service';
 import { LocalStorageService } from './local-storage-service';
+import { UserScore } from '../../models/user-score';
+import { Exercise, Operation } from '../../models/exercise';
+import {
+  DifficultyLevel,
+  ExerciseGenerator,
+} from '../../business-logic/exercise-generator.service';
+import { WordExerciseBuilder } from '../../business-logic/word-exercise-builder.service';
 
 type ExerciseExecutionState = {
-  exerciseSet: UserExercise[];
-  score: UserScore;
+  exerciseSet: ExerciseAttempt[];
+  totalScore: UserScore;
+  currentExerciseScore: number;
   currentIndex: number;
+  difficultyLevel: number;
 };
 
 const initialState: ExerciseExecutionState = {
   exerciseSet: [],
   currentIndex: 0,
-  score: LocalStorageService.getUserScore() ?? [0, 0, 0],
+  currentExerciseScore: 0,
+  difficultyLevel: 0,
+  totalScore: LocalStorageService.getUserScore() ?? [0, 0, 0],
 };
 
 export const ExerciseExecutionStore = signalStore(
   withState(initialState),
   withHooks({
     onDestroy: (store) => {
-      LocalStorageService.saveUserScore(store.score());
+      LocalStorageService.saveUserScore(store.totalScore());
     },
   }),
   withComputed((store) => ({
@@ -44,6 +51,7 @@ export const ExerciseExecutionStore = signalStore(
   withComputed(
     ({
       currentIndex,
+      difficultyLevel,
       exerciseSet: excerciseSet,
       currentExercise: currentExercise,
     }) => ({
@@ -52,46 +60,14 @@ export const ExerciseExecutionStore = signalStore(
         return currentExercise() && currentExercise().userResult !== undefined;
       }),
       correctResult: computed(() => {
-        const operation = currentExercise().operation;
-        const operationSymbol = getOperationSymbol(operation);
-        const values = currentExercise().values;
-        return (
-          values.join(` ${operationSymbol} `) + '= ' + currentExercise().result
-        );
+        return currentExercise().exerciseDefinition.evaluate();
       }),
-
-      currentValues: computed(() => {
-        return excerciseSet()[currentIndex()]?.values;
-      }),
-      currentOperation: computed(() => {
-        return excerciseSet()[currentIndex()]?.operation;
-      }),
-      currentOperationSymbol: computed(() => {
-        const operation = excerciseSet()[currentIndex()]?.operation;
-        return getOperationSymbol(operation);
-      }),
-      currentExerciseResult: computed(() => {
-        return excerciseSet()[currentIndex()]?.result;
-      }),
-      currentExerciseUserResult: computed(() => {
-        return excerciseSet()[currentIndex()]?.userResult;
-      }),
-      currentExerciseResultCorrect: computed(() => {
-        const excercise = excerciseSet()[currentIndex()];
-        return excercise && excercise.userResult === excercise.result;
-      }),
-      currentExerciseResultIncorrect: computed(() => {
-        const excercise = excerciseSet()[currentIndex()];
-        return (
-          excercise &&
-          excercise.userResult !== undefined &&
-          excercise.userResult !== excercise.result
-        );
-      }),
-      currentSetScore: computed(() => {
+      currentExerciseSetScore: computed(() => {
         return excerciseSet().reduce((acc, excercise) => {
-          if (excercise.userResult === excercise.result) {
-            return acc + 1;
+          if (
+            excercise.userResult === excercise.exerciseDefinition.evaluate()
+          ) {
+            return acc + difficultyLevel();
           }
           return acc;
         }, 0);
@@ -100,13 +76,18 @@ export const ExerciseExecutionStore = signalStore(
         return excerciseSet().filter(
           (excercise) =>
             excercise.userResult !== undefined &&
-            excercise.userResult !== excercise.result
+            excercise.userResult !== excercise.exerciseDefinition.evaluate()
         ).length;
       }),
       correctCount: computed(() => {
         return excerciseSet().filter(
-          (excercise) => excercise.userResult === excercise.result
+          (excercise) =>
+            excercise.userResult === excercise.exerciseDefinition.evaluate()
         ).length;
+      }),
+      exerciseObject: computed(() => {
+        const excercise = excerciseSet()[currentIndex()];
+        return excercise && excercise.object;
       }),
       exerciseProgress: computed(() => {
         const totalExcercises = excerciseSet().length;
@@ -116,16 +97,12 @@ export const ExerciseExecutionStore = signalStore(
       isTernary: computed(() => {
         const excercise = excerciseSet()[currentIndex()];
 
-        return (
-          excercise &&
-          excercise.values.length === 3 &&
-          excercise.operation !== Operation.Addition
-        );
+        return excercise && excercise.exerciseDefinition.terms.length === 3;
       }),
       isBinary: computed(() => {
         const excercise = excerciseSet()[currentIndex()];
 
-        return excercise && excercise.values.length === 2;
+        return excercise && excercise.exerciseDefinition.terms.length === 2;
       }),
     })
   ),
@@ -133,71 +110,66 @@ export const ExerciseExecutionStore = signalStore(
     (
       store,
       failedExercisesStore = inject(FailedExercisesStore),
-      mathTasksProvider = inject(MathTasksProviderService)
+      wordExerciseBuilder = inject(WordExerciseBuilder)
     ) => ({
       configureBinaryArythmeticExercises(
         operation: Operation,
-        difficultyLevel: number
+        difficultyLevel: DifficultyLevel
       ): void {
-        const excercises =
-          BinaryArithmeticExerciseGenerator.generateExerciseSet(
-            operation,
-            difficultyLevel
-          );
+        const exercises: Exercise[] = Array.from({ length: 10 }, () =>
+          ExerciseGenerator.generateExercise(
+            2,
+            difficultyLevel,
+            operation ? [operation] : undefined
+          )
+        );
+
         patchState(store, {
-          exerciseSet: excercises.map((excercise) => ({
-            ...excercise,
-            userResult: undefined,
-          })),
+          exerciseSet: exercises.map(
+            (exercise) => new ExerciseAttempt(exercise)
+          ),
+          difficultyLevel,
           currentIndex: 0,
         });
       },
       configureTernaryArythmeticExercises(
         operation: Operation,
-        difficultyLevel: number
+        difficultyLevel: DifficultyLevel
       ): void {
-        const exercises =
-          TernaryArithmeticExerciseGenerator.generateExerciseSet(
-            operation,
-            difficultyLevel
-          );
+        const exercises: Exercise[] = Array.from({ length: 10 }, () =>
+          ExerciseGenerator.generateExercise(
+            3,
+            difficultyLevel,
+            operation ? [operation, operation] : undefined
+          )
+        );
+
         patchState(store, {
-          exerciseSet: exercises.map((excercise) => ({
-            ...excercise,
-            userResult: undefined,
-          })),
+          exerciseSet: exercises.map(
+            (exercise) =>
+              new ExerciseAttempt(
+                exercise,
+                ...Object.values(
+                  wordExerciseBuilder.build({
+                    values: exercise.values,
+                    operations: exercise.operations,
+                  })
+                )
+              )
+          ),
+          difficultyLevel,
           currentIndex: 0,
         });
       },
-      stringifyCurrentExercise: () => {
-        const operation = store.exerciseSet()[store.currentIndex()]?.operation;
-        const operationSymbol = getOperationSymbol(operation);
-        if (store.currentExercise().values.length === 3) {
-          const task =
-            mathTasksProvider.getByOperation(operation)[store.currentIndex()];
-          const { values } = store.currentExercise();
-          return `${task(values[0], values[1], values[2])}`;
-        }
-        return `${store.currentExercise()?.values[0]} ${operationSymbol} ${
-          store.currentExercise()?.values[1]
-        } = `;
-      },
       setAnswer(userResult: number) {
         const currentExercise = store.currentExercise();
-        const isWrongAnswer = userResult !== currentExercise.result;
+        const updatedExercise = currentExercise.withUserResult(userResult);
 
         patchState(store, (state) => ({
-          exerciseSet: state.exerciseSet.map((excercise, index) => {
-            if (index === store.currentIndex()) {
-              return { ...excercise, userResult };
-            }
-            return excercise;
-          }),
+          exerciseSet: state.exerciseSet.map((exercise, index) =>
+            index === store.currentIndex() ? updatedExercise : exercise
+          ),
         }));
-
-        if (isWrongAnswer) {
-          failedExercisesStore.addFailedExercise(currentExercise);
-        }
       },
       nextExercise() {
         patchState(store, (state) => ({

@@ -1,29 +1,228 @@
 {
-    "select_operation":"Select operation",
-    "addition":"➕ Addition",
-    "subtraction":"➖ Subtraction",
-    "multiplication":"Multiplication",
-    "division":"Division",
-    "language_polish":"Polish",
-    "language_english":"English",
-    "select_difficulty_level":"Select difficulty level",
-    "difficulty_level_easy":"🦊 Easy",
-    "difficulty_level_medium":"🐼 Medium",
-    "difficulty_level_hard":"🐯 Hard",
-    "select_exercise_type":"Select exercise type",
-    "exercise_type_simple":"Simple exercises",
-    "exercise_type_word":"Word exercises",
-    "header_title":"Math for kids",
-    "correct_answer_is":"Correct answer is",
-    "correct_count":"Correct count",
-    "errors_count":"Errors count",
-    "exercises_count":"Exercises count",
-    "you_get":"You get",
-    "exercises_summary_title":"Summary!",
-    "app_footer_text":"",
-    "continue":"Continue",
-    "start_over":"Start over",
-    "check_answer":"Check answer",
-    "points":"points",
-    "select_answer":"Please select an answer"
+  "select_operation": "Select operation",
+  "operation_addition": "➕ Addition",
+  "operation_subtraction": "➖ Subtraction",
+  "operation_any": "Both, ➕ or ➖",
+  "multiplication": "Multiplication",
+  "division": "Division",
+  "language_polish": "Polish",
+  "language_english": "English",
+  "select_difficulty_level": "Select difficulty level",
+  "difficulty_level_easy": "🦊 Easy",
+  "difficulty_level_medium": "🐼 Medium",
+  "difficulty_level_hard": "🐯 Hard",
+  "select_exercise_type": "Select exercise type",
+  "exercise_type_simple": "Quick sums",
+  "exercise_type_word": "Word exercises",
+  "header_title": "{userName}  solves it!",
+  "correct_answer_is": "Correct answer is",
+  "correct_count": "Correct count",
+  "errors_count": "Errors count",
+  "exercises_count": "Exercises count",
+  "you_get": "You get",
+  "exercises_summary_title": "Summary!",
+  "app_footer_text": "",
+  "continue": "Continue",
+  "start_over": "Start over",
+  "check_answer": "Check answer",
+  "points": "points",
+  "select_answer": "Please select an answer",
+  "explanation_first_step": "First step",
+  "explanation_next_step": "Next step",
+  "task": {
+    "money": {
+      "start": "Martha had {value} {value, plural, one {dolar} other {dolars}} 💰",
+      "add": [
+        "she received {value} dollars from her grandmother",
+        "she found {value} {value, plural, one {dolar} other {dolars}} in her piggy bank",
+        "she won {value} {value, plural, one {dolar} other {dolars}} in a contest",
+        "she borrowed {value} {value, plural, one {dolar} other {dolars}} from her friend",
+        "she earned {value} {value, plural, one {dolar} other {dolars}} selling drawings"
+      ],
+      "sub": [
+        "she spent {value} {value, plural, one {dolar} other {dolars}} on ice cream 🍦",
+        "she lost {value} {value, plural, one {dolar} other {dolars}} in a casino",
+        "she spent {value} {value, plural, one {dolar} other {dolars}} shopping",
+        "she spent {value} {value, plural, one {dolar} other {dolars}} on books",
+        "she lent {value} {value, plural, one {dolar} other {dolars}} to her friend"
+      ],
+      "question": "How much money does Martha have now?"
+    },
+    "fruit": {
+      "start": "Martha had {value} {value, plural, one {apple} other {apples}} 🍎",
+      "add": [
+        "she received {value} more from her mom",
+        "she found {value} {value, plural, one {apple} other {apples}} in the garden",
+        "she won {value} {value, plural, one {apple} other {apples}} in a contest",
+        "she borrowed {value} {value, plural, one {apple} other {apples}} from her friend",
+        "she bought {value} {value, plural, one {apple} other {apples}} from the store"
+      ],
+      "sub": [
+        "she ate {value} {value, plural, one {apple} other {apples}}",
+        "she gave {value} {value, plural, one {apple} other {apples}} to her friend",
+        "she lost {value} {value, plural, one {apple} other {apples}} in the park",
+        "she spent {value} {value, plural, one {apple} other {apples}} at the market",
+        "she sold {value} {value, plural, one {apple} other {apples}} at the store"
+      ],
+      "question": "How many apples does Martha have now?"
+    },
+    "stuffed_animal": {
+      "start": "Martha had {value} {value, plural, one {stuffed animal} other {stuffed animals}} 🧸",
+      "add": [
+        "she got {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {stuffed animal} other {stuffed animals}} in the attic",
+        "she borrowed {value} from her friend",
+        "she received {value} as a birthday present"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {stuffed animal} other {stuffed animals}} to her friends",
+        "she lost {value} {value, plural, one {stuffed animal} other {stuffed animals}}",
+        "she left {value} {value, plural, one {stuffed animal} other {stuffed animals}} at her grandparents' house",
+        "she exchanged {value} {value, plural, one {stuffed animal} other {stuffed animals}} for others",
+        "she sold {value} {value, plural, one {stuffed animal} other {stuffed animals}} at the toy store"
+      ],
+      "question": "How many stuffed animals does Martha have now?"
+    },
+    "cake": {
+      "start": "Martha had {value} {value, plural, one {cake} other {cakes}} 🍰",
+      "add": [
+        "she received {value} more from her grandmother",
+        "she baked {value} {value, plural, one {cake} other {cakes}}",
+        "she won {value} {value, plural, one {cake} other {cakes}} in a baking contest",
+        "she borrowed {value} {value, plural, one {cake} other {cakes}} from her friend",
+        "she received {value} as a present"
+      ],
+      "sub": [
+        "she ate {value} {value, plural, one {cake} other {cakes}}",
+        "she gave {value} {value, plural, one {cake} other {cakes}} to her friends",
+        "she exchanged {value} {value, plural, one {cake} other {cakes}} for others",
+        "she lost {value} {value, plural, one {cake} other {cakes}}",
+        "she sold {value} {value, plural, one {cake} other {cakes}}"
+      ],
+      "question": "How many cakes does Martha have now?"
+    },
+    "toy": {
+      "start": "Martha had {value} {value, plural, one {toy} other {toys}} 🧸",
+      "add": [
+        "she received {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {toy} other {toys}} in the garden",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {toy} other {toys}} for her birthday"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {toy} other {toys}} to her friends",
+        "she lost {value} {value, plural, one {toy} other {toys}}",
+        "she exchanged {value} {value, plural, one {toy} other {toys}} for others",
+        "she sold {value} {value, plural, one {toy} other {toys}} at the sale",
+        "she burned {value} {value, plural, one {toy} other {toys}} in the fire"
+      ],
+      "question": "How many toys does Martha have now?"
+    },
+    "hamster": {
+      "start": "Martha had {value} {value, plural, one {hamster} other {hamsters}} 🐹",
+      "add": [
+        "she got {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {hamster} other {hamsters}} in the garden",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {hamster} other {hamsters}} as a present"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {hamster} other {hamsters}} to her friends",
+        "she lost {value} {value, plural, one {hamster} other {hamsters}} in the garden",
+        "she exchanged {value} {value, plural, one {hamster} other {hamsters}} for other pets",
+        "she sold {value} {value, plural, one {hamster} other {hamsters}} at the pet store",
+        "{value} escaped from the cage"
+      ],
+      "question": "How many hamsters does Martha have now?"
+    },
+    "notebook": {
+      "start": "Martha had {value} {value, plural, one {notebook} other {notebooks}} 📒",
+      "add": [
+        "she received {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {notebook} other {notebooks}} at school",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {notebook} other {notebooks}} at the start of the year"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {notebook} other {notebooks}} to her friends",
+        "she lost {value} {value, plural, one {notebook} other {notebooks}}",
+        "she exchanged {value} {value, plural, one {notebook} other {notebooks}} for others",
+        "she ruined {value} {value, plural, one {notebook} other {notebooks}}",
+        "she burned {value} {value, plural, one {notebook} other {notebooks}}"
+      ],
+      "question": "How many notebooks does Martha have now?"
+    },
+    "pencil": {
+      "start": "Martha had {value} {value, plural, one {pencil} other {pencils}} ✏️",
+      "add": [
+        "she received {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {pencil} other {pencils}} at school",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {pencil} other {pencils}} at the start of the year"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {pencil} other {pencils}} to her friends",
+        "she lost {value} {value, plural, one {pencil} other {pencils}}",
+        "she exchanged {value} {value, plural, one {pencil} other {pencils}} for others",
+        "she broke {value} {value, plural, one {pencil} other {pencils}}",
+        "she ruined {value} {value, plural, one {pencil} other {pencils}}"
+      ],
+      "question": "How many pencils does Martha have now?"
+    },
+    "candy": {
+      "start": "Martha had {value} {value, plural, one {candy} other {candies}} 🍬",
+      "add": [
+        "she received {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {candy} other {candies}} at the store",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {candy} other {candies}} for her birthday"
+      ],
+      "sub": [
+        "she ate {value} {value, plural, one {candy} other {candies}}",
+        "she gave {value} {value, plural, one {candy} other {candies}} to her friends",
+        "she exchanged {value} {value, plural, one {candy} other {candies}} for others",
+        "she lost {value} {value, plural, one {candy} other {candies}}",
+        "she sold {value} {value, plural, one {candy} other {candies}} at the market"
+      ],
+      "question": "How many candies does Martha have now?"
+    },
+    "doll": {
+      "start": "Martha had {value} {value, plural, one {doll} other {dolls}} 🧸",
+      "add": [
+        "she received {value} more from her aunt",
+        "she won {value} in a contest",
+        "she found {value} {value, plural, one {doll} other {dolls}} in the attic",
+        "she borrowed {value} from her friend",
+        "she received {value} {value, plural, one {doll} other {dolls}} as a gift"
+      ],
+      "sub": [
+        "she gave {value} {value, plural, one {doll} other {dolls}} to her friends",
+        "she lost {value} {value, plural, one {doll} other {dolls}}",
+        "she exchanged {value} {value, plural, one {doll} other {dolls}} for others",
+        "she sold {value} {value, plural, one {doll} other {dolls}} at the toy store",
+        "she burned {value} {value, plural, one {doll} other {dolls}} in the fire"
+      ],
+      "question": "How many dolls does Martha have now?"
+    }
+  },
+  "sudoku": {
+    "new_game": "New game",
+    "congratulations": "🎉 Congratulations! You solved the Sudoku puzzle! 🥳",
+    "readonly_field": "Readonly Field",
+    "editable_field": "Editable Field",
+    "board_size_label": "Select board size",
+    "config": {
+      "board_size_3": "3x3",
+      "board_size_4": "4x4",
+      "board_size_5": "5x5"
+    },
+    "restart": "Restart",
+    "give_up": "Give up"
+  }
 }

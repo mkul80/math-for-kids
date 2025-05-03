@@ -11,8 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { userPreferences } from '../../../consts/user-preferences';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
-import { Operation } from '../../../models/operation';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Logger } from '../../../common/logger.service';
 
 @Component({
   selector: 'app-course-level-selector',
@@ -53,7 +53,7 @@ export class CourseLevelSelectorComponent implements OnInit {
   }
 
   get isSubtraction(): boolean {
-    return this.form.value.operation === Operation.Subtraction;
+    return this.form.value.operation === '-';
   }
 
   isLastStep(): boolean {
@@ -61,7 +61,6 @@ export class CourseLevelSelectorComponent implements OnInit {
   }
 
   startArithmeticExercises(): void {
-    console.log('startArithmeticExercises');
     const { operation, difficultyLevel, exerciseType } = this.form.value;
     this.excerciseStore.configureBinaryArythmeticExercises(
       operation,
@@ -76,7 +75,7 @@ export class CourseLevelSelectorComponent implements OnInit {
       operation,
       difficultyLevel
     );
-    console.log('startWordExercises', this.excerciseStore.currentExercise());
+    Logger.log('startWordExercises', this.excerciseStore.currentExercise());
     this.#router.navigate(['/home/excercise']);
   }
 

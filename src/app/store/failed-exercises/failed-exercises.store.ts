@@ -7,7 +7,7 @@ import {
 } from '@ngrx/signals';
 import { Exercise } from '../../models/exercise';
 import { LocalStorageService } from '../exercise/local-storage-service';
-import { UserExercise } from '../../models/user-exercise';
+import { ExerciseAttempt } from '../../models/exercise-attempt';
 
 type FailedExercisesState = {
   failedExerciseSet: Exercise[];
@@ -25,25 +25,24 @@ export const FailedExercisesStore = signalStore(
     },
   })),
   withMethods((store) => ({
-    addFailedExercise(exercise: UserExercise) {
-      const exerciseAlreadyExists = store
-        .failedExerciseSet()
-        .some(
-          (failed) =>
-            failed.values[0] === exercise.values[0] &&
-            failed.values[1] === exercise.values[1] &&
-            failed.operation === exercise.operation
-        );
-
-      if (!exerciseAlreadyExists) {
-        const { userResult, ...exerciseWithoutResult } = exercise;
-        patchState(store, (state) => ({
-          failedExerciseSet: [
-            ...state.failedExerciseSet,
-            exerciseWithoutResult,
-          ],
-        }));
-      }
+    addFailedExercise(exercise: ExerciseAttempt) {
+      // const exerciseAlreadyExists = store
+      //   .failedExerciseSet()
+      //   .some(
+      //     (failed) =>
+      //       failed.values[0] === exercise.values[0] &&
+      //       failed.values[1] === exercise.values[1] &&
+      //       failed.operation === exercise.operation
+      //   );
+      // if (!exerciseAlreadyExists) {
+      //   const { userResult, ...exerciseWithoutResult } = exercise;
+      //   patchState(store, (state) => ({
+      //     failedExerciseSet: [
+      //       ...state.failedExerciseSet,
+      //       exerciseWithoutResult,
+      //     ],
+      //   }));
+      // }
     },
   }))
 );

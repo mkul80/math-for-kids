@@ -1,5 +1,3 @@
-import { Operation } from '../models/operation';
-
 enum ExerciseType {
   Simple = 'simple',
   Word = 'word',
@@ -24,8 +22,8 @@ export const userPreferences = {
   ],
 
   mathOperations: [
-    { labelKey: 'addition', value: Operation.Addition },
-    { labelKey: 'subtraction', value: Operation.Subtraction },
+    { labelKey: 'operation_addition', value: '+' },
+    { labelKey: 'operation_subtraction', value: '-' },
     // { label: '✖️ Mnożenie', value: Operation.Multiplication },
     // { label: '➗ Dzielenie', value: Operation.Division },
   ],
@@ -34,4 +32,5 @@ export const userPreferences = {
 export const localStorageKeys = {
   failedUserExercises: 'failedUserExercises',
   userScore: 'userScore',
+  language: 'language',
 } as const;

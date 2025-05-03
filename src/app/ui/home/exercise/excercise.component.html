@@ -10,7 +10,7 @@
 </div>
 } @if(!excerciseStore.isFinished()){
 <div
-  class="math-problem header-1 d-flex flex-column-on-mobile align-center justify-between"
+  class="math-problem paragraph-1 d-flex flex-column align-center justify-between"
 >
   @if(!excerciseStore.isCurrentAnswered()){ @if(excerciseStore.isBinary()){
   <div class="select-answer-label header-2">
@@ -19,22 +19,29 @@
   } @else {
   <img
     class="image"
-    src="assets/images/math-task-solving.jpg"
+    [src]="getExerciseImage(excerciseStore.exerciseObject())"
     alt="Word task image"
   />
   } }
-  <div>{{ excerciseStore.stringifyCurrentExercise() }}</div>
+  <div [class.paragraph-ultra-large]="excerciseStore.isBinary()">
+    {{ excerciseStore.currentExercise().toString() }}
+  </div>
 </div>
 <app-answer-selector
-  [correctAnswer]="excerciseStore.currentExerciseResult()"
+  [correctAnswer]="
+    excerciseStore.currentExercise().exerciseDefinition.evaluate()
+  "
   [disabled]="excerciseStore.isCurrentAnswered()"
   (selectedAnswer)="excerciseStore.setAnswer($event)"
 ></app-answer-selector>
 } @if(excerciseStore.isCurrentAnswered()) {
 <app-excerise-status
-  [excercise]="excerciseStore.currentExercise()"
-  [userResult]="excerciseStore.currentExerciseUserResult()!"
+  [excercise]="excerciseStore.currentExercise().exerciseDefinition"
+  [userResult]="excerciseStore.currentExercise().userResult!"
   [correctAnswer]="excerciseStore.correctResult()"
+  [explanation]="
+    excerciseStore.currentExercise().exerciseDefinition.renderStepsAsHtml()
+  "
 ></app-excerise-status>
 <button
   mat-flat-button
@@ -48,6 +55,6 @@
 <app-exercises-summary
   [errorCount]="excerciseStore.errorCount()"
   [correctCount]="excerciseStore.correctCount()"
-  [score]="excerciseStore.score()"
+  [currentScore]="excerciseStore.currentExerciseSetScore()"
 ></app-exercises-summary>
 }

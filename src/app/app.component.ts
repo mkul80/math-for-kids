@@ -1,5 +1,7 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { LocalStorageService } from './store/exercise/local-storage-service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +21,21 @@ export class AppComponent {
       this.checkVersion();
     }
   }
+  #translateService = inject(TranslateService);
+
   title = 'math-tutorial';
   constructor() {
     this.checkVersion();
+    this.#translateService.use(this.getDefaultLanguage());
+  }
+
+  getDefaultLanguage(): string {
+    const storedLanguage = LocalStorageService.getLanguage();
+    const browserLanguage = navigator.language.split('-')[0];
+    const language = storedLanguage || browserLanguage;
+    const supportedLanguages = ['en', 'pl'];
+    const isSupported = supportedLanguages.includes(language);
+    return isSupported ? language : 'en';
   }
 
   async checkVersion() {

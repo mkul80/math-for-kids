@@ -54,9 +54,9 @@
     height: auto;
     max-height: 40vh;
     object-fit: contain;
-    @media screen and (orientation: portrait) and (max-width: 768px) {
-      max-width: 60vw;
-    }
+    // @media screen and (orientation: portrait) and (max-width: 768px) {
+    //   max-width: 60vw;
+    // }
   }
   .first-row {
     padding-bottom: 0.5rem;

@@ -23,11 +23,13 @@
     <!-- <h2 class="text-center">{{ failureMessage.title }}</h2> -->
     <div class="d-flex flex-column align-center justify-between">
       <div class="paragraph-bold-1 text-center">
-        {{ "correct_answer_is" | translate }}:
+        <span>{{ "correct_answer_is" | translate }}:</span>
+        <span class="correct-answer">{{ correctAnswer }}</span>
       </div>
-      <div class="correct-answer paragraph-bold-1">
-        {{ correctAnswer }}
-      </div>
+      <div
+        class="correct-answer paragraph-bold-1"
+        [innerHTML]="explanation"
+      ></div>
       <div class="paragraph-bold-1 text-center">
         {{ failureMessage.message }}
       </div>

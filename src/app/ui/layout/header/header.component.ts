@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OkCancelDialogComponent } from '../../dialogs/ok-cancel.dialog.component';
 import { map, take } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { CalculatorComponent } from '../../dialogs/calculator-dialog.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { HttpClient } from '@angular/common/http';
+import { Logger } from '../../../common/logger.service';
+import { AuthService } from '../../../common/auth.service';
 
 @Component({
   standalone: true,
@@ -21,6 +23,7 @@ import { HttpClient } from '@angular/common/http';
     MatMenuModule,
     TranslatePipe,
     MatDividerModule,
+    RouterLink,
   ],
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -31,6 +34,11 @@ export class HeaderComponent implements OnInit {
   #dialogService = inject(MatDialog);
   #translateService = inject(TranslateService);
   #http = inject(HttpClient);
+  #authService = inject(AuthService);
+  get userName(): string {
+    Logger.log('userName', this.#authService);
+    return this.#authService.userName;
+  }
 
   version: string = '';
 
@@ -45,6 +53,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get selectedLang() {
+    Logger.log('selectedLang', this.#translateService.currentLang);
     return this.#translateService.currentLang;
   }
 

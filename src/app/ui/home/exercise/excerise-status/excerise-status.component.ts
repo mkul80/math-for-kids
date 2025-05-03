@@ -1,42 +1,38 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Exercise } from '../../../../models/exercise';
-import {
-  getRandomSuccessMessage,
-  getRandomFailureMessage,
-  SUCCESS_IMAGES,
-  FAILURE_IMAGES,
-} from '../../../../consts/exercise-status.consts';
-import { TranslatePipe } from '@ngx-translate/core';
+
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MessageService } from '../../../../consts/exercise-status.consts';
 
 @Component({
+  standalone: true,
   selector: 'app-excerise-status',
   imports: [TranslatePipe],
   templateUrl: './excerise-status.component.html',
   styleUrl: './excerise-status.component.scss',
 })
 export class ExceriseStatusComponent {
-  successImage: string;
-  failureImage: string;
+  #messageService = inject(MessageService);
+  #translateService = inject(TranslateService);
   failureMessage: Message;
   successMessage: Message;
 
   @Input() excercise!: Exercise;
   @Input() userResult!: number;
-  @Input() correctAnswer!: string;
+  @Input() correctAnswer!: number;
+  @Input() explanation!: string;
 
   get isCorrect(): boolean {
-    return this.excercise.result === this.userResult;
-  }
-
-  #getRandomImage(images: string[]): string {
-    return images[Math.floor(Math.random() * images.length)];
+    return this.excercise.evaluate() === this.userResult;
   }
 
   constructor() {
-    this.successImage = this.#getRandomImage(SUCCESS_IMAGES);
-    this.failureImage = this.#getRandomImage(FAILURE_IMAGES);
-    this.successMessage = getRandomSuccessMessage();
-    this.failureMessage = getRandomFailureMessage();
+    this.successMessage = this.#messageService.getRandomSuccessMessage();
+    this.failureMessage = this.#messageService.getRandomFailureMessage();
+    this.#translateService.onLangChange.subscribe(() => {
+      this.successMessage = this.#messageService.getRandomSuccessMessage();
+      this.failureMessage = this.#messageService.getRandomFailureMessage();
+    });
   }
 }
 
