@@ -39,6 +39,12 @@ body {
       label-text-size: 1.8rem,
     )
   );
+  @include mat.menu-overrides(
+    (
+      item-label-text-color: orange,
+      item-icon-color: red,
+    )
+  );
 }
 
 html {

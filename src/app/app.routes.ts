@@ -18,7 +18,10 @@ export const routes: Routes = [
         component: ExcerciseComponent,
       },
       { path: 'sudoku', component: SudokuConfigComponent },
-      { path: 'sudoku-game/:boardSize', component: SudokuComponent },
+      {
+        path: 'sudoku-game/:boardSize/:difficultyLevel',
+        component: SudokuComponent,
+      },
     ],
   },
   { path: '**', component: NotFoundComponent }, // Handle undefined routes

@@ -1,5 +1,10 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { boardSize, SudokuField, SudokuBoard } from './sudoku.models';
+import {
+  boardSize,
+  SudokuField,
+  SudokuBoard,
+  difficultyLevel,
+} from './sudoku.models';
 import { BoardGeneratorService } from './board-generator.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
@@ -29,9 +34,12 @@ export class SudokuComponent implements OnInit {
     this.boardSize = +this.#route.snapshot.paramMap.get(
       'boardSize'
     )! as boardSize;
+    const difficultyLevel = +this.#route.snapshot.paramMap.get(
+      'difficultyLevel'
+    )! as difficultyLevel;
     this.board = BoardGeneratorService.generateBoard(
       this.boardSize,
-      Math.floor(this.boardSize / 5) * 8
+      Math.floor(this.boardSize / 5) * 4 * (2 - difficultyLevel)
     );
     this.startTimer();
   }

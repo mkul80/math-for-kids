@@ -220,7 +220,12 @@
     "config": {
       "board_size_3": "3x3",
       "board_size_4": "4x4",
-      "board_size_5": "5x5"
+      "board_size_5": "5x5",
+      "difficulty_level": "Wybierz poziom trudności",
+      "board_size": "Wybierz rozmiar planszy",
+      "difficulty_level_0": "Łatwy",
+      "difficulty_level_1": "Średni",
+      "difficulty_level_2": "Trudny"
     },
     "restart": "Resetuj",
     "give_up": "Pokaż rozwiązanie"

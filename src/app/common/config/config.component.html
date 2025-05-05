@@ -1,0 +1,6 @@
+<app-config-option-selector
+  [labelKey]="config.steps[currentIndex].labelKey | translate"
+  [options]="config.steps[currentIndex].options"
+  (selectionChange)="onSelectionChange($event)"
+></app-config-option-selector>
+{{ config | json }}

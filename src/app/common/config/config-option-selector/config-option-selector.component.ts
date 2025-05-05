@@ -3,6 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ConfigOption } from './config-option.model';
 
 @Component({
   selector: 'app-config-option-selector',
@@ -30,9 +31,4 @@ export class ConfigOptionSelectorComponent<T> {
       }
     });
   }
-}
-
-export interface ConfigOption<T> {
-  value: T;
-  labelKey: string;
 }

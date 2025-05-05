@@ -1,6 +1,7 @@
 export const FIELD_VALUES = ['🍎', '🍌', '🍒', '🍐', '🫐', '🥝'] as const;
 export type FieldValue = (typeof FIELD_VALUES)[number];
 export type boardSize = 3 | 4 | 5;
+export type difficultyLevel = 0 | 1 | 2;
 
 export class SudokuField {
   value?: number;
