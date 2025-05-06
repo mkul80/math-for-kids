@@ -2,11 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Config } from './config-option-selector/config-option.model';
 import { ConfigOptionSelectorComponent } from './config-option-selector/config-option-selector.component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-config',
-  imports: [ConfigOptionSelectorComponent, TranslatePipe, JsonPipe],
+  imports: [ConfigOptionSelectorComponent, TranslatePipe],
   templateUrl: './config.component.html',
   styleUrl: './config.component.scss',
 })

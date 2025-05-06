@@ -1,89 +1,65 @@
-import { Component, HostBinding, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { userPreferences } from '../../../consts/user-preferences';
+import { Config } from '../../../common/config/config-option-selector/config-option.model';
+import { ConfigComponent } from '../../../common/config/config.component';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
-import { TranslatePipe } from '@ngx-translate/core';
-import { Logger } from '../../../common/logger.service';
+import { Operation } from '../../../models/exercise';
+import { DifficultyLevel } from '../../../business-logic/exercise-generator.service';
 
 @Component({
-  selector: 'app-course-level-selector',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatButtonModule,
-    TranslatePipe,
-  ],
+  selector: 'app-course-level-selector',
+  imports: [ConfigComponent],
   templateUrl: './course-level-selector.component.html',
   styleUrl: './course-level-selector.component.scss',
 })
-export class CourseLevelSelectorComponent implements OnInit {
+export class CourseLevelSelectorComponent {
   #router = inject(Router);
-  form!: FormGroup;
+  #exerciseStore = inject(ExerciseExecutionStore);
+  config: Config = {
+    steps: [
+      {
+        options: [
+          { value: '+', labelKey: 'operation_addition' },
+          { value: '-', labelKey: 'operation_subtraction' },
+          { value: 'any', labelKey: 'operation_any' },
+        ],
+        labelKey: 'select_operation',
+      },
+      {
+        options: [
+          { value: 0, labelKey: 'difficulty_level_easy' },
+          { value: 1, labelKey: 'difficulty_level_medium' },
+          { value: 2, labelKey: 'difficulty_level_hard' },
+        ],
+        labelKey: 'select_difficulty_level',
+      },
+      {
+        options: [
+          { value: 'simple', labelKey: 'exercise_type_simple' },
+          { value: 'word', labelKey: 'exercise_type_word' },
+        ],
+        labelKey: 'select_exercise_type',
+      },
+    ],
+  };
 
-  @HostBinding('class') class =
-    'h-100 d-flex flex-column align-center justify-center';
-
-  difficultyLevels = userPreferences.difficultyLevels;
-  exerciseTypes = userPreferences.exerciseTypes;
-  operations = userPreferences.mathOperations;
-
-  private fb = inject(FormBuilder);
-  private excerciseStore = inject(ExerciseExecutionStore);
-
-  currentStep = 0;
-  readonly totalSteps = 3;
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      difficultyLevel: [null, Validators.required],
-      exerciseType: [null, Validators.required],
-      operation: [null, Validators.required],
-    });
-  }
-
-  get isSubtraction(): boolean {
-    return this.form.value.operation === '-';
-  }
-
-  isLastStep(): boolean {
-    return this.currentStep === this.totalSteps - 1;
-  }
-
-  startArithmeticExercises(): void {
-    const { operation, difficultyLevel, exerciseType } = this.form.value;
-    this.excerciseStore.configureBinaryArythmeticExercises(
-      operation,
-      difficultyLevel
-    );
+  onConfigChange([operation, difficultyLevel, exerciseType]: [
+    Operation,
+    DifficultyLevel,
+    string
+  ]): void {
+    if (exerciseType === 'simple') {
+      this.#exerciseStore.configureBinaryArythmeticExercises(
+        operation,
+        difficultyLevel
+      );
+    } else {
+      this.#exerciseStore.configureTernaryArythmeticExercises(
+        operation,
+        difficultyLevel
+      );
+    }
     this.#router.navigate(['/home/excercise']);
-  }
-
-  startWordExercises(): void {
-    const { operation, difficultyLevel, exerciseType } = this.form.value;
-    this.excerciseStore.configureTernaryArythmeticExercises(
-      operation,
-      difficultyLevel
-    );
-    Logger.log('startWordExercises', this.excerciseStore.currentExercise());
-    this.#router.navigate(['/home/excercise']);
-  }
-
-  handleSelectionAndProgress(): void {
-    setTimeout(() => {
-      if (this.currentStep < this.totalSteps - 1) {
-        this.currentStep++;
-      }
-    }, 400);
   }
 }

@@ -1,0 +1,10 @@
+@import "rwd";
+
+:host {
+  display: flex;
+  @include desktop {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-radius: 20px;
+    padding: 20px;
+  }
+}
