@@ -229,5 +229,15 @@
     },
     "restart": "Restart",
     "give_up": "Give up"
+  },
+  "path_finder": {
+    "title": "RoboPath",
+    "control_center": "Control Center",
+    "rotate_left": "Rotate left",
+    "rotate_right": "Rotate right",
+    "move_forward": "Move forward",
+    "run_program": "Run program",
+    "go_button": "Go!",
+    "empty_log_message": "Your mission commands will appear here"
   }
 }

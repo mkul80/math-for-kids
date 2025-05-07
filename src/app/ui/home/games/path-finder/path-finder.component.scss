@@ -1,0 +1,436 @@
+@import "rwd";
+
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+  .robot {
+    width: 80px;
+    height: 80px;
+    background-image: url("/assets/images/robot.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.5s ease; /* Add transition for rotation */
+    transform-origin: center center;
+    animation: blink 2s infinite;
+    border: 2px solid #ff9edb;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      border-color: #ff0000;
+    }
+    50% {
+      border-color: #0000ff;
+    }
+  }
+
+  /* Apply moving animation when robot is walking */
+  .robot.walking {
+    animation: moveAnimation 0.5s ease-in-out, blink 2s infinite;
+  }
+
+  .board {
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border: 2px solid #ff9edb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 182, 255, 0.7);
+    background: linear-gradient(to bottom right, #e9c6ff, #d1a6f7);
+
+    @include desktop {
+      max-width: 500px;
+    }
+
+    .board-row {
+      display: flex;
+
+      .board-cell {
+        outline: 1px solid rgba(255, 158, 219, 0.4);
+        aspect-ratio: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        width: calc(95vw / 5);
+        height: auto;
+        font-size: 50px;
+        background-color: rgba(255, 255, 255, 0.3);
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.5);
+          transform: scale(0.95);
+        }
+
+        @include desktop {
+          font-size: 60px;
+        }
+
+        &.robot {
+          background-color: rgba(140, 122, 255, 0.3);
+        }
+      }
+
+      &:first-child .board-cell {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+      }
+
+      &:last-child .board-cell {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+    }
+  }
+
+  .game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @include desktop {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .starship-controls {
+    background: linear-gradient(to bottom, #d667ff, #9649cb);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(255, 182, 255, 0.7);
+    border: 2px solid #ff9edb;
+    color: #ffffff;
+    width: 100%;
+    max-height: calc(100vh - 350px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    @include desktop {
+      max-width: 350px;
+      max-height: none;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      color: #fff3b8;
+      font-family: "Arial", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 214, 214, 0.9);
+      &::before,
+      &::after {
+        content: "⚙️";
+        font-size: 0.8em;
+        margin: 0 8px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .execute-button {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(to right, #64a9ff, #8c7aff);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(100, 169, 255, 0.5),
+      0 0 20px rgba(255, 255, 255, 0.3) inset;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    .execute-icon {
+      font-size: 24px;
+      margin-right: 10px;
+      transform: none; // Remove the rotation since we're using a robot emoji now
+    }
+
+    &:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.4) inset;
+      background: linear-gradient(to right, #75b4ff, #9d8bff);
+    }
+
+    &:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 3px 10px rgba(255, 105, 180, 0.4);
+    }
+  }
+  .control-panel {
+    margin-bottom: 20px;
+
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .command-group {
+      gap: 5px;
+      flex: 3;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        right: -5px;
+        top: 10%;
+        height: 80%;
+        width: 2px;
+        background-color: rgba(255, 255, 255, 0.3);
+
+        @include mobile {
+          display: none;
+        }
+      }
+    }
+
+    .execute-wrapper {
+      flex: 2;
+      text-align: center;
+      position: relative;
+
+      .game-button {
+        width: 95%;
+        padding: 8px;
+
+        &::before,
+        &::after {
+          content: "✨";
+          position: absolute;
+          font-size: 16px;
+        }
+
+        &::before {
+          left: 10px;
+          top: -7px;
+        }
+
+        &::after {
+          right: 10px;
+          bottom: -7px;
+        }
+      }
+    }
+
+    // Hide the old containers since we're not using them
+    .command-buttons,
+    .execute-container {
+      display: none;
+    }
+  }
+
+  // Add some extra styling for the game buttons in our new layout
+  .game-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 12px rgba(255, 255, 255, 0.3);
+
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    &.compact-button {
+      width: 60px;
+      height: 48px;
+      border-radius: 12px;
+      font-size: 30px;
+    }
+
+    &.pill-button {
+      border-radius: 25px;
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    // Color variants
+    &.pink-variant {
+      background-color: #ff85c2;
+      &:hover {
+        background-color: #ffb0d8;
+      }
+    }
+
+    &.blue-variant {
+      background-color: #80b3ff;
+      &:hover {
+        background-color: #a6c9ff;
+      }
+    }
+
+    &.green-variant {
+      background-color: #83e6c5;
+      &:hover {
+        background-color: #a5f5da;
+      }
+    }
+    &.orange-variant {
+      background-color: #fe7a4a;
+      &:hover {
+        background-color: #ffaa7f;
+      }
+    }
+
+    &.purple-variant {
+      background: linear-gradient(to right, #64a9ff, #8c7aff);
+      color: white;
+      box-shadow: 0 4px 15px rgba(100, 169, 255, 0.7),
+        0 0 20px rgba(255, 255, 255, 0.4) inset;
+
+      &:hover {
+        background: linear-gradient(to right, #75b4ff, #9d8bff);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 18px rgba(100, 169, 255, 0.8),
+          0 0 25px rgba(255, 255, 255, 0.5) inset;
+      }
+    }
+
+    .button-icon {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+  }
+
+  .mission-log {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+
+    .empty-log {
+      text-align: center;
+      padding: 10px;
+      font-style: italic;
+      color: #ffe3f1;
+      &::before {
+        content: "💻";
+        display: block;
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .command-sequence {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+
+      @include desktop {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 8px;
+      }
+    }
+
+    .command-item {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      padding: 5px;
+      min-width: auto;
+      flex: 0 0 auto;
+      margin-right: 2px;
+
+      @include desktop {
+        padding: 8px;
+        margin-right: 0;
+      }
+
+      .command-number {
+        background-color: #ffb8e6;
+        color: #8030a0;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 5px;
+        font-size: 12px;
+
+        @include desktop {
+          width: 24px;
+          height: 24px;
+          font-size: 14px;
+          margin-right: 10px;
+        }
+      }
+
+      .command-icon {
+        margin-right: 5px;
+        font-size: 16px;
+
+        @include desktop {
+          margin-right: 10px;
+          font-size: 20px;
+        }
+      }
+
+      .command-text {
+        display: none;
+
+        @include desktop {
+          display: block;
+          flex-grow: 1;
+        }
+      }
+
+      .remove-command {
+        background: none;
+        border: none;
+        color: #ff99cc;
+        cursor: pointer;
+        font-size: 14px;
+
+        @include desktop {
+          font-size: 16px;
+        }
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    .board {
+      margin-bottom: 10px;
+    }
+  }
+
+  // Remove any duplicate or conflicting styles for command-button and execute-button
+  // Comment out these blocks if needed
+  .command-button,
+  .execute-button {
+    display: none !important; // Force hide the old buttons
+  }
+}

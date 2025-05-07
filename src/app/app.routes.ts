@@ -5,6 +5,7 @@ import { NotFoundComponent } from './ui/not-found/not-found.component';
 import { ExcerciseComponent } from './ui/home/exercise/excercise.component';
 import { SudokuComponent } from './ui/home/games/sudoku/sudoku.component';
 import { SudokuConfigComponent } from './ui/home/games/sudoku/sudoku-config/sudoku-config.component';
+import { PathFinderComponent } from './ui/home/games/path-finder/path-finder.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home/course-level', pathMatch: 'full' },
@@ -21,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'sudoku-game/:boardSize/:difficultyLevel',
         component: SudokuComponent,
+      },
+      {
+        path: 'path-finder-game',
+        component: PathFinderComponent,
       },
     ],
   },

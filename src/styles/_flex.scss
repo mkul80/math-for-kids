@@ -79,8 +79,26 @@
   gap: 1rem;
 }
 
+.gap-2 {
+  gap: 2rem;
+}
+
 .expander {
   flex: 1;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hide-on-mobile {

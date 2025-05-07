@@ -229,5 +229,15 @@
     },
     "restart": "Resetuj",
     "give_up": "Pokaż rozwiązanie"
+  },
+  "path_finder": {
+    "title": "Znajdź Drogę!",
+    "control_center": "Centrum sterowania",
+    "rotate_left": "Obróć w lewo",
+    "rotate_right": "Obróć w prawo",
+    "move_forward": "Idź do przodu",
+    "run_program": "Uruchom program",
+    "go_button": "Start",
+    "empty_log_message": "Tutaj pojawią się twoje komendy"
   }
 }

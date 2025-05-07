@@ -1,0 +1,92 @@
+<div class="game-container expander">
+  <div class="board flex-column-center">
+    @for (row of board.fields; let rowIndex = $index; track row) {
+    <div class="board-row">
+      @for (cell of row; let colIndex = $index; track cell) {
+      <div
+        class="board-cell"
+        [class.robot]="containsRobot(rowIndex, colIndex)"
+        [class.walking]="containsRobot(rowIndex, colIndex) && isAnimating"
+      >
+        @if(board.isEndPosition(rowIndex, colIndex)) {
+        <span>🚪</span>
+        }
+        {{ cell.symbol }}
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="starship-controls d-flex flex-column expander">
+    <div class="control-panel">
+      <!-- <h2>{{ "path_finder.control_center" | translate }}</h2> -->
+      <div class="buttons-row">
+        <div class="command-group flex-row-center">
+          <button
+            class="game-button compact-button green-variant"
+            (click)="addCommand('moveLeft')"
+            [title]="'path_finder.move_left' | translate"
+          >
+            ⬅️
+          </button>
+          <div class="d-flex flex-column gap-1">
+            <button
+              class="game-button compact-button blue-variant"
+              (click)="addCommand('moveUp')"
+              [title]="'path_finder.move_up' | translate"
+            >
+              ⬆️
+            </button>
+            <button
+              class="game-button compact-button pink-variant"
+              (click)="addCommand('moveDown')"
+              [title]="'path_finder.move_down' | translate"
+            >
+              ⬇️
+            </button>
+          </div>
+          <button
+            class="game-button compact-button orange-variant"
+            (click)="addCommand('moveRight')"
+            [title]="'path_finder.move_right' | translate"
+          >
+            ➡️
+          </button>
+        </div>
+        <div class="execute-wrapper expander">
+          <button
+            (click)="executeCommands()"
+            class="game-button pill-button purple-variant"
+            [title]="'path_finder.run_program' | translate"
+          >
+            <span class="button-icon">▶️</span>
+            <span class="button-text">{{
+              "path_finder.go_button" | translate
+            }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mission-log expander">
+      @if (commands.length === 0) {
+      <div class="empty-log">
+        {{ "path_finder.empty_log_message" | translate }}
+      </div>
+      } @else {
+      <div class="command-sequence">
+        @for (command of commands; let i = $index; track i) {
+        <div class="command-item">
+          <span class="command-number desktop-only">{{ i + 1 }}</span>
+          <span class="command-icon">{{ getCommandIcon(command) }}</span>
+          <span class="command-text">{{ command }}</span>
+          <button class="remove-command" (click)="removeCommand(i)">❌</button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</div>
+Position: {{ robot.currentPosition.row }}:{{ robot.currentPosition.column }}
