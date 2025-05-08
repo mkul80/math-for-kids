@@ -5,18 +5,6 @@
   display: flex;
   flex-direction: column;
   padding: 0.25rem;
-  .robot {
-    width: 80px;
-    height: 80px;
-    background-image: url("/assets/images/robot.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transition: transform 0.5s ease; /* Add transition for rotation */
-    transform-origin: center center;
-    animation: blink 2s infinite;
-    border: 2px solid #ff9edb;
-  }
 
   @keyframes blink {
     0%,
@@ -28,12 +16,66 @@
     }
   }
 
+  @keyframes shakeRobot {
+    0%,
+    100% {
+      transform: translateX(0) rotate(0deg);
+    }
+    20% {
+      transform: translateX(-5px) rotate(-5deg);
+    }
+    40% {
+      transform: translateX(5px) rotate(5deg);
+    }
+    60% {
+      transform: translateX(-5px) rotate(-5deg);
+    }
+    80% {
+      transform: translateX(5px) rotate(5deg);
+    }
+  }
+
+  @keyframes pulseCollision {
+    0% {
+      background-color: rgba(255, 100, 100, 0.3);
+    }
+    50% {
+      background-color: rgba(255, 50, 50, 0.7);
+    }
+    100% {
+      background-color: rgba(255, 100, 100, 0.3);
+    }
+  }
+
+  @keyframes destinationPulse {
+    0% {
+      box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.5);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.9);
+      background-color: rgba(255, 250, 200, 0.8);
+    }
+    100% {
+      box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.5);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
   /* Apply moving animation when robot is walking */
   .robot.walking {
     animation: moveAnimation 0.5s ease-in-out, blink 2s infinite;
   }
 
+  /* Apply shake animation when robot is stuck */
+  .robot.stuck {
+    animation: shakeRobot 0.5s ease-in-out;
+    border: 3px solid #ff0000;
+    box-shadow: 0 0 10px #ff0000;
+  }
+
   .board {
+    position: relative;
     aspect-ratio: 1;
     box-sizing: border-box;
     border: 2px solid #ff9edb;
@@ -41,13 +83,15 @@
     overflow: hidden;
     box-shadow: 0 0 15px rgba(255, 182, 255, 0.7);
     background: linear-gradient(to bottom right, #e9c6ff, #d1a6f7);
+    display: grid;
+    // grid-template-columns: repeat(5, 1fr);
 
     @include desktop {
       max-width: 500px;
     }
 
     .board-row {
-      display: flex;
+      display: contents;
 
       .board-cell {
         outline: 1px solid rgba(255, 158, 219, 0.4);
@@ -55,12 +99,35 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 80px;
-        width: calc(95vw / 5);
+        width: 100%;
         height: auto;
-        font-size: 50px;
         background-color: rgba(255, 255, 255, 0.3);
         transition: all 0.2s ease;
+
+        &.collision {
+          animation: pulseCollision 0.7s ease-in-out 2;
+          box-shadow: 0 0 15px #ff0000 inset;
+          z-index: 1;
+        }
+
+        &.finish {
+          animation: destinationPulse 2s infinite ease-in-out;
+          position: relative;
+          z-index: 1;
+
+          &::after {
+            content: "🚪";
+            font-size: 1.2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+        &.start {
+          background-color: rgba(255, 255, 255, 0.5);
+          border-radius: 50%;
+        }
 
         &:hover {
           background-color: rgba(255, 255, 255, 0.5);
@@ -70,32 +137,40 @@
         @include desktop {
           font-size: 60px;
         }
-
-        &.robot {
-          background-color: rgba(140, 122, 255, 0.3);
-        }
       }
 
-      &:first-child .board-cell {
+      // Apply border radius to first and last rows
+      &:first-child .board-cell:first-child {
         border-top-left-radius: 6px;
+      }
+      &:first-child .board-cell:last-child {
         border-top-right-radius: 6px;
       }
-
-      &:last-child .board-cell {
+      &:last-child .board-cell:first-child {
         border-bottom-left-radius: 6px;
+      }
+      &:last-child .board-cell:last-child {
         border-bottom-right-radius: 6px;
       }
+    }
+    .robot {
+      position: absolute;
+      background-image: url("/assets/images/robot.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      transition: top 0.8s ease, left 0.8s ease;
     }
   }
 
   .game-container {
     display: flex;
     flex-direction: column;
+
     gap: 15px;
 
     @include desktop {
-      flex-direction: row;
-      align-items: flex-start;
+      flex-direction: row-reverse;
+      align-items: center;
     }
   }
 
@@ -111,7 +186,8 @@
     overflow-y: auto;
     box-sizing: border-box;
     @include desktop {
-      max-width: 350px;
+      max-width: 400px;
+      height: 100%;
       max-height: none;
     }
 

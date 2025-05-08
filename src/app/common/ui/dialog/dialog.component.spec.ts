@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SudokuConfigComponent } from './sudoku-config.component';
+import { DialogComponent } from './dialog.component';
 
-describe('SudokuConfigComponent', () => {
-  let component: SudokuConfigComponent;
-  let fixture: ComponentFixture<SudokuConfigComponent>;
+describe('DialogComponent', () => {
+  let component: DialogComponent;
+  let fixture: ComponentFixture<DialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SudokuConfigComponent]
+      imports: [DialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SudokuConfigComponent);
+    fixture = TestBed.createComponent(DialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

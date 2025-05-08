@@ -1,14 +1,24 @@
 <div class="game-container expander">
-  <div class="board flex-column-center">
+  <div
+    #boardRef
+    class="board"
+    [style.gridTemplateColumns]="'repeat(' + boardSize + ', 1fr)'"
+  >
     @for (row of board.fields; let rowIndex = $index; track row) {
     <div class="board-row">
       @for (cell of row; let colIndex = $index; track cell) {
       <div
         class="board-cell"
-        [class.robot]="containsRobot(rowIndex, colIndex)"
-        [class.walking]="containsRobot(rowIndex, colIndex) && isAnimating"
+        [style.font-size.px]="300 / boardSize"
+        [class.finish]="
+          board.end.row === rowIndex && board.end.column === colIndex
+        "
+        [class.start]="
+          board.start.row === rowIndex && board.start.column === colIndex
+        "
+        [class.collision]="isCollisionCell(rowIndex, colIndex)"
       >
-        @if(board.isEndPosition(rowIndex, colIndex)) {
+        @if(board.isEndPosition(rowIndex, colIndex) && !gameFinished) {
         <span>🚪</span>
         }
         {{ cell.symbol }}
@@ -16,11 +26,21 @@
       }
     </div>
     }
+    <div
+      class="robot"
+      [class.walking]="isWalking"
+      [class.stuck]="robotStuck"
+      [style.top.%]="robot.currentPosition.row * (100 / boardSize)"
+      [style.left.%]="robot.currentPosition.column * (100 / boardSize)"
+      [style.width]="'calc(100% / ' + boardSize + ')'"
+      [style.height]="'calc(100% / ' + boardSize + ')'"
+    ></div>
   </div>
-
   <div class="starship-controls d-flex flex-column expander">
     <div class="control-panel">
-      <!-- <h2>{{ "path_finder.control_center" | translate }}</h2> -->
+      <h2 class="desktop-only">
+        {{ "path_finder.control_center" | translate }}
+      </h2>
       <div class="buttons-row">
         <div class="command-group flex-row-center">
           <button
@@ -80,7 +100,9 @@
         <div class="command-item">
           <span class="command-number desktop-only">{{ i + 1 }}</span>
           <span class="command-icon">{{ getCommandIcon(command) }}</span>
-          <span class="command-text">{{ command }}</span>
+          <span class="command-text">{{
+            getCommandTranslationKey(command) | translate
+          }}</span>
           <button class="remove-command" (click)="removeCommand(i)">❌</button>
         </div>
         }
@@ -89,4 +111,3 @@
     </div>
   </div>
 </div>
-Position: {{ robot.currentPosition.row }}:{{ robot.currentPosition.column }}

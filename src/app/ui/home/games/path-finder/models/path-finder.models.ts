@@ -7,4 +7,15 @@ export class Position {
     return this.row === position.row && this.column === position.column;
   }
 }
-export const FIELD_VALUES = ['', '📦', '🪜', '🛞', '🧯', '🧱', '🚧'] as const;
+export const FIELD_VALUES = [
+  '',
+  '📦',
+  '🗑',
+  '🛋',
+  '🪑',
+  '🧱',
+  '🪨',
+  '🔧',
+  '🧲',
+  '🪵',
+] as const;

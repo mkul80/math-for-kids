@@ -1,4 +1,5 @@
 {
+  "calculator": "Calculator",
   "select_operation": "Select operation",
   "operation_addition": "➕ Addition",
   "operation_subtraction": "➖ Subtraction",
@@ -236,8 +237,39 @@
     "rotate_left": "Rotate left",
     "rotate_right": "Rotate right",
     "move_forward": "Move forward",
+    "move_up": "Move up",
+    "move_down": "Move down",
+    "move_left": "Move left",
+    "move_right": "Move right",
     "run_program": "Run program",
     "go_button": "Go!",
-    "empty_log_message": "Your mission commands will appear here"
+    "empty_log_message": "Your mission commands will appear here",
+    "config": {
+      "board_size": "Select board size",
+      "board_size_5": "5x5",
+      "board_size_6": "6x6",
+      "board_size_7": "7x7",
+      "board_size_8": "8x8"
+    },
+    "invalid_path_dialog": {
+      "header": "Uh-oh! Blocked path!",
+      "content": "Your robot is stuck. Maybe there's a wall? Check your moves and try again!"
+    },
+    "incomplete_path_dialog": {
+      "header": "Almost there!",
+      "content": "Your robot started moving but didn’t reach the goal. Add a few more commands and try again!"
+    },
+    "success_dialog": {
+      "header": "Mission accomplished!",
+      "content": "Your robot reached the goal! Great job! 🎉",
+      "ok_button": "Restart",
+      "cancel_button": "New game"
+    }
+  },
+  "universal_dialog": {
+    "header": "Invalid path",
+    "content": "The path is invalid. Please check your commands.",
+    "ok_button": "OK",
+    "cancel_button": "Cancel"
   }
 }

@@ -13,6 +13,14 @@ export class Robot {
     };
   }
 
+  set currentPosition(position: Position) {
+    this.position = new Position(position.row, position.column);
+  }
+
+  resetPosition(): void {
+    this.position = new Position(this.board.start.row, this.board.start.column);
+  }
+
   validateCommand(command: MoveCommand): boolean {
     const newPosition = { ...this.position };
     switch (command) {

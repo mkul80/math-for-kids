@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PathFinderComponent } from './path-finder.component';
+import { PathFinderSetupComponent } from './path-finder-setup.component';
 
-describe('PathFinderComponent', () => {
-  let component: PathFinderComponent;
-  let fixture: ComponentFixture<PathFinderComponent>;
+describe('PathFinderSetupComponent', () => {
+  let component: PathFinderSetupComponent;
+  let fixture: ComponentFixture<PathFinderSetupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PathFinderComponent]
+      imports: [PathFinderSetupComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PathFinderComponent);
+    fixture = TestBed.createComponent(PathFinderSetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
