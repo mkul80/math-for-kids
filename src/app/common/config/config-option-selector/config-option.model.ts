@@ -8,6 +8,6 @@ export interface Step<T> {
   labelKey: string;
 }
 
-export interface Config {
-  steps: Step<any>[];
+export interface Config<T extends any[]> {
+  steps: { [K in keyof T]: Step<T[K]> };
 }

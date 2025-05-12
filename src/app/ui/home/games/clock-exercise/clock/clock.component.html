@@ -1,0 +1,66 @@
+<svg
+  viewBox="0 0 100 100"
+  width="300"
+  height="300"
+  style="
+    background-color: #fff3e0;
+    border-radius: 50%;
+    box-shadow: 2px 2px 8px #aaa;
+  "
+>
+  <circle
+    cx="50"
+    cy="50"
+    r="48"
+    stroke="#333"
+    stroke-width="2"
+    fill="#fff8dc"
+  />
+
+  <g
+    font-size="6"
+    font-family="Comic Sans MS"
+    fill="#000"
+    text-anchor="middle"
+    dominant-baseline="middle"
+  >
+    <text x="50" y="12">12</text>
+    <text x="70.7" y="17.6">1</text>
+    <text x="82.4" y="29.3">2</text>
+    <text x="88" y="50">3</text>
+    <text x="82.4" y="70.7">4</text>
+    <text x="70.7" y="82.4">5</text>
+    <text x="50" y="88">6</text>
+    <text x="29.3" y="82.4">7</text>
+    <text x="17.6" y="70.7">8</text>
+    <text x="12" y="50">9</text>
+    <text x="17.6" y="29.3">10</text>
+    <text x="29.3" y="17.6">11</text>
+  </g>
+
+  <line
+    id="hour-hand"
+    x1="50"
+    y1="50"
+    x2="50"
+    y2="28"
+    stroke="#444"
+    stroke-width="3"
+    stroke-linecap="round"
+    [attr.transform]="'rotate(' + hourAngle + ' 50 50)'"
+  />
+
+  <line
+    id="minute-hand"
+    x1="50"
+    y1="50"
+    x2="50"
+    y2="20"
+    stroke="#888"
+    stroke-width="2"
+    stroke-linecap="round"
+    [attr.transform]="'rotate(' + minuteAngle + ' 50 50)'"
+  />
+
+  <circle cx="50" cy="50" r="2" fill="#000" />
+</svg>

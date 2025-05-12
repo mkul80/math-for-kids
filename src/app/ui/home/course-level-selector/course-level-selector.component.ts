@@ -1,9 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Config } from '../../../common/config/config-option-selector/config-option.model';
+import {
+  Config,
+  ConfigOption,
+  Step,
+} from '../../../common/config/config-option-selector/config-option.model';
 import { ConfigComponent } from '../../../common/config/config.component';
 import { ExerciseExecutionStore } from '../../../store/exercise/exercise-execution.store';
-import { Operation } from '../../../models/exercise';
+import { Operation, SelectableOperation } from '../../../models/exercise';
 import { DifficultyLevel } from '../../../business-logic/exercise-generator.service';
 
 @Component({
@@ -16,13 +20,13 @@ import { DifficultyLevel } from '../../../business-logic/exercise-generator.serv
 export class CourseLevelSelectorComponent {
   #router = inject(Router);
   #exerciseStore = inject(ExerciseExecutionStore);
-  config: Config = {
+  config: Config<[SelectableOperation, number, string]> = {
     steps: [
       {
         options: [
           { value: '+', labelKey: 'operation_addition' },
           { value: '-', labelKey: 'operation_subtraction' },
-          { value: 'any', labelKey: 'operation_any' },
+          { value: 'both', labelKey: 'operation_any' },
         ],
         labelKey: 'select_operation',
       },
@@ -45,7 +49,7 @@ export class CourseLevelSelectorComponent {
   };
 
   onConfigChange([operation, difficultyLevel, exerciseType]: [
-    Operation,
+    SelectableOperation,
     DifficultyLevel,
     string
   ]): void {
@@ -60,6 +64,6 @@ export class CourseLevelSelectorComponent {
         difficultyLevel
       );
     }
-    this.#router.navigate(['/home/excercise']);
+    this.#router.navigate(['/home/exercise']);
   }
 }

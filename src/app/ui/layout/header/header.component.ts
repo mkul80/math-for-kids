@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OkCancelDialogComponent } from '../../dialogs/ok-cancel.dialog.component';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { CalculatorComponent } from '../../dialogs/calculator-dialog.component';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatDividerModule } from '@angular/material/divider';
@@ -29,7 +29,7 @@ import { AuthService } from '../../../common/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   #router = inject(Router);
   #dialogService = inject(MatDialog);
   #translateService = inject(TranslateService);
@@ -38,18 +38,6 @@ export class HeaderComponent implements OnInit {
   get userName(): string {
     Logger.log('userName', this.#authService);
     return this.#authService.userName;
-  }
-
-  version: string = '';
-
-  ngOnInit() {
-    this.#http
-      .get<{ version: string }>('assets/version.json')
-      .pipe(
-        take(1),
-        map((data) => data.version)
-      )
-      .subscribe((version) => (this.version = version));
   }
 
   get selectedLang() {
@@ -73,7 +61,7 @@ export class HeaderComponent implements OnInit {
     dialogRef
       .afterClosed()
       .pipe(take(1))
-      .subscribe((result) => {
+      .subscribe(result => {
         if (result) {
           this.#router.navigate(['/']);
         }

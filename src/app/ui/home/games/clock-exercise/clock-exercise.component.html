@@ -1,0 +1,42 @@
+<div class="quiz-container">
+  <div class="progress-bar">
+    <ng-container *ngFor="let i of [].constructor(10); let idx = index">
+      <span
+        [ngClass]="{
+          good: results[idx] === 'correct',
+          bad: results[idx] === 'wrong',
+          empty: results[idx] !== 'correct' && results[idx] !== 'wrong'
+        }"
+        >●</span
+      >
+    </ng-container>
+    <app-clock [hour]="hour" [minutes]="minutes"></app-clock>
+  </div>
+</div>
+<br />
+<div class="buttons-container">
+  <div class="answers">
+    <button
+      *ngFor="let answer of answers"
+      [ngClass]="{
+        correct: selectedAnswer && isCorrect(answer),
+        wrong: selectedAnswer && selectedAnswer === answer && !isCorrect(answer)
+      }"
+      (click)="chooseAnswer(answer)"
+      [disabled]="selectedAnswer !== null"
+    >
+      {{ answer }}
+    </button>
+  </div>
+
+  <div class="next">
+    <button
+      [class.disabled]="!selectedAnswer"
+      (click)="generateQuestion(difficultyLevel)"
+    >
+      🎯 Kolejne pytanie
+    </button>
+  </div>
+</div>
+
+<div class="confetti" *ngIf="showConfetti">🎉 🎊 🎉 🎊 🎉</div>

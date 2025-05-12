@@ -30,6 +30,24 @@
   "select_answer": "Please select an answer",
   "explanation_first_step": "First step",
   "explanation_next_step": "Next step",
+  "dashboard": {
+    "title": "Choose a task",
+    "math_title": "Math",
+    "sudoku_title": "Sudoku",
+    "path_finder_title": "RoboPath",
+    "clock_title": "Clock",
+    "settings_title": "Settings",
+    "help_title": "Help",
+    "version": "Version"
+  },
+  "clock": {
+    "config": {
+      "difficulty_level": "Select difficulty level",
+      "difficulty_level_0": "Easy",
+      "difficulty_level_1": "Medium",
+      "difficulty_level_2": "Hard"
+    }
+  },
   "task": {
     "money": {
       "start": "Martha had {value} {value, plural, one {dolar} other {dolars}} 💰",

@@ -10,7 +10,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './config.component.scss',
 })
 export class ConfigComponent {
-  @Input() config!: Config;
+  @Input() config!: Config<any>;
   @Output() selectionChange = new EventEmitter();
   currentIndex = 0;
   selectedValues: any[] = [];

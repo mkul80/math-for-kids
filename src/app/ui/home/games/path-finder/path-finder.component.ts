@@ -15,7 +15,7 @@ import { Robot } from './models/robot';
 import { MatDialog } from '@angular/material/dialog';
 import { OkCancelDialogComponent } from '../../../dialogs/ok-cancel.dialog.component';
 import { take } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-path-finder',
@@ -27,6 +27,7 @@ export class PathFinderComponent implements OnInit, AfterViewInit {
   @ViewChild('boardRef') boardRef!: ElementRef<HTMLDivElement>;
   #dialog = inject(MatDialog);
   #route = inject(ActivatedRoute);
+  #router = inject(Router);
   boardSize!: number;
   board!: Board;
   robot!: Robot;
@@ -116,8 +117,10 @@ export class PathFinderComponent implements OnInit, AfterViewInit {
       .pipe(take(1))
       .subscribe(result => {
         if (!!result) {
-          this.initializeBoardAndRobot()
+          this.initializeBoardAndRobot();
           this.commands = [];
+        } else {
+          this.#router.navigate(['home/path-finder/setup']);
         }
       });
 

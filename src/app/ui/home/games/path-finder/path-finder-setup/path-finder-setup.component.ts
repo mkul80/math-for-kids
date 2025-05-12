@@ -12,7 +12,7 @@ import { ConfigComponent } from '../../../../../common/config/config.component';
 export class PathFinderSetupComponent {
   #router = inject(Router);
 
-  config: Config = {
+  config: Config<[number]> = {
     steps: [
       {
         options: [

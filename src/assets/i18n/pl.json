@@ -30,6 +30,24 @@
   "select_answer": "Proszę wybierz odpowiedź",
   "explanation_first_step": "Pierwszy krok",
   "explanation_next_step": "Następny krok",
+  "dashboard": {
+    "title": "Wybierz zadanie",
+    "math_title": "Matematyka",
+    "sudoku_title": "Sudoku",
+    "path_finder_title": "Znajdź drogę",
+    "clock_title": "Zegar",
+    "settings_title": "Ustawienia",
+    "help_title": "Pomoc",
+    "version": "Wersja"
+  },
+  "clock": {
+    "config": {
+      "difficulty_level": "Wybierz poziom trudności",
+      "difficulty_level_0": "Łatwy",
+      "difficulty_level_1": "Średni",
+      "difficulty_level_2": "Trudny"
+    }
+  },
   "task": {
     "money": {
       "start": "Marta miała {value} zł 💰",
@@ -262,7 +280,8 @@
     "success_dialog": {
       "header": "Brawo! Udało się!",
       "content": "Udało się! Twój robot dotarł do celu! 🎉",
-      "ok_button": "Nowa gra"
+      "ok_button": "Powtórz",
+      "cancel_button": "Nowa gra"
     }
   },
   "universal_dialog": {

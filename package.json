@@ -1,11 +1,11 @@
 {
   "name": "math-tutorial",
-  "version": "0.0.26",
+  "version": "0.0.28",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:prod": "ng build --configuration production",
-    "build": "node update-version.js && ng build  --configuration production",
+    "build:prod": "ng build --configuration production --base-href /math/",
+    "build": "node update-version.js && ng build  --configuration production --base-href /math/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

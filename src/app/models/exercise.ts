@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 export type Operation = '+' | '-';
+export type SelectableOperation = '+' | '-' | 'both';
 
 const keycapEmojis = [
   '0️⃣',
@@ -57,11 +58,11 @@ export class Exercise implements IExercise {
   }
 
   get values(): number[] {
-    return this.terms.map((term) => term.value);
+    return this.terms.map(term => term.value);
   }
 
   get operations(): Operation[] {
-    return this.terms.slice(1).map((term) => term.operation as Operation);
+    return this.terms.slice(1).map(term => term.operation as Operation);
   }
 
   evaluate(): number {
@@ -75,7 +76,7 @@ export class Exercise implements IExercise {
 
   toString(): string {
     return this.terms
-      .map((term) =>
+      .map(term =>
         term.operation ? `${term.operation} ${term.value}` : `${term.value}`
       )
       .join(' ');

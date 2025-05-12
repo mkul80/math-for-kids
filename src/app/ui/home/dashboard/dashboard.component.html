@@ -1,0 +1,44 @@
+<div class="dashboard-container">
+  <h1 class="dashboard-title">{{ "dashboard.title" | translate }}</h1>
+
+  <div class="tiles-grid">
+    <div class="tile math-tile" [routerLink]="['/home/course-level']">
+      <div class="tile-icon">🧮</div>
+      <div class="tile-title">{{ "dashboard.math_title" | translate }}</div>
+    </div>
+
+    <div class="tile games-tile" [routerLink]="['/home/clock-setup']">
+      <div class="tile-icon">⏰️</div>
+      <div class="tile-title">{{ "dashboard.clock_title" | translate }}</div>
+    </div>
+
+    <div class="tile quiz-tile" [routerLink]="['/home/sudoku']">
+      <div class="tile-icon">❓</div>
+      <div class="tile-title">{{ "dashboard.sudoku_title" | translate }}</div>
+    </div>
+
+    <div
+      class="tile path-finder-tile"
+      [routerLink]="['/home/path-finder/setup']"
+    >
+      <div class="tile-icon">🤖</div>
+      <div class="tile-title">
+        {{ "dashboard.path_finder_title" | translate }}
+      </div>
+    </div>
+
+    <div class="tile settings-tile disabled">
+      <div class="tile-icon">⚙️</div>
+      <div class="tile-title">{{ "dashboard.settings_title" | translate }}</div>
+    </div>
+
+    <div class="tile help-tile disabled">
+      <div class="tile-icon">📚</div>
+      <div class="tile-title">{{ "dashboard.help_title" | translate }}</div>
+    </div>
+  </div>
+
+  <div class="version-footer">
+    <span>✨ {{ "dashboard.version" | translate }}: {{ version }} ✨</span>
+  </div>
+</div>

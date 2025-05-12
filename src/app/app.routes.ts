@@ -7,16 +7,20 @@ import { SudokuComponent } from './ui/home/games/sudoku/sudoku.component';
 import { SudokuConfigComponent } from './ui/home/games/sudoku/sudoku-config/sudoku-config.component';
 import { PathFinderComponent } from './ui/home/games/path-finder/path-finder.component';
 import { PathFinderSetupComponent } from './ui/home/games/path-finder/path-finder-setup/path-finder-setup.component';
+import { DashboardComponent } from './ui/home/dashboard/dashboard.component';
+import { ClockExerciseComponent } from './ui/home/games/clock-exercise/clock-exercise.component';
+import { ClockSetupComponent } from './ui/home/games/clock-exercise/clock-setup/clock-setup.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/home/course-level', pathMatch: 'full' },
+  { path: '', redirectTo: '/home/dashboard', pathMatch: 'full' },
   {
     path: 'home',
     component: HomeComponent,
     children: [
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'course-level', component: CourseLevelSelectorComponent },
       {
-        path: 'excercise',
+        path: 'exercise',
         component: ExcerciseComponent,
       },
       { path: 'sudoku', component: SudokuConfigComponent },
@@ -24,6 +28,8 @@ export const routes: Routes = [
         path: 'sudoku-game/:boardSize/:difficultyLevel',
         component: SudokuComponent,
       },
+      { path: 'clock-setup', component: ClockSetupComponent },
+      { path: 'clock/:difficultyLevel', component: ClockExerciseComponent },
       {
         path: 'path-finder',
         children: [

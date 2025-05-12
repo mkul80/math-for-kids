@@ -13,7 +13,7 @@ import { ConfigComponent } from '../../../../../common/config/config.component';
 export class SudokuConfigComponent {
   #router = inject(Router);
 
-  config: Config = {
+  config: Config<[number, number]> = {
     steps: [
       {
         options: [

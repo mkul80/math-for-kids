@@ -1,0 +1,171 @@
+@import "rwd";
+
+:host {
+  display: block;
+  height: 100%;
+  padding: 1rem;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  text-align: center;
+  color: #8c7aff;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-shadow: 0 0 8px rgba(255, 214, 214, 0.5);
+
+  &::before,
+  &::after {
+    content: "✨";
+    margin: 0 10px;
+  }
+}
+
+.tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+
+  @include desktop {
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 30px;
+  }
+}
+
+.tile {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border: 2px solid transparent;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .tile-icon {
+      transform: scale(1.15);
+    }
+  }
+
+  &:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+
+      &::before {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.tile-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.tile-title {
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+// Tile color variants
+.math-tile {
+  background: linear-gradient(135deg, #ff85c2, #ff5aa5);
+  border-color: #ffb0d8;
+}
+
+.games-tile {
+  background: linear-gradient(135deg, #83e6c5, #4bcf9c);
+  border-color: #a5f5da;
+}
+
+.quiz-tile {
+  background: linear-gradient(135deg, #80b3ff, #5494e8);
+  border-color: #a6c9ff;
+}
+
+.path-finder-tile {
+  background: linear-gradient(135deg, #d667ff, #9649cb);
+  border-color: #ff9edb;
+}
+
+.settings-tile {
+  background: linear-gradient(135deg, #ffcc66, #ffaa00);
+  border-color: #ffe0a3;
+}
+
+.help-tile {
+  background: linear-gradient(135deg, #fe7a4a, #e65c2e);
+  border-color: #ffaa7f;
+}
+
+// Version footer styling
+.version-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #8c7aff;
+  opacity: 0.8;
+  font-weight: 500;
+  text-shadow: 0 0 4px rgba(255, 214, 214, 0.3);
+
+  span {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.2)
+    );
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

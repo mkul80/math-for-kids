@@ -4,7 +4,7 @@
     class="board"
     [style.gridTemplateColumns]="'repeat(' + boardSize + ', 1fr)'"
   >
-    @for (row of board.fields; let rowIndex = $index; track row) {
+    @for (row of board.fields; let rowIndex = $index; track $index) {
     <div class="board-row">
       @for (cell of row; let colIndex = $index; track cell) {
       <div
@@ -34,7 +34,9 @@
       [style.left.%]="robot.currentPosition.column * (100 / boardSize)"
       [style.width]="'calc(100% / ' + boardSize + ')'"
       [style.height]="'calc(100% / ' + boardSize + ')'"
-    ></div>
+    >
+      <img class="robot-image" src="assets/images/robot.png" alt="" />
+    </div>
   </div>
   <div class="starship-controls d-flex flex-column expander">
     <div class="control-panel">

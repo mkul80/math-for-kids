@@ -12,7 +12,11 @@ import { computed } from '@angular/core';
 import { FailedExercisesStore } from '../failed-exercises/failed-exercises.store';
 import { LocalStorageService } from './local-storage-service';
 import { UserScore } from '../../models/user-score';
-import { Exercise, Operation } from '../../models/exercise';
+import {
+  Exercise,
+  Operation,
+  SelectableOperation,
+} from '../../models/exercise';
 import {
   DifficultyLevel,
   ExerciseGenerator,
@@ -38,11 +42,11 @@ const initialState: ExerciseExecutionState = {
 export const ExerciseExecutionStore = signalStore(
   withState(initialState),
   withHooks({
-    onDestroy: (store) => {
+    onDestroy: store => {
       LocalStorageService.saveUserScore(store.totalScore());
     },
   }),
-  withComputed((store) => ({
+  withComputed(store => ({
     currentExercise: computed(() => {
       const currentIndex = store.currentIndex();
       return store.exerciseSet()[currentIndex];
@@ -74,14 +78,14 @@ export const ExerciseExecutionStore = signalStore(
       }),
       errorCount: computed(() => {
         return excerciseSet().filter(
-          (excercise) =>
+          excercise =>
             excercise.userResult !== undefined &&
             excercise.userResult !== excercise.exerciseDefinition.evaluate()
         ).length;
       }),
       correctCount: computed(() => {
         return excerciseSet().filter(
-          (excercise) =>
+          excercise =>
             excercise.userResult === excercise.exerciseDefinition.evaluate()
         ).length;
       }),
@@ -113,40 +117,40 @@ export const ExerciseExecutionStore = signalStore(
       wordExerciseBuilder = inject(WordExerciseBuilder)
     ) => ({
       configureBinaryArythmeticExercises(
-        operation: Operation,
+        operation: SelectableOperation,
         difficultyLevel: DifficultyLevel
       ): void {
         const exercises: Exercise[] = Array.from({ length: 10 }, () =>
           ExerciseGenerator.generateExercise(
             2,
             difficultyLevel,
-            operation ? [operation] : undefined
+            operation ? [selectOperation(operation)] : undefined
           )
         );
 
         patchState(store, {
-          exerciseSet: exercises.map(
-            (exercise) => new ExerciseAttempt(exercise)
-          ),
+          exerciseSet: exercises.map(exercise => new ExerciseAttempt(exercise)),
           difficultyLevel,
           currentIndex: 0,
         });
       },
       configureTernaryArythmeticExercises(
-        operation: Operation,
+        operation: SelectableOperation,
         difficultyLevel: DifficultyLevel
       ): void {
         const exercises: Exercise[] = Array.from({ length: 10 }, () =>
           ExerciseGenerator.generateExercise(
             3,
             difficultyLevel,
-            operation ? [operation, operation] : undefined
+            operation
+              ? [selectOperation(operation), selectOperation(operation)]
+              : undefined
           )
         );
 
         patchState(store, {
           exerciseSet: exercises.map(
-            (exercise) =>
+            exercise =>
               new ExerciseAttempt(
                 exercise,
                 ...Object.values(
@@ -165,17 +169,30 @@ export const ExerciseExecutionStore = signalStore(
         const currentExercise = store.currentExercise();
         const updatedExercise = currentExercise.withUserResult(userResult);
 
-        patchState(store, (state) => ({
+        patchState(store, state => ({
           exerciseSet: state.exerciseSet.map((exercise, index) =>
             index === store.currentIndex() ? updatedExercise : exercise
           ),
         }));
       },
       nextExercise() {
-        patchState(store, (state) => ({
+        patchState(store, state => ({
           currentIndex: state.currentIndex + 1,
         }));
       },
     })
   )
 );
+
+function selectOperation(operation: SelectableOperation): Operation {
+  switch (operation) {
+    case '+':
+      return '+';
+    case '-':
+      return '-';
+    case 'both':
+      return Math.random() < 0.5 ? '+' : '-';
+    default:
+      throw new Error('Invalid operation');
+  }
+}
