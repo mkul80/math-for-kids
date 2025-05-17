@@ -13,7 +13,7 @@
     </div>
 
     <div class="tile quiz-tile" [routerLink]="['/home/sudoku']">
-      <div class="tile-icon">❓</div>
+      <div class="tile-icon">🚀</div>
       <div class="tile-title">{{ "dashboard.sudoku_title" | translate }}</div>
     </div>
 
@@ -24,6 +24,13 @@
       <div class="tile-icon">🤖</div>
       <div class="tile-title">
         {{ "dashboard.path_finder_title" | translate }}
+      </div>
+    </div>
+
+    <div class="tile quiz-tile" [routerLink]="['/home/math-blaster/game']">
+      <div class="tile-icon">❓</div>
+      <div class="tile-title">
+        {{ "dashboard.math_blaster_title" | translate }}
       </div>
     </div>
 

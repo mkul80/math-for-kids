@@ -33,6 +33,7 @@
   "dashboard": {
     "title": "Wybierz zadanie",
     "math_title": "Matematyka",
+    "math_blaster_title": "MatBlaster",
     "sudoku_title": "Sudoku",
     "path_finder_title": "Znajdź drogę",
     "clock_title": "Zegar",
@@ -282,6 +283,35 @@
       "content": "Udało się! Twój robot dotarł do celu! 🎉",
       "ok_button": "Powtórz",
       "cancel_button": "Nowa gra"
+    }
+  },
+  "math_blaster": {
+    "title": "MatBlaster",
+    "mission": "Misja",
+    "score": "Wynik",
+    "start_mission": "ROZPOCZNIJ MISJĘ",
+    "play_again": "Zagraj ponownie",
+    "game_over": "Koniec gry!",
+    "level_complete": "Poziom ukończony!",
+    "mobile_controls": {
+      "left": "LEWO",
+      "fire": "OGIEŃ",
+      "right": "PRAWO"
+    },
+    "config": {
+      "difficulty_title": "Wybierz poziom",
+      "easy": {
+        "name": "Łatwy",
+        "desc": "Proste dodawanie"
+      },
+      "medium": {
+        "name": "Średni",
+        "desc": "Dodawanie i odejmowanie"
+      },
+      "hard": {
+        "name": "Trudny",
+        "desc": "Większe liczby"
+      }
     }
   },
   "universal_dialog": {

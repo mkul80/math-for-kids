@@ -1,0 +1,183 @@
+<div class="game-container">
+  <!-- New spaceship control panel -->
+  <div class="spaceship-control-panel">
+    <div class="panel-section problem-display">
+      <div class="panel-label">{{ "math_blaster.mission" | translate }}</div>
+      <div class="panel-value">{{ currentTask }}</div>
+    </div>
+    <div class="panel-divider"></div>
+    <div class="panel-section score-panel">
+      <div class="panel-label">{{ "math_blaster.score" | translate }}</div>
+      <div class="panel-value">{{ score }}</div>
+    </div>
+  </div>
+
+  <div #gameBoard class="game-board">
+    <!-- Start game button -->
+    <div
+      *ngIf="!gameStarted && !selectingDifficulty"
+      class="start-button-container"
+    >
+      <button class="start-button" (click)="startGameFromButton()">
+        <div class="button-label">
+          {{ "math_blaster.start_mission" | translate }}
+        </div>
+        <div class="button-icon">🚀</div>
+      </button>
+    </div>
+
+    <!-- Difficulty selection screen -->
+    <div *ngIf="selectingDifficulty" class="difficulty-selection">
+      <h2>{{ "math_blaster.config.difficulty_title" | translate }}</h2>
+      <div class="difficulty-buttons">
+        <button class="difficulty-button easy" (click)="selectDifficulty(0)">
+          <div class="difficulty-icon">🌱</div>
+          <div class="difficulty-name">
+            {{ "math_blaster.config.easy.name" | translate }}
+          </div>
+          <div class="difficulty-desc">
+            {{ "math_blaster.config.easy.desc" | translate }}
+          </div>
+        </button>
+        <button class="difficulty-button medium" (click)="selectDifficulty(1)">
+          <div class="difficulty-icon">🔥</div>
+          <div class="difficulty-name">
+            {{ "math_blaster.config.medium.name" | translate }}
+          </div>
+          <div class="difficulty-desc">
+            {{ "math_blaster.config.medium.desc" | translate }}
+          </div>
+        </button>
+        <button class="difficulty-button hard" (click)="selectDifficulty(2)">
+          <div class="difficulty-icon">⚡</div>
+          <div class="difficulty-name">
+            {{ "math_blaster.config.hard.name" | translate }}
+          </div>
+          <div class="difficulty-desc">
+            {{ "math_blaster.config.hard.desc" | translate }}
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Lives display -->
+    <div class="lives-display">
+      <div class="lives-icons">
+        @for (i of [].constructor(lives); track $index) {
+        <span class="life-icon">♥️</span>
+        }
+      </div>
+    </div>
+
+    <!-- Game elements (only visible when game started) -->
+    @if (gameStarted) {
+    <div class="player-ship" [style.left.%]="playerPosition">
+      <img
+        src="assets/images/spaceship-red.png"
+        alt="Player Ship"
+        class="ship-image"
+      />
+    </div>
+
+    @for (enemy of enemies; track enemy.id) {
+    <div class="enemy" [style.top.%]="enemy.y" [style.left.%]="enemy.x">
+      {{ enemy.value }}
+    </div>
+    } @for (bullet of bullets; track bullet.id) {
+    <div
+      class="bullet"
+      [style.top.%]="bullet.y"
+      [style.left.%]="bullet.x"
+    ></div>
+    }
+
+    <!-- Add explosion effects -->
+    @for (explosion of explosions; track explosion.id) { @if
+    (explosion.isCorrectTarget) {
+    <div
+      class="special-explosion"
+      [style.top.%]="explosion.y"
+      [style.left.%]="explosion.x"
+    >
+      <!-- Special explosion when correct target is hit -->
+      <div class="particle" style="--angle: 0deg"></div>
+      <div class="particle" style="--angle: 45deg"></div>
+      <div class="particle" style="--angle: 90deg"></div>
+      <div class="particle" style="--angle: 135deg"></div>
+      <div class="particle" style="--angle: 180deg"></div>
+      <div class="particle" style="--angle: 225deg"></div>
+      <div class="particle" style="--angle: 270deg"></div>
+      <div class="particle" style="--angle: 315deg"></div>
+    </div>
+    } @else {
+    <div
+      class="explosion"
+      [style.top.%]="explosion.y"
+      [style.left.%]="explosion.x"
+    >
+      <!-- Regular explosion for wrong answers -->
+      <div class="particle" style="--angle: 0deg"></div>
+      <div class="particle" style="--angle: 45deg"></div>
+      <div class="particle" style="--angle: 90deg"></div>
+      <div class="particle" style="--angle: 135deg"></div>
+      <div class="particle" style="--angle: 180deg"></div>
+      <div class="particle" style="--angle: 225deg"></div>
+      <div class="particle" style="--angle: 270deg"></div>
+      <div class="particle" style="--angle: 315deg"></div>
+    </div>
+    } } }
+
+    <!-- Game messages -->
+    @if (gameOver) {
+    <div class="game-message game-over">
+      {{ "math_blaster.game_over" | translate }}
+      <br />
+      <button class="restart-button" (click)="resetGame()">
+        {{ "math_blaster.play_again" | translate }}
+      </button>
+    </div>
+    } @if (levelComplete) {
+    <div class="game-message level-complete">
+      {{ "math_blaster.level_complete" | translate }}
+    </div>
+    }
+  </div>
+
+  <!-- Mobile controls - updated to match spaceship dashboard -->
+  <div class="spaceship-control-panel game-controls mobile-only">
+    <div class="control-lights">
+      <div class="control-light"></div>
+      <div class="control-light"></div>
+      <div class="control-light"></div>
+    </div>
+
+    <div class="controls-container">
+      <button
+        class="control-button left-button"
+        (touchstart)="moveLeft()"
+        (touchend)="stopMoving()"
+      >
+        <div class="button-label">
+          {{ "math_blaster.mobile_controls.left" | translate }}
+        </div>
+        <div class="button-icon">⬅️</div>
+      </button>
+      <button class="control-button fire-button" (click)="fire()">
+        <div class="button-label">
+          {{ "math_blaster.mobile_controls.fire" | translate }}
+        </div>
+        <div class="button-icon">🔥</div>
+      </button>
+      <button
+        class="control-button right-button"
+        (touchstart)="moveRight()"
+        (touchend)="stopMoving()"
+      >
+        <div class="button-label">
+          {{ "math_blaster.mobile_controls.right" | translate }}
+        </div>
+        <div class="button-icon">➡️</div>
+      </button>
+    </div>
+  </div>
+</div>

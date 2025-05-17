@@ -14,7 +14,6 @@ import { FooterComponent } from '../layout/footer/footer.component';
     MatButtonModule,
     MatIconModule,
     HeaderComponent,
-    FooterComponent,
     RouterModule,
   ],
   templateUrl: './home.component.html',

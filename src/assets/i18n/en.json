@@ -33,6 +33,7 @@
   "dashboard": {
     "title": "Choose a task",
     "math_title": "Math",
+    "math_blaster_title": "Math Blaster",
     "sudoku_title": "Sudoku",
     "path_finder_title": "RoboPath",
     "clock_title": "Clock",
@@ -282,6 +283,35 @@
       "content": "Your robot reached the goal! Great job! 🎉",
       "ok_button": "Restart",
       "cancel_button": "New game"
+    }
+  },
+  "math_blaster": {
+    "title": "Math Blaster",
+    "mission": "Mission",
+    "score": "Score",
+    "start_mission": "START MISSION",
+    "play_again": "Play Again",
+    "game_over": "Game Over!",
+    "level_complete": "Level Complete!",
+    "mobile_controls": {
+      "left": "LEFT",
+      "fire": "FIRE",
+      "right": "RIGHT"
+    },
+    "config": {
+      "difficulty_title": "Select Difficulty",
+      "easy": {
+        "name": "Easy",
+        "desc": "Simple Addition"
+      },
+      "medium": {
+        "name": "Medium",
+        "desc": "Addition & Subtraction"
+      },
+      "hard": {
+        "name": "Hard",
+        "desc": "Larger Numbers"
+      }
     }
   },
   "universal_dialog": {

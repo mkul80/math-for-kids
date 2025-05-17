@@ -1,0 +1,740 @@
+@import "rwd";
+
+:host {
+  height: 100%;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem;
+
+  // Animations
+  @keyframes enemyFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes bulletTravel {
+    from {
+      box-shadow: 0 0 5px 2px rgba(0, 255, 0, 0.5);
+    }
+    to {
+      box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.9);
+    }
+  }
+
+  @keyframes correctTarget {
+    0% {
+      box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.9);
+    }
+    100% {
+      box-shadow: 0 0 5px 2px rgba(255, 255, 0, 0.5);
+    }
+  }
+
+  @keyframes explosion {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particleExplode {
+    0% {
+      transform: translate(0, 0) scale(0.1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(
+          calc(cos(var(--angle)) * 50px),
+          calc(sin(var(--angle)) * 50px)
+        )
+        scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes specialExplode {
+    0% {
+      transform: scale(0.1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(2);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  .game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @include desktop {
+      align-items: center;
+    }
+  }
+
+  /* New spaceship control panel styles */
+  .spaceship-control-panel {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, #1a237e, #0a0a2a, #1a237e);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(91, 132, 255, 0.7);
+    border: 2px solid #5b84ff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
+      border-radius: 10px 10px 0 0;
+    }
+
+    .panel-section {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 5px 15px;
+      position: relative;
+
+      &.problem-display {
+        flex: 2;
+      }
+
+      &.score-panel {
+        flex: 1;
+      }
+    }
+
+    .panel-divider {
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, #5b84ff, transparent);
+      margin: 0 10px;
+    }
+
+    .panel-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #8cb4ff;
+      margin-bottom: 5px;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(140, 180, 255, 0.7);
+    }
+
+    .panel-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+
+      @include mobile {
+        font-size: 20px;
+      }
+    }
+
+    @include desktop {
+      max-width: 600px;
+      padding: 15px 20px;
+
+      .panel-label {
+        font-size: 16px;
+      }
+
+      .panel-value {
+        font-size: 28px;
+      }
+    }
+  }
+
+  .game-board {
+    position: relative;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    border: 2px solid #5b84ff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(91, 132, 255, 0.7);
+    background: radial-gradient(ellipse at center, #1b2735 0%, #090a0f 100%);
+    // background: linear-gradient(to bottom, #0a0a2a, #1a1a4a);
+    width: 100%;
+
+    @include desktop {
+      max-width: 600px;
+    }
+
+    // Lives display styling
+    .lives-display {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 16px;
+      z-index: 10;
+      box-shadow: 0 0 10px rgba(91, 132, 255, 0.7);
+      border: 1px solid rgba(91, 132, 255, 0.6);
+
+      .lives-icons {
+        .life-icon {
+          font-size: 14px;
+          margin-right: 2px;
+
+          @include mobile {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    // Start button container
+    .start-button-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(10, 10, 42, 0.8);
+      z-index: 100; // Make sure this is below game messages
+    }
+
+    .start-button {
+      position: relative;
+      width: 70%;
+      max-width: 300px;
+      padding: 20px 15px;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(to bottom, #5b75ff, #3949a3);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 30px rgba(91, 132, 255, 0.9),
+        0 0 50px rgba(140, 180, 255, 0.5) inset;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        top: -5px;
+      }
+
+      &::before {
+        left: 20px;
+      }
+
+      &::after {
+        right: 20px;
+      }
+
+      .button-icon {
+        font-size: 48px;
+        animation: pulse 1.5s infinite alternate;
+      }
+
+      &:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 0 50px rgba(91, 132, 255, 1),
+          0 0 60px rgba(140, 180, 255, 0.7) inset;
+      }
+
+      &:active {
+        transform: translateY(3px) scale(0.98);
+        box-shadow: 0 0 25px rgba(91, 132, 255, 0.8),
+          0 0 40px rgba(140, 180, 255, 0.6) inset;
+      }
+    }
+
+    // Add animation for the start button
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.2);
+      }
+    }
+
+    // Difficulty selection styling
+    .difficulty-selection {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(10, 10, 42, 0.9);
+      z-index: 100;
+      padding: 20px;
+
+      h2 {
+        color: white;
+        font-size: 32px;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px rgba(140, 180, 255, 0.8);
+        font-weight: bold;
+        text-transform: uppercase;
+
+        @include mobile {
+          font-size: 24px;
+          margin-bottom: 15px;
+        }
+      }
+
+      .difficulty-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 80%;
+        max-width: 400px;
+
+        @include mobile {
+          gap: 8px;
+          width: 90%;
+        }
+
+        @include desktop {
+          flex-direction: row;
+          width: 90%;
+          max-width: 500px;
+        }
+      }
+
+      .difficulty-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border: none;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex: 1;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+
+        @include mobile {
+          padding: 8px;
+          border-radius: 10px;
+        }
+
+        .difficulty-icon {
+          font-size: 36px;
+          margin-bottom: 10px;
+
+          @include mobile {
+            font-size: 24px;
+            margin-bottom: 5px;
+          }
+        }
+
+        .difficulty-name {
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 5px;
+
+          @include mobile {
+            font-size: 16px;
+            margin-bottom: 2px;
+          }
+        }
+
+        .difficulty-desc {
+          font-size: 12px;
+          opacity: 0.8;
+
+          @include mobile {
+            font-size: 10px;
+          }
+        }
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px rgba(140, 180, 255, 0.3);
+        }
+
+        &:active {
+          transform: translateY(2px);
+        }
+
+        &.easy {
+          background: linear-gradient(to bottom, #4b7bec, #3867d6);
+
+          &:hover {
+            background: linear-gradient(to bottom, #5b8aff, #4876e5);
+          }
+        }
+
+        &.medium {
+          background: linear-gradient(to bottom, #fa8231, #f7b731);
+
+          &:hover {
+            background: linear-gradient(to bottom, #ff9240, #ffc640);
+          }
+        }
+
+        &.hard {
+          background: linear-gradient(to bottom, #eb3b5a, #fc5c65);
+
+          &:hover {
+            background: linear-gradient(to bottom, #fa4a69, #ff6b74);
+          }
+        }
+      }
+    }
+  }
+
+  // Remove the old score display since it's now in the control panel
+  .score-display {
+    display: none;
+  }
+
+  // Remove the old math task displays since they're now in the control panel
+  .math-task,
+  .math-task-panel {
+    display: none;
+  }
+
+  .player-ship {
+    position: absolute;
+    bottom: -5%;
+    width: 20%;
+    aspect-ratio: 1/1.5;
+    transition: left 0.2s ease;
+
+    .ship-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .enemy {
+    position: absolute;
+    width: 8%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    // background-color: rgba(255, 100, 100, 0.7);
+    border-radius: 50%;
+    // box-shadow: 0 0 10px rgba(255, 100, 100, 0.5);
+
+    text-shadow: 0 0 5px #fff, 0 0 10px #0ff, 0 0 15px #0ff, 0 0 20px #0ff;
+    // animation: enemyFloat 3s infinite ease-in-out;
+
+    &.hit {
+      animation: explosion 0.5s forwards;
+    }
+  }
+
+  .bullet {
+    position: absolute;
+    width: 2%;
+    height: 5%;
+    background-color: #00ff00;
+    border-radius: 50%;
+    animation: bulletTravel 0.5s infinite alternate;
+  }
+
+  // Add new explosion effect
+  .explosion {
+    position: absolute;
+    pointer-events: none;
+    width: 15%;
+    height: 15%;
+    z-index: 10;
+
+    .particle {
+      position: absolute;
+      background-color: #ffcc00;
+      border-radius: 50%;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+
+      @for $i from 1 through 8 {
+        &:nth-child(#{$i}) {
+          transform: rotate(#{$i * 45}deg) translate(0, 0);
+          animation: particleExplode 0.8s ease-out forwards;
+          animation-delay: #{$i * 0.05}s;
+          background-color: adjust-hue(#ff5500, $i * 30);
+        }
+      }
+    }
+  }
+
+  .special-explosion {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    z-index: 15;
+    pointer-events: none;
+    animation: specialExplode 0.7s forwards;
+    background: radial-gradient(circle, #ffff00, #ff8800, transparent);
+    border-radius: 50%;
+  }
+
+  .game-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 101; // Increase z-index to be above start button
+    text-align: center;
+
+    .restart-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: linear-gradient(to right, #ff3547, #ff5252);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        transform: scale(1.05);
+        background: linear-gradient(to right, #ff5252, #ff7676);
+      }
+    }
+
+    &.game-over {
+      color: #ff0000;
+    }
+
+    &.level-complete {
+      color: #00ff00;
+    }
+  }
+
+  .game-controls {
+    padding: 15px 10px;
+    flex-direction: column;
+    margin-top: 10px;
+    background: linear-gradient(to right, #1a237e, #0a0a2a, #1a237e);
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ffff, transparent);
+      border-radius: 0 0 10px 10px;
+    }
+
+    .control-lights {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+      gap: 20px;
+
+      .control-light {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ff5b5b;
+        box-shadow: 0 0 8px rgba(255, 91, 91, 0.8);
+        animation: blinkLight 2s infinite alternate;
+
+        &:nth-child(2) {
+          background-color: #ffcc00;
+          box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+          animation-delay: 0.6s;
+        }
+
+        &:nth-child(3) {
+          background-color: #00ff00;
+          box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+          animation-delay: 1.2s;
+        }
+      }
+    }
+
+    .controls-container {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .control-button {
+      touch-action: manipulation;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s ease;
+      background: linear-gradient(to bottom, #2a3a80, #1a2660);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(91, 132, 255, 0.4) inset;
+      border: 1px solid rgba(91, 132, 255, 0.6);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 15%;
+        right: 15%;
+        height: 4px;
+        border-radius: 4px;
+        background: rgba(0, 255, 255, 0.5);
+        box-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+      }
+
+      .button-label {
+        font-size: 10px;
+        color: #8cb4ff;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+        text-shadow: 0 0 5px rgba(140, 180, 255, 0.8);
+      }
+
+      .button-icon {
+        font-size: 24px;
+      }
+
+      &:active {
+        transform: scale(0.92) translateY(3px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5),
+          0 0 10px rgba(91, 132, 255, 0.3) inset;
+
+        &::after {
+          bottom: -3px;
+          opacity: 0.7;
+        }
+      }
+
+      &.left-button {
+        .button-icon {
+          color: #80b3ff;
+        }
+      }
+
+      &.fire-button {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(to bottom, #802020, #601010);
+        box-shadow: 0 4px 15px rgba(255, 91, 91, 0.7),
+          0 0 20px rgba(255, 0, 0, 0.4) inset;
+        border: 1px solid rgba(255, 50, 50, 0.6);
+
+        &::after {
+          background: rgba(255, 100, 100, 0.5);
+          box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+        }
+
+        .button-label {
+          color: #ffcccc;
+          font-size: 14px;
+          margin-bottom: 8px;
+          font-weight: bold;
+        }
+
+        .button-icon {
+          font-size: 32px;
+        }
+      }
+
+      &.right-button {
+        .button-icon {
+          color: #80b3ff;
+        }
+      }
+    }
+  }
+
+  // Add blinking light animation
+  @keyframes blinkLight {
+    0%,
+    30% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  // Utility classes
+  .desktop-only {
+    @include mobile {
+      display: none;
+    }
+  }
+
+  .mobile-only {
+    @include desktop {
+      display: none;
+    }
+  }
+}

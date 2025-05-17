@@ -10,6 +10,7 @@ import { PathFinderSetupComponent } from './ui/home/games/path-finder/path-finde
 import { DashboardComponent } from './ui/home/dashboard/dashboard.component';
 import { ClockExerciseComponent } from './ui/home/games/clock-exercise/clock-exercise.component';
 import { ClockSetupComponent } from './ui/home/games/clock-exercise/clock-setup/clock-setup.component';
+import { MathBlasterComponent } from './ui/home/games/math-blaster/math-blaster.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home/dashboard', pathMatch: 'full' },
@@ -40,6 +41,19 @@ export const routes: Routes = [
           {
             path: 'game/:boardSize',
             component: PathFinderComponent,
+          },
+        ],
+      },
+      {
+        path: 'math-blaster',
+        children: [
+          // {
+          //   path: 'setup',
+          //   component: PathFinderSetupComponent,
+          // },
+          {
+            path: 'game',
+            component: MathBlasterComponent,
           },
         ],
       },
