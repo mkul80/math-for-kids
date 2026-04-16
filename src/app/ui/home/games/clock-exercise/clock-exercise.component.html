@@ -1,6 +1,6 @@
 <div class="quiz-container">
   <div class="progress-bar">
-    <ng-container *ngFor="let i of [].constructor(10); let idx = index">
+    @for (i of [].constructor(10); track i; let idx = $index) {
       <span
         [ngClass]="{
           good: results[idx] === 'correct',
@@ -8,35 +8,38 @@
           empty: results[idx] !== 'correct' && results[idx] !== 'wrong'
         }"
         >●</span
-      >
-    </ng-container>
-    <app-clock [hour]="hour" [minutes]="minutes"></app-clock>
+        >
+      }
+      <app-clock [hour]="hour" [minutes]="minutes"></app-clock>
+    </div>
   </div>
-</div>
-<br />
-<div class="buttons-container">
-  <div class="answers">
-    <button
-      *ngFor="let answer of answers"
+  <br />
+  <div class="buttons-container">
+    <div class="answers">
+      @for (answer of answers; track answer) {
+        <button
       [ngClass]="{
         correct: selectedAnswer && isCorrect(answer),
         wrong: selectedAnswer && selectedAnswer === answer && !isCorrect(answer)
       }"
-      (click)="chooseAnswer(answer)"
-      [disabled]="selectedAnswer !== null"
-    >
-      {{ answer }}
-    </button>
+          (click)="chooseAnswer(answer)"
+          [disabled]="selectedAnswer !== null"
+          >
+          {{ answer }}
+        </button>
+      }
+    </div>
+
+    <div class="next">
+      <button
+        [class.disabled]="!selectedAnswer"
+        (click)="generateQuestion(difficultyLevel)"
+        >
+        🎯 Kolejne pytanie
+      </button>
+    </div>
   </div>
 
-  <div class="next">
-    <button
-      [class.disabled]="!selectedAnswer"
-      (click)="generateQuestion(difficultyLevel)"
-    >
-      🎯 Kolejne pytanie
-    </button>
-  </div>
-</div>
-
-<div class="confetti" *ngIf="showConfetti">🎉 🎊 🎉 🎊 🎉</div>
+  @if (showConfetti) {
+    <div class="confetti">🎉 🎊 🎉 🎊 🎉</div>
+  }

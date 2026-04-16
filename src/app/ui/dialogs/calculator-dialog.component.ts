@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
@@ -9,13 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-calculator-dialog',
   imports: [
-    CommonModule,
     MatDialogModule,
     MatButtonModule,
     FormsModule,
     MatGridListModule,
-    MatIconModule,
-  ],
+    MatIconModule
+],
   template: `
     <h2 mat-dialog-title class="text-center">Kalkulator</h2>
     <mat-dialog-content>

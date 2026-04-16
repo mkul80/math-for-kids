@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { map, take } from 'rxjs';
@@ -10,7 +10,7 @@ import { map, take } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, RouterLink],
+  imports: [TranslateModule, RouterLink],
 })
 export class DashboardComponent implements OnInit {
   #http = inject(HttpClient);

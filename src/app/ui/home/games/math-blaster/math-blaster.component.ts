@@ -7,7 +7,7 @@ import {
   ElementRef,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MathBlasterEntityService } from './services/math-blaster-entity.service';
 import { MathBlasterCollisionService } from './services/math-blaster-collision.service';
 import { Bullet, Enemy, DifficultyLevel } from './models/math-blaster.models';
@@ -19,7 +19,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-math-blaster',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [TranslatePipe],
   templateUrl: './math-blaster.component.html',
   styleUrl: './math-blaster.component.scss',
 })

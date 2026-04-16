@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, HostBinding } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,7 +16,6 @@ import { IMAGE_PATHS } from '../../../consts/image-paths';
   selector: 'app-excercise',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatProgressBarModule,
@@ -24,8 +23,8 @@ import { IMAGE_PATHS } from '../../../consts/image-paths';
     ExceriseStatusComponent,
     ExercisesSummaryComponent,
     AnswerSelectorComponent,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
   templateUrl: './excercise.component.html',
   styleUrl: './excercise.component.scss',
 })
