@@ -1,4 +1,5 @@
-@import "rwd";
+@use "rwd" as *;
+@use "sass:color";
 
 :host {
   height: 100%;
@@ -515,7 +516,7 @@
           transform: rotate(#{$i * 45}deg) translate(0, 0);
           animation: particleExplode 0.8s ease-out forwards;
           animation-delay: #{$i * 0.05}s;
-          background-color: adjust-hue(#ff5500, $i * 30);
+          background-color: color.adjust(#ff5500, $hue: $i * 30);
         }
       }
     }

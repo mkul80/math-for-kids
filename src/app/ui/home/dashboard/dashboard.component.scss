@@ -1,4 +1,4 @@
-@import "rwd";
+@use "rwd" as *;
 
 :host {
   display: block;

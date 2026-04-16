@@ -1,4 +1,4 @@
-@import "rwd";
+@use "rwd" as *;
 
 :host {
   --orange-primary: #ff6f00;
