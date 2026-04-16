@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, inject, DOCUMENT } from '@angular/core';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -16,7 +16,7 @@ import {
 } from '@ngx-translate/core';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { DOCUMENT } from '@angular/common';
+
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
 import { Logger } from './common/logger.service';
 
