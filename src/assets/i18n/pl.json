@@ -172,7 +172,7 @@
         "zgubiła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}",
         "wymieniła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}} na cukierki",
         "zniszczyła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}",
-        "spaliła {value} {value, plural, one {zeszyt} few {zeszyty} other {zeszytów}}"
+        "zostawiła {value} w domu dziadków"
       ],
       "question": "Ile zeszytów ma teraz Marta?"
     },

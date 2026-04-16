@@ -136,7 +136,7 @@
         "she lost {value} {value, plural, one {toy} other {toys}}",
         "she exchanged {value} {value, plural, one {toy} other {toys}} for others",
         "she sold {value} {value, plural, one {toy} other {toys}} at the sale",
-        "she burned {value} {value, plural, one {toy} other {toys}} in the fire"
+        "she gave {value} {value, plural, one {toy} other {toys}} to the neighbor's daughter"
       ],
       "question": "How many toys does Martha have now?"
     },
@@ -172,7 +172,7 @@
         "she lost {value} {value, plural, one {notebook} other {notebooks}}",
         "she exchanged {value} {value, plural, one {notebook} other {notebooks}} for others",
         "she ruined {value} {value, plural, one {notebook} other {notebooks}}",
-        "she burned {value} {value, plural, one {notebook} other {notebooks}}"
+        "she left {value} {value, plural, one {notebook} other {notebooks}} at her grandparents' house"
       ],
       "question": "How many notebooks does Martha have now?"
     },
@@ -226,7 +226,7 @@
         "she lost {value} {value, plural, one {doll} other {dolls}}",
         "she exchanged {value} {value, plural, one {doll} other {dolls}} for others",
         "she sold {value} {value, plural, one {doll} other {dolls}} at the toy store",
-        "she burned {value} {value, plural, one {doll} other {dolls}} in the fire"
+        "she gave {value} {value, plural, one {doll} other {dolls}} to her best friend for her birthday"
       ],
       "question": "How many dolls does Martha have now?"
     }
